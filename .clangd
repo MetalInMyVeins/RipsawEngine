@@ -1,0 +1,6 @@
+Diagnostics:
+  Suppress:
+    - unused-includes
+
+header-insertion: never
+

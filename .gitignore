@@ -1,0 +1,11 @@
+bin/
+build/
+.cache/
+docs/
+lib/
+.envrc
+vgrun
+vimbin
+*.nvim
+*.vim
+
