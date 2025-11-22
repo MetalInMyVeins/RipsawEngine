@@ -46,7 +46,13 @@ include_directories(
 )
 
 add_library(lib${pn} STATIC
-  ${CMAKE_SOURCE_DIR}/src/dummy.cxx
+  ${CMAKE_SOURCE_DIR}/src/Actor.cxx
+  ${CMAKE_SOURCE_DIR}/src/Component.cxx
+  ${CMAKE_SOURCE_DIR}/src/Engine.cxx
+  ${CMAKE_SOURCE_DIR}/src/TransformComponent.cxx
+  ${CMAKE_SOURCE_DIR}/src/processInput.cxx
+  ${CMAKE_SOURCE_DIR}/src/renderEngine.cxx
+  ${CMAKE_SOURCE_DIR}/src/updateEngine.cxx
 )
 target_compile_options(lib${pn} PRIVATE
   $<$<AND:$<COMPILE_LANGUAGE:C>,$<CONFIG:Debug>>:${DEBUG_C_FLAGS}>
