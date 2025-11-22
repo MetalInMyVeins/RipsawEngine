@@ -2,6 +2,7 @@
 import os
 import xml.etree.ElementTree as ET
 import re
+import subprocess
 
 XML_DIR = "docs/xml"
 TEMPLATE_MD = "README.template.md"
@@ -217,6 +218,8 @@ def inject_markdown_into_template(generated_md):
         f.write(new_content)
 
 def main():
+    print("Running Doxygen...")
+    subprocess.run(["doxygen", "Doxyfile"], check=True)
     classes = []
     for file in os.listdir(XML_DIR):
         if file.startswith("class") and file.endswith(".xml"):
