@@ -1,11 +1,13 @@
 #pragma once
 
+#include <iostream>
+#include <vector>
+
 #include <SDL3/SDL.h>
 #include <SDL3_image/SDL_image.h>
 #include <SDL3_ttf/SDL_ttf.h>
+
 #include <glm/glm.hpp>
-#include <iostream>
-#include <vector>
 
 namespace RipsawEngine
 {
@@ -32,10 +34,6 @@ private:
   void updateEngine();
   /// @brief Renders game output on screen.
   void renderEngine();
-  /// @brief Loads game assets.
-  bool loadMedia();
-  /// @brief Unloads game assets.
-  void unloadMedia();
 
 private:
   /// Screen width

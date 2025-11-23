@@ -1,5 +1,5 @@
-#include "RipsawEngine/Scene/TransformComponent.hxx"
 #include "RipsawEngine/Scene/Actor.hxx"
+#include "RipsawEngine/Scene/TransformComponent.hxx"
 
 namespace RipsawEngine
 {

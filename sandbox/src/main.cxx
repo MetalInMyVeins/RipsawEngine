@@ -1,4 +1,5 @@
 #include "RipsawEngine/Core/Core.hxx"
+#include "RipsawEngine/Scene/Scene.hxx"
 
 int main(int argv, char** argc)
 {

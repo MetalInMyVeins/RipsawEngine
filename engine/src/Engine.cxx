@@ -56,7 +56,6 @@ bool Engine::init()
 
   SDL_CreateWindowAndRenderer("Starship", mScreenWidth, mScreenHeight, SDL_WINDOW_FULLSCREEN, &mWindow, &mRenderer);
   SDL_SetRenderVSync(mRenderer, 1);
-  this->loadMedia();
   return true;
 }
 
@@ -72,7 +71,6 @@ void Engine::run()
 
 void Engine::shutdown()
 {
-  this->unloadMedia();
   SDL_DestroyRenderer(mRenderer);
   SDL_DestroyWindow(mWindow);
   SDL_Quit();
@@ -85,19 +83,6 @@ void Engine::addActor(Actor* actor)
 
 void Engine::removeActor(Actor* actor)
 {}
-
-bool Engine::loadMedia()
-{
-  return true;
-}
-
-void Engine::unloadMedia()
-{
-  for (const auto& actor : mActors)
-  {
-    delete actor;
-  }
-}
 
 }
 

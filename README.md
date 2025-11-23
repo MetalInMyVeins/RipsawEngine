@@ -292,14 +292,6 @@ Updates the game world.
 
 Renders game output on screen.
 
-#### `bool RipsawEngine::Engine::loadMedia`
-
-Loads game assets.
-
-#### `void RipsawEngine::Engine::unloadMedia`
-
-Unloads game assets.
-
 
 ---
 

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Component.hxx"
+
 #include <glm/glm.hpp>
 
 namespace RipsawEngine

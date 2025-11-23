@@ -1,8 +1,10 @@
 #pragma once
 
-#include <SDL3/SDL_log.h>
-#include <glm/glm.hpp>
 #include <vector>
+
+#include <SDL3/SDL_log.h>
+
+#include <glm/glm.hpp>
 
 namespace RipsawEngine
 {
