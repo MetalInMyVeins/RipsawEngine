@@ -8,5 +8,6 @@ vgrun
 vimbin
 *.nvim
 *.vim
+.rn
 quirks
 

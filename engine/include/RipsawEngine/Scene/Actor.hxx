@@ -4,6 +4,9 @@
 #include <glm/glm.hpp>
 #include <vector>
 
+namespace RipsawEngine
+{
+
 class Actor
 {
 public:
@@ -48,4 +51,6 @@ private:
   /// @ref TransformComponent tied to the actor (if any).
   class TransformComponent* mTransformComponent{nullptr};
 };
+
+}
 

@@ -7,6 +7,9 @@
 #include <iostream>
 #include <vector>
 
+namespace RipsawEngine
+{
+
 class Engine
 {
 public:
@@ -66,4 +69,6 @@ private:
   /// List of all actors
   std::vector<class Actor*> mActors{};
 };
+
+}
 

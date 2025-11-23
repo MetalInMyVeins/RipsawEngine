@@ -208,8 +208,8 @@ def inject_markdown_into_template(generated_md):
 
     # regex to replace everything between AUTODOC markers
     new_content = re.sub(
-        r"(<!-- AUTODOC:BEGIN -->).*?(<!-- AUTODOC:END -->)",
-        rf"\1\n\n{generated_md}\n\2",
+        r"<!-- AUTODOC:BEGIN -->.*?<!-- AUTODOC:END -->",
+        generated_md,
         content,
         flags=re.DOTALL
     )

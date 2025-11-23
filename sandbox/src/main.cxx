@@ -1,8 +1,8 @@
-#include "Engine.hxx"
+#include "RipsawEngine/Core/Core.hxx"
 
 int main(int argv, char** argc)
 {
-  Engine engine;
+  RipsawEngine::Engine engine;
   if (engine.init() == false)
   {
     return -1;

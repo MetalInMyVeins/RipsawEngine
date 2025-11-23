@@ -1,5 +1,8 @@
-#include "Engine.hxx"
-#include "Actor.hxx"
+#include "RipsawEngine/Core/Engine.hxx"
+#include "RipsawEngine/Scene/Actor.hxx"
+
+namespace RipsawEngine
+{
 
 void Engine::updateEngine()
 {
@@ -28,5 +31,7 @@ void Engine::updateEngine()
   {
     actor->update(dt);
   }
+}
+
 }
 

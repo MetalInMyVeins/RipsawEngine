@@ -1,6 +1,9 @@
-#include "Engine.hxx"
-#include "Actor.hxx"
-#include "TransformComponent.hxx"
+#include "RipsawEngine/Core/Engine.hxx"
+#include "RipsawEngine/Scene/Actor.hxx"
+#include "RipsawEngine/Scene/TransformComponent.hxx"
+
+namespace RipsawEngine
+{
 
 Engine::Engine(int w, int h)
 {
@@ -94,5 +97,7 @@ void Engine::unloadMedia()
   {
     delete actor;
   }
+}
+
 }
 

@@ -1,5 +1,8 @@
-#include "Component.hxx"
-#include "Actor.hxx"
+#include "RipsawEngine/Scene/Component.hxx"
+#include "RipsawEngine/Scene/Actor.hxx"
+
+namespace RipsawEngine
+{
 
 Component::Component(Actor* actor)
   : mOwner{actor}
@@ -14,4 +17,6 @@ Component::~Component()
 
 void Component::update(double dt)
 {}
+
+}
 

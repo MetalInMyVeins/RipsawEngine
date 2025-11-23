@@ -1,4 +1,7 @@
-#include "Engine.hxx"
+#include "RipsawEngine/Core/Engine.hxx"
+
+namespace RipsawEngine
+{
 
 void Engine::processInput()
 {
@@ -17,5 +20,7 @@ void Engine::processInput()
         mIsRunning = false;
     }
   }
+}
+
 }
 

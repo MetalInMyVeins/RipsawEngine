@@ -1,5 +1,8 @@
-#include "TransformComponent.hxx"
-#include "Actor.hxx"
+#include "RipsawEngine/Scene/TransformComponent.hxx"
+#include "RipsawEngine/Scene/Actor.hxx"
+
+namespace RipsawEngine
+{
 
 TransformComponent::TransformComponent(Actor* actor, const glm::vec2& pos, const glm::vec2& vel)
   : Component{actor},
@@ -37,5 +40,7 @@ glm::vec2 TransformComponent::getVelocity() const
 void TransformComponent::setVelocity(const glm::vec2& vel)
 {
   mVel = vel;
+}
+
 }
 

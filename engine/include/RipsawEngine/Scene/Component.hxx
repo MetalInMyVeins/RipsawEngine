@@ -1,5 +1,8 @@
 #pragma once
 
+namespace RipsawEngine
+{
+
 class Component
 {
 public:
@@ -14,4 +17,6 @@ public:
   /// @param dt Delta-time.
   virtual void update(double dt);
 };
+
+}
 

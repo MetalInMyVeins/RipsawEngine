@@ -1,7 +1,10 @@
-#include "Actor.hxx"
-#include "Engine.hxx"
-#include "Component.hxx"
-#include "TransformComponent.hxx"
+#include "RipsawEngine/Scene/Actor.hxx"
+#include "RipsawEngine/Core/Engine.hxx"
+#include "RipsawEngine/Scene/Component.hxx"
+#include "RipsawEngine/Scene/TransformComponent.hxx"
+
+namespace RipsawEngine
+{
 
 Actor::Actor(Engine* engine)
   : mEngine{engine}
@@ -97,5 +100,7 @@ void Actor::setVelocity(const glm::vec2& vel)
     return;
   }
   mTransformComponent->setPosition(vel);
+}
+
 }
 

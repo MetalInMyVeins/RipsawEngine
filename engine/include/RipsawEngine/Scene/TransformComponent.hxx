@@ -3,6 +3,9 @@
 #include "Component.hxx"
 #include <glm/glm.hpp>
 
+namespace RipsawEngine
+{
+
 class TransformComponent : public Component
 {
 public:
@@ -33,4 +36,6 @@ private:
   /// Velocity.
   glm::vec2 mVel{};
 };
+
+}
 

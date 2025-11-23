@@ -1,4 +1,7 @@
-#include "Engine.hxx"
+#include "RipsawEngine/Core/Engine.hxx"
+
+namespace RipsawEngine
+{
 
 void Engine::renderEngine()
 {
@@ -6,5 +9,7 @@ void Engine::renderEngine()
   SDL_RenderClear(mRenderer);
   SDL_SetRenderDrawColor(mRenderer, 255, 0, 0, 255);
   SDL_RenderPresent(mRenderer);
+}
+
 }
 
