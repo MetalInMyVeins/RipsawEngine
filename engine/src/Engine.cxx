@@ -1,17 +1,28 @@
 #include "RipsawEngine/Core/Engine.hxx"
 #include "RipsawEngine/Scene/Actor.hxx"
+#include "RipsawEngine/Scene/SpriteComponent.hxx"
 #include "RipsawEngine/Scene/TransformComponent.hxx"
 
 namespace RipsawEngine
 {
 
-Engine::Engine(int w, int h)
+Engine::Engine(const std::string& wname, int w, int h)
+  : mWname{wname}
 {
   if (w != 0 and h != 0)
   {
     mIsDisplaySetManually = true;
     mScreenWidth = w;
     mScreenHeight = h;
+  }
+}
+
+Engine::~Engine()
+{
+  for (const auto& actor : mActors)
+  {
+    if (actor != nullptr)
+      delete actor;
   }
 }
 
@@ -54,7 +65,7 @@ bool Engine::init()
   }
   SDL_Log("[INFO] Display Resolution: %d X %d", mScreenWidth, mScreenHeight);
 
-  SDL_CreateWindowAndRenderer("Starship", mScreenWidth, mScreenHeight, SDL_WINDOW_FULLSCREEN, &mWindow, &mRenderer);
+  SDL_CreateWindowAndRenderer(mWname.c_str(), mScreenWidth, mScreenHeight, SDL_WINDOW_FULLSCREEN, &mWindow, &mRenderer);
   SDL_SetRenderVSync(mRenderer, 1);
   return true;
 }
@@ -76,13 +87,47 @@ void Engine::shutdown()
   SDL_Quit();
 }
 
+SDL_Renderer* Engine::getRenderer() const
+{
+  return mRenderer;
+}
+
+std::pair<int, int> Engine::getScreenSize() const
+{
+  return std::make_pair(mScreenWidth, mScreenHeight);
+}
+
 void Engine::addActor(Actor* actor)
 {
   mActors.emplace_back(actor);
+  mTotalActorsSize += sizeof(*actor);
+  SDL_Log("[INFO] Cumulative actor size: %ld bytes", mTotalActorsSize);
 }
 
 void Engine::removeActor(Actor* actor)
-{}
+{
+  auto it{std::find(mActors.begin(), mActors.end(), actor)};
+  if (it != mActors.end())
+  {
+    mActors.erase(it);
+  }
+}
+
+void Engine::addSprite(class SpriteComponent* sc)
+{
+  mSprites.emplace_back(sc);
+  SDL_Log("[INFO] Total sprites: %ld", mSprites.size());
+}
+
+void Engine::removeSprite(SpriteComponent* sprite)
+{
+  auto it{std::find(mSprites.begin(), mSprites.end(), sprite)};
+  if (it != mSprites.end())
+  {
+    mSprites.erase(it);
+  }
+  SDL_Log("[INFO] Total sprites: %ld", mSprites.size());
+}
 
 }
 

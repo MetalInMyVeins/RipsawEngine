@@ -13,6 +13,8 @@ Component::Component(Actor* actor)
 Component::~Component()
 {
   mOwner->removeComponent(this);
+  SDL_Log("[INFO] Removed component from Actor: %p", (void*)mOwner);
+  SDL_Log("\tAddress: %p", (void*)this);
 }
 
 void Component::update(double dt)

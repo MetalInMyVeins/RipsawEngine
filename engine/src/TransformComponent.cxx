@@ -10,10 +10,24 @@ TransformComponent::TransformComponent(Actor* actor, const glm::vec2& pos, const
     mVel{vel}
 {
   mOwner->setTransformComponent(this);
+  if (this->isComponentValid())
+  {
+    SDL_Log("[INFO] TransformComponent created: %p", (void*)this);
+    SDL_Log("\tAdded to Actor: %p", (void*)mOwner);
+  }
+  else
+  {
+    SDL_Log("[ERROR] TransformComponent construction FAILED");
+  }
 }
 
 TransformComponent::~TransformComponent()
 {
+}
+
+bool TransformComponent::isComponentValid() const
+{
+  return true;
 }
 
 void TransformComponent::update(double dt)

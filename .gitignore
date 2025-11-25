@@ -3,6 +3,7 @@ build/
 .cache/
 docs/
 lib/
+tests/
 .envrc
 vgrun
 vimbin

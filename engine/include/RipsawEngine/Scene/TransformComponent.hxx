@@ -15,8 +15,10 @@ public:
   /// @param pos Position of actor.
   /// @param vel Velocity of actor.
   TransformComponent(class Actor* actor, const glm::vec2& pos = {}, const glm::vec2& vel = {});
-  /// Destructor.
+  /// Destructs transform component.
   ~TransformComponent();
+  /// Checks if TransformComponent is valid.
+  bool isComponentValid() const override;
   /// Updates transform component.
   /// @param dt Delta-time.
   void update(double dt) override;

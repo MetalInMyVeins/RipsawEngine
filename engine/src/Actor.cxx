@@ -9,10 +9,9 @@ namespace RipsawEngine
 Actor::Actor(Engine* engine)
   : mEngine{engine}
 {
-  mEngine->addActor(this);
-  SDL_Log("[INFO] Actor created");
-  SDL_Log("\tAddress: %p", (void*)this);
+  SDL_Log("[INFO] Actor created: %p", (void*)this);
   SDL_Log("\tSize: %ld bytes", sizeof(*this));
+  mEngine->addActor(this);
 }
 
 Actor::~Actor()
@@ -20,10 +19,14 @@ Actor::~Actor()
   for (const auto& component : mComponents)
   {
     if (component != nullptr)
+    {
       delete component;
+    }
   }
   if (mTransformComponent != nullptr)
+  {
     mTransformComponent = nullptr;
+  }
 
   mEngine->removeActor(this);
   SDL_Log("[INFO] Actor destroyed");
@@ -46,10 +49,17 @@ void Actor::updateComponents(double dt)
 void Actor::addComponent(Component* component)
 {
   mComponents.emplace_back(component);
+  mTotalComponentSize += sizeof(*component);
+  SDL_Log("[INFO] Cumulative component size: %ld bytes", mTotalComponentSize);
 }
 
 void Actor::removeComponent(Component* component)
 {
+  auto it{std::find(mComponents.begin(), mComponents.end(), component)};
+  if (it != mComponents.end())
+  {
+    mComponents.erase(it);
+  }
 }
 
 TransformComponent* Actor::getTransformComponent() const
@@ -100,6 +110,11 @@ void Actor::setVelocity(const glm::vec2& vel)
     return;
   }
   mTransformComponent->setPosition(vel);
+}
+
+Engine* Actor::getEngine() const
+{
+  return mEngine;
 }
 
 }

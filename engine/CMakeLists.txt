@@ -2,6 +2,7 @@ add_library(RipsawEngine STATIC
   src/Actor.cxx
   src/Component.cxx
   src/Engine.cxx
+  src/SpriteComponent.cxx
   src/TransformComponent.cxx
   src/processInput.cxx
   src/renderEngine.cxx
