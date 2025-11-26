@@ -36,6 +36,37 @@ SpriteComponent::SpriteComponent(Actor* actor, SDL_Renderer* renderer, const std
   }
 }
 
+SpriteComponent::SpriteComponent(class Actor* actor, SDL_Renderer* renderer, const std::pair<float, float>& size, const std::tuple<unsigned char, unsigned char, unsigned char, unsigned char>& color)
+  : Component{actor},
+    mRenderer{renderer}
+{
+  SDL_Surface* surface{SDL_CreateSurface(size.first, size.second, SDL_PIXELFORMAT_RGBA8888)};
+  Uint32 col{SDL_MapSurfaceRGBA(surface, std::get<0>(color), std::get<1>(color), std::get<2>(color), std::get<3>(color))};
+  SDL_FillSurfaceRect(surface, nullptr, col);
+  if (surface != nullptr)
+  {
+    mTexture = SDL_CreateTextureFromSurface(mRenderer, surface);
+  }
+  SDL_DestroySurface(surface);
+  
+  if (mTexture != nullptr)
+  {
+    mTexSize = std::make_pair(mTexture->w, mTexture->h);
+  }
+
+  if (this->isComponentValid())
+  {
+    SDL_Log("[INFO] SpriteComponent created: %p", (void*)this);
+    SDL_Log("\tAdded to Actor: %p", (void*)mOwner);
+    SDL_Log("\tTexture size: %.f X %.f", mTexSize.first, mTexSize.second);
+    mOwner->getEngine()->addSprite(this);
+  }
+  else
+  {
+    SDL_Log("[ERROR] SpriteComponent construction FAILED");
+  }
+}
+
 SpriteComponent::~SpriteComponent()
 {
   SDL_DestroyTexture(mTexture);

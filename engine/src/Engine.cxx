@@ -116,7 +116,7 @@ void Engine::removeActor(Actor* actor)
 void Engine::addSprite(class SpriteComponent* sc)
 {
   mSprites.emplace_back(sc);
-  SDL_Log("[INFO] Total sprites: %ld", mSprites.size());
+  SDL_Log("[INFO] Total active sprites: %ld", mSprites.size());
 }
 
 void Engine::removeSprite(SpriteComponent* sprite)

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <tuple>
 #include <utility>
 
 #include <SDL3/SDL.h>
@@ -20,6 +21,12 @@ public:
   /// @param renderer Renderer.
   /// @param imgfile Path to image file.
   SpriteComponent(class Actor* actor, SDL_Renderer* renderer, const std::string& imgfile);
+  /// Constructs sprite component with owning actor, renderer, rectangle size, and color.
+  /// @param actor Actor owning the component.
+  /// @param renderer Renderer.
+  /// @param size Pair of float containing rectangle width and height.
+  /// @param color Tuple of RGBA color values.
+  SpriteComponent(class Actor* actor, SDL_Renderer* renderer, const std::pair<float, float>& size = {}, const std::tuple<unsigned char, unsigned char, unsigned char, unsigned char>& color = {});
   /// Destructs SpriteComponent.
   ~SpriteComponent();
   /// Checks if SpriteComponent is valid.

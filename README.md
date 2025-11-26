@@ -195,6 +195,19 @@ Constructs transform component with owning actor, position, and velocity.
 | `renderer` | `SDL_Renderer *` | Renderer. |
 | `imgfile` | `const std::string &` | Path to image file. |
 
+#### `RipsawEngine::SpriteComponent::SpriteComponent`
+
+Constructs sprite component with owning actor, renderer, rectangle size, and color.
+
+#### Parameters
+
+| Name | Type | Description |
+|------|------|-------------|
+| `actor` | `class Actor *` | Actor owning the component. |
+| `renderer` | `SDL_Renderer *` | Renderer. |
+| `size` | `const std::pair< float, float > &` | Pair of float containing rectangle width and height. |
+| `color` | `const std::tuple< unsigned char, unsigned char, unsigned char, unsigned char > &` | Tuple of RGBA color values. |
+
 #### `RipsawEngine::SpriteComponent::~SpriteComponent`
 
 Destructs SpriteComponent.
