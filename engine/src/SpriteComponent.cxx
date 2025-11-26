@@ -11,6 +11,8 @@ SpriteComponent::SpriteComponent(Actor* actor, SDL_Renderer* renderer, const std
     mRenderer{renderer},
     mImgFile{imgfile}
 {
+  mOwner->helperRegisterComponent("SpriteComponent");
+
   SDL_Surface* surface{IMG_Load(mImgFile.c_str())};
   if (surface != nullptr)
   {
@@ -40,6 +42,8 @@ SpriteComponent::SpriteComponent(class Actor* actor, SDL_Renderer* renderer, con
   : Component{actor},
     mRenderer{renderer}
 {
+  mOwner->helperRegisterComponent("SpriteComponent");
+
   SDL_Surface* surface{SDL_CreateSurface(size.first, size.second, SDL_PIXELFORMAT_RGBA8888)};
   Uint32 col{SDL_MapSurfaceRGBA(surface, std::get<0>(color), std::get<1>(color), std::get<2>(color), std::get<3>(color))};
   SDL_FillSurfaceRect(surface, nullptr, col);
@@ -69,6 +73,7 @@ SpriteComponent::SpriteComponent(class Actor* actor, SDL_Renderer* renderer, con
 
 SpriteComponent::~SpriteComponent()
 {
+  mOwner->deregisterComponent("SpriteComponent");
   SDL_DestroyTexture(mTexture);
   mOwner->getEngine()->removeSprite(this);
 }

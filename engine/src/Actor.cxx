@@ -117,5 +117,33 @@ Engine* Actor::getEngine() const
   return mEngine;
 }
 
+bool Actor::hasComponent(const std::string& compname) const
+{
+  if (mComponentMap.contains(compname))
+  {
+    return mComponentMap.at(compname);
+  }
+  return false;
+}
+
+void Actor::registerComponent(const std::string& compname)
+{
+  mComponentMap[compname] = true;
+}
+
+void Actor::deregisterComponent(const std::string& compname)
+{
+  mComponentMap[compname] = false;
+}
+  
+void Actor::helperRegisterComponent(const std::string& compname)
+{
+  if (this->hasComponent(compname))
+  {
+    throw std::runtime_error{"[ABORT] Actor already owns " + compname};
+  }
+  this->registerComponent(compname);
+}
+
 }
 

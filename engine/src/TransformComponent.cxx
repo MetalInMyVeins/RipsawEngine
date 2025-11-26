@@ -1,3 +1,5 @@
+#include <stdexcept>
+
 #include "RipsawEngine/Scene/Actor.hxx"
 #include "RipsawEngine/Scene/TransformComponent.hxx"
 
@@ -9,7 +11,10 @@ TransformComponent::TransformComponent(Actor* actor, const glm::vec2& pos, const
     mPos{pos},
     mVel{vel}
 {
+  mOwner->helperRegisterComponent("TransformComponent");
+
   mOwner->setTransformComponent(this);
+
   if (this->isComponentValid())
   {
     SDL_Log("[INFO] TransformComponent created: %p", (void*)this);
@@ -23,6 +28,7 @@ TransformComponent::TransformComponent(Actor* actor, const glm::vec2& pos, const
 
 TransformComponent::~TransformComponent()
 {
+  mOwner->deregisterComponent("TransformComponent");
 }
 
 bool TransformComponent::isComponentValid() const

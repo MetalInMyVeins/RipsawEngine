@@ -14,6 +14,9 @@
 - `std::vector<class Component*>` `mComponents`: Vector of all components tied to the actor.
 - `class TransformComponent*` `mTransformComponent`: TransformComponent tied to the actor (if any).
 - `size_t` `mTotalComponentSize`: Total size of all components held by actor.
+- `std::unordered_map<std::string, bool>` `mComponentMap`: Map of all possible components that actor can hold and their inclusion status in the actor.
+  
+  Components are capabilities of an actor. The philosophy as of now is, no actor should be able to hold the same type of component more than once. To ensure that, there should be a way in actor to verify in runtime if the same type of component is being injected more than once in the same actor. This map holds a list of {key, value} pairs where the keys are possible components and the values default to false which means that the associated component has not yet been injected in the actor.
 
 ### Member Functions
 
@@ -53,7 +56,7 @@ Updates all components tied to the actor.
 
 #### `void RipsawEngine::Actor::addComponent`
 
-Adds component to actor storing in mComponents.
+Adds component to actor storing in mComponents .
 
 #### Parameters
 
@@ -73,13 +76,13 @@ Removes component from actor.
 
 #### `TransformComponent * RipsawEngine::Actor::getTransformComponent`
 
-Returns mTransformComponent.
+Returns mTransformComponent .
 
-This method works as a way for other components to get access to TransformComponent.
+This method works as a way for other components to get access to TransformComponent .
 
 #### `void RipsawEngine::Actor::setTransformComponent`
 
-Sets mTransformComponent.
+Sets mTransformComponent .
 
 #### Parameters
 
@@ -119,6 +122,48 @@ Sets velocity of actor.
 
 Returns mEngine so that other componets can use it if needed.
 
+#### `bool RipsawEngine::Actor::hasComponent`
+
+Returns True if the specified component exists in mComponentMap.
+
+#### Parameters
+
+| Name | Type | Description |
+|------|------|-------------|
+| `compname` | `const std::string &` | Component name. |
+
+#### `void RipsawEngine::Actor::registerComponent`
+
+Registers specified component in mComponentMap.
+
+#### Parameters
+
+| Name | Type | Description |
+|------|------|-------------|
+| `compname` | `const std::string &` | Component name. |
+
+#### `void RipsawEngine::Actor::deregisterComponent`
+
+Deregisters component from mComponentMap.
+
+#### Parameters
+
+| Name | Type | Description |
+|------|------|-------------|
+| `compname` | `const std::string &` | Component name. |
+
+#### `void RipsawEngine::Actor::helperRegisterComponent`
+
+Helper method to ease out component registration avoiding code duplication.
+
+@warn Throws runtime error if specified component has already been injected in actor.
+
+#### Parameters
+
+| Name | Type | Description |
+|------|------|-------------|
+| `compname` | `const std::string &` | Component name. |
+
 
 ---
 
@@ -134,7 +179,7 @@ Returns mEngine so that other componets can use it if needed.
 
 Constructs component with pointer to Actor instance.
 
-This is an abstract base class for defining components. All derived components must implement isComponentValid(). This provides a way for instantiated component to mark themselves valid or invalid based on certain conditions. If a derived component is surely a valid component, then isComponentValid() should just return True.
+This is an abstract base class for defining components. All derived components must implement isComponentValid() . This provides a way for instantiated component to mark themselves valid or invalid based on certain conditions. If a derived component is surely a valid component, then isComponentValid() should just return True.
 
 #### Parameters
 
@@ -210,7 +255,7 @@ Constructs sprite component with owning actor, renderer, rectangle size, and col
 
 #### `RipsawEngine::SpriteComponent::~SpriteComponent`
 
-Destructs SpriteComponent.
+Destructs SpriteComponent .
 
 #### `bool RipsawEngine::SpriteComponent::isComponentValid`
 
@@ -379,7 +424,7 @@ Returns screen size in a pair.
 
 #### `void RipsawEngine::Engine::addActor`
 
-Adds actor to mActors.
+Adds actor to mActors .
 
 #### Parameters
 
@@ -389,7 +434,7 @@ Adds actor to mActors.
 
 #### `void RipsawEngine::Engine::removeActor`
 
-Removes actor from mActors.
+Removes actor from mActors .
 
 #### Parameters
 

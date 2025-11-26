@@ -22,7 +22,7 @@ def remove_parameterlists(node):
 def extract_text(node):
     if node is None:
         return ""
-    return "".join(node.itertext()).strip()
+    return " ".join(t.strip() for t in node.itertext()).strip()
 
 
 # ------------------------------------------------------------
@@ -53,8 +53,21 @@ def parse_parameters(member):
                     continue
 
                 pname = extract_text(names.find("parametername"))
-                pdesc = extract_text(desc_node)
 
+                # Prefer para children for a clean parameter description.
+                paras = desc_node.findall("para")
+                if paras:
+                    pdesc = " ".join(extract_text(p) for p in paras)
+                else:
+                    # Remove any simplesect content (e.g. warning/note) before extracting.
+                    for s in desc_node.findall(".//simplesect"):
+                        # clear its children and text to avoid including them
+                        for child in list(s):
+                            s.remove(child)
+                        s.text = ""
+                    pdesc = extract_text(desc_node)
+
+                # assign to matching parameter
                 for existing in params:
                     if existing["name"] == pname:
                         existing["desc"] = pdesc
@@ -86,6 +99,12 @@ def parse_member(member):
             for r in ret_nodes:
                 for child in list(r):
                     r.remove(child)
+        # For the remaining detailed text, remove any simplesect that represent "warning"/"note"
+        for s in detailed_node.findall(".//simplesect"):
+            # keep simplesect structure but clear children/text so they don't pollute main detailed text
+            for child in list(s):
+                s.remove(child)
+            s.text = ""
         detailed = extract_text(detailed_node)
 
     ret_type = extract_text(member.find("type"))
@@ -138,28 +157,19 @@ def parse_class(xml_file):
 # ------------------------------------------------------------
 
 def topo_sort_classes(classes):
-    """
-    Return classes sorted so that each base appears before its derived classes,
-    and all derived classes appear immediately after their base (grouped).
-    Deterministic: children lists are visited in alphabetical order.
-    
-    Input: classes: list of tuples (name, bases, methods, variables)
-    Output: list of the same tuples in desired order
-    """
-    # Map name -> tuple and name -> bases
     name_to_tuple = {c[0]: c for c in classes}
-    bases_map = {c[0]: [b for b in c[1] if b in name_to_tuple] for c in classes}  # only in-set bases
+    bases_map = {c[0]: [b for b in c[1] if b in name_to_tuple] for c in classes}
 
-    # Build children map: base -> set of derived
-    children = {name: set() for name in name_to_tuple}
+    children = {name: [] for name in name_to_tuple}
     for name, base_list in bases_map.items():
         for b in base_list:
-            children[b].add(name)
+            children[b].append(name)
 
-    # Find roots: classes that do not have any in-set bases
+    # Deterministic: sort child lists in the order we want (alphabetical)
+    for k in children:
+        children[k].sort()
+
     roots = [name for name, bs in bases_map.items() if not bs]
-
-    # To be deterministic, sort roots and children lists
     roots.sort()
 
     visited = set()
@@ -169,23 +179,18 @@ def topo_sort_classes(classes):
         if node in visited:
             return
         visited.add(node)
-        # Append node now so parent appears before children
-        order.append(node)
-        # Visit children in sorted order so grouping/order is deterministic
-        for child in sorted(children.get(node, [])):
+        order.append(node)            # append parent before children
+        for child in children.get(node, []):
             dfs(child)
 
-    # Start DFS from each root (sorted)
     for r in roots:
         dfs(r)
 
-    # There may be classes not reachable from any root (cycles or all bases are external).
-    # Ensure we still include them deterministically:
+    # include any remaining (external bases or cycles), deterministically
     for name in sorted(name_to_tuple.keys()):
         if name not in visited:
             dfs(name)
 
-    # Return the full tuples in the computed order
     return [name_to_tuple[n] for n in order]
 
 
@@ -217,12 +222,19 @@ def write_markdown(classes, out_file=None):
                 else:
                     typ = definition.replace(name, "").strip()
 
-                brief = v["brief"] or v["detailed"]
+                brief = v["brief"] or ""
+                detailed_v = v.get("detailed", "") or ""
 
+                # Write brief on the list line
                 if typ:
                     f.write(f"- `{typ}` `{name}`: {brief}\n")
                 else:
                     f.write(f"- `{name}`: {brief}\n")
+
+                # If there is a detailed description for the variable (@details), print it just below
+                if detailed_v and detailed_v != brief:
+                    # small visual separation, make it a normal paragraph indented two spaces
+                    f.write(f"  \n  {detailed_v}\n")
             f.write("\n")
 
         # Methods
@@ -262,7 +274,6 @@ def inject_markdown_into_template(generated_md):
     with open(TEMPLATE_MD, "r") as f:
         content = f.read()
 
-    # Replace AUTODOC block exactly
     new_content = re.sub(
         r"<!-- AUTODOC:BEGIN -->.*?<!-- AUTODOC:END -->",
         f"<!-- AUTODOC:BEGIN -->\n\n{generated_md}\n<!-- AUTODOC:END -->",
@@ -288,10 +299,8 @@ def main():
             cname, bases, methods, variables = parse_class(os.path.join(XML_DIR, file))
             classes.append((cname, bases, methods, variables))
 
-    # NEW: inheritance-aware sorting
     classes = topo_sort_classes(classes)
 
-    # Generate markdown into buffer
     from io import StringIO
     buffer = StringIO()
     write_markdown(classes, out_file=buffer)
@@ -302,3 +311,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
