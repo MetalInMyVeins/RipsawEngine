@@ -44,7 +44,7 @@ bool Engine::init()
   {
     int count{};
     SDL_DisplayID* displays{SDL_GetDisplays(&count)};
-    if (count < 1 and displays == nullptr)
+    if (displays == nullptr or count == 0)
     {
       SDL_Log("[ERROR] Couldn't get display");
       return false;
@@ -65,8 +65,19 @@ bool Engine::init()
   }
   SDL_Log("[INFO] Display Resolution: %d X %d", mScreenWidth, mScreenHeight);
 
-  SDL_CreateWindowAndRenderer(mWname.c_str(), mScreenWidth, mScreenHeight, SDL_WINDOW_FULLSCREEN, &mWindow, &mRenderer);
+  SDL_SetHint(SDL_HINT_RENDER_DRIVER, "vulkan");
+  
+  SDL_CreateWindowAndRenderer(
+      mWname.c_str(),
+      mScreenWidth, mScreenHeight,
+      SDL_WINDOW_FULLSCREEN | SDL_WINDOW_HIGH_PIXEL_DENSITY,
+      &mWindow,
+      &mRenderer
+  );
+  
   SDL_SetRenderVSync(mRenderer, 1);
+  SDL_SetRenderDrawBlendMode(mRenderer, SDL_BLENDMODE_BLEND);
+
   return true;
 }
 
