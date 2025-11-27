@@ -194,6 +194,40 @@ def topo_sort_classes(classes):
     return [name_to_tuple[n] for n in order]
 
 
+# --------------------------
+# Directory Layout
+# --------------------------
+
+def read_gitignore(path=".gitignore"):
+    """Return a list of patterns from .gitignore suitable for tree -I."""
+    if not os.path.exists(path):
+        return []
+
+    patterns = []
+    with open(path, "r") as f:
+        for line in f:
+            line = line.strip()
+            if not line or line.startswith("#"):
+                continue
+            # tree uses patterns like "dir1|dir2|*.o"
+            patterns.append(line)
+    return patterns
+
+def generate_tree_output(ignore_patterns):
+    """Run tree with ignore patterns and return its output as text."""
+    if ignore_patterns:
+        pattern = "|".join(ignore_patterns)
+        cmd = ["tree", "-I", pattern]
+    else:
+        cmd = ["tree"]
+
+    try:
+        output = subprocess.check_output(cmd, text=True)
+    except FileNotFoundError:
+        output = "tree command not found."
+    return output
+
+
 # ------------------------------------------------------------
 # Markdown writer
 # ------------------------------------------------------------
@@ -285,6 +319,47 @@ def inject_markdown_into_template(generated_md):
         f.write(new_content)
 
 
+
+def inject_two_blocks(tree_md, api_md):
+    with open(TEMPLATE_MD, "r") as f:
+        content = f.read()
+
+    # Find both AUTODOC blocks with their spans
+    pattern = r"<!-- AUTODOC:BEGIN -->.*?<!-- AUTODOC:END -->"
+    matches = list(re.finditer(pattern, content, flags=re.DOTALL))
+
+    if len(matches) != 2:
+        raise RuntimeError("Expected exactly two AUTODOC blocks")
+
+    # Inject contents in-place by slicing the string
+    result = []
+    last_end = 0
+
+    # First block → directory layout
+    m0 = matches[0]
+    result.append(content[last_end:m0.start()])
+    result.append(
+        f"<!-- AUTODOC:BEGIN -->\n\n```\n{tree_md}\n```\n\n<!-- AUTODOC:END -->"
+    )
+    last_end = m0.end()
+
+    # Second block → API docs
+    m1 = matches[1]
+    result.append(content[last_end:m1.start()])
+    result.append(
+        f"<!-- AUTODOC:BEGIN -->\n\n{api_md}\n<!-- AUTODOC:END -->"
+    )
+    last_end = m1.end()
+
+    # Tail of the file
+    result.append(content[last_end:])
+
+    # Write final README
+    with open(FINAL_MD, "w") as f:
+        f.write("".join(result))
+
+
+
 # ------------------------------------------------------------
 # Main
 # ------------------------------------------------------------
@@ -304,10 +379,18 @@ def main():
     from io import StringIO
     buffer = StringIO()
     write_markdown(classes, out_file=buffer)
-    generated_md = buffer.getvalue()
+    api_md = buffer.getvalue()
 
-    inject_markdown_into_template(generated_md)
+    # ---------------------------
+    # DIRECTORY TREE GENERATION
+    # ---------------------------
+    ignore_patterns = read_gitignore()
+    tree_output = generate_tree_output(ignore_patterns)
 
+    # ---------------------------
+    # FINAL INJECTION
+    # ---------------------------
+    inject_two_blocks(tree_output, api_md)
 
 if __name__ == "__main__":
     main()

@@ -2,6 +2,59 @@
 
 2D/3D game engine implemented from scratch in C++.
 
+# Directory Layout
+
+<!-- AUTODOC:BEGIN -->
+
+```
+.
+├── CMakeLists.txt
+├── Doxyfile
+├── README.template.md
+├── engine
+│   ├── CMakeLists.txt
+│   ├── include
+│   │   └── RipsawEngine
+│   │       ├── Core
+│   │       │   ├── Core.hxx
+│   │       │   └── Engine.hxx
+│   │       └── Scene
+│   │           ├── Actor.hxx
+│   │           ├── Component.hxx
+│   │           ├── Scene.hxx
+│   │           ├── SpriteComponent.hxx
+│   │           └── TransformComponent.hxx
+│   └── src
+│       ├── Actor.cxx
+│       ├── Component.cxx
+│       ├── Engine.cxx
+│       ├── SpriteComponent.cxx
+│       ├── TransformComponent.cxx
+│       ├── processInput.cxx
+│       ├── renderEngine.cxx
+│       └── updateEngine.cxx
+├── sandbox
+│   ├── CMakeLists.txt
+│   ├── assets
+│   │   ├── back1.png
+│   │   ├── back2.png
+│   │   ├── ship1.png
+│   │   ├── ship2.png
+│   │   ├── ship3.png
+│   │   ├── ship4.png
+│   │   └── stars.png
+│   ├── include
+│   └── src
+│       └── main.cxx
+└── scripts
+    └── gen_docs.py
+
+12 directories, 29 files
+
+```
+
+<!-- AUTODOC:END -->
+
 # API Documentation
 
 <!-- AUTODOC:BEGIN -->
