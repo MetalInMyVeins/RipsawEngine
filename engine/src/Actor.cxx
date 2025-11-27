@@ -1,3 +1,5 @@
+#include <stdexcept>
+
 #include "RipsawEngine/Core/Engine.hxx"
 #include "RipsawEngine/Scene/Actor.hxx"
 #include "RipsawEngine/Scene/Component.hxx"
@@ -50,7 +52,7 @@ void Actor::addComponent(Component* component)
 {
   mComponents.emplace_back(component);
   mTotalComponentSize += sizeof(*component);
-  SDL_Log("[INFO] Cumulative component size: %ld bytes", mTotalComponentSize);
+  SDL_Log("[INFO] Cumulative component size of Actor %p: %ld bytes", (void*)this, mTotalComponentSize);
 }
 
 void Actor::removeComponent(Component* component)

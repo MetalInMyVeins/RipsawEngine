@@ -137,7 +137,7 @@ void Engine::removeSprite(SpriteComponent* sprite)
   {
     mSprites.erase(it);
   }
-  SDL_Log("[INFO] Total sprites: %ld", mSprites.size());
+  SDL_Log("[INFO] Total active sprites: %ld", mSprites.size());
 }
 
 }

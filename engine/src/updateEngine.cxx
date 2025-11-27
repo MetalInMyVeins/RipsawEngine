@@ -6,13 +6,21 @@ namespace RipsawEngine
 
 void Engine::updateEngine()
 {
-  while (!(SDL_GetTicksNS() >= mTicksCount + 16000000));
-  double dt{static_cast<double>((SDL_GetTicksNS() - mTicksCount) / 1000000000.f)};
-  mTicksCount = SDL_GetTicksNS();
+  // Frame locking code would go here.
+  // But the preferred philosophy is to let the loop
+  // run as fast as possible depending on the hardware.
+
+  // Delta-time calculation goes here.
+  Uint64 now{SDL_GetTicksNS()};
+  double dt{ (now - mTicksCount) / 1'000'000'000.0 };
+  mTicksCount = now;
+
   if (dt > 0.05)
     dt = 0.05;
+  
   mtimer += dt;
   ++mFrames;
+  
   if (mtimer >= 1.f)
   {
     SDL_Log("[INFO] Rendering at: %d FPS", mFrames);
