@@ -67,7 +67,7 @@ bool Engine::init()
   }
   SDL_Log("[INFO] Display Resolution: %d X %d", mScreenWidth, mScreenHeight);
 
-  SDL_SetHint(SDL_HINT_RENDER_DRIVER, "vulkan");
+  SDL_SetHint(SDL_HINT_RENDER_DRIVER, mRendererBackend.c_str());
   
   SDL_CreateWindowAndRenderer(
       mWname.c_str(),
@@ -85,6 +85,14 @@ bool Engine::init()
   
   SDL_SetRenderVSync(mRenderer, 1);
   SDL_SetRenderDrawBlendMode(mRenderer, SDL_BLENDMODE_BLEND);
+
+  SDL_PropertiesID props = SDL_GetRendererProperties(mRenderer);
+  std::string driver{SDL_GetStringProperty(
+      props,
+      SDL_PROP_RENDERER_NAME_STRING,
+      "unknown"
+  )};
+  SDL_Log("[INFO] Renderer Backend: %s", driver.c_str());
 
   return true;
 }
@@ -119,6 +127,21 @@ SDL_Renderer* Engine::getRenderer() const
 std::pair<int, int> Engine::getScreenSize() const
 {
   return std::make_pair(mScreenWidth, mScreenHeight);
+}
+
+void Engine::setRendererBackend(const std::string& backend)
+{
+  std::vector<std::string> validBackends{"opengl", "vulkan", "software"};
+  
+  auto it{std::find(validBackends.begin(), validBackends.end(), backend)};
+  if (it == validBackends.end())
+  {
+    mRendererBackend = "opengl";
+  }
+  else
+  {
+    mRendererBackend = backend;
+  }
 }
 
 void Engine::addActor(Actor* actor)

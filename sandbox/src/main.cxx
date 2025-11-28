@@ -32,6 +32,7 @@ int main(int argv, char** argc)
 {
   Sandbox sandbox;
   RipsawEngine::Engine engine{&sandbox};
+  engine.setRendererBackend("opengl");
 
   if (engine.init() == false)
   {

@@ -448,6 +448,7 @@ Sets velocity.
 - `bool` `mIsRunning`: True if game loop is running.
 - `SDL_Window*` `mWindow`: Window pointer.
 - `SDL_Renderer*` `mRenderer`: Renderer pointer.
+- `std::string` `mRendererBackend`: Renderer backend for engine.
 - `double` `mDt`: Delta time.
 - `Uint64` `mTicksCount`: Ticks passed since last frame.
 - `double` `mtimer`: Timer denoting if 1 second has passed.
@@ -509,6 +510,18 @@ Returns mRenderer.
 #### `std::pair< int, int > RipsawEngine::Engine::getScreenSize`
 
 Returns screen size in a pair.
+
+#### `void RipsawEngine::Engine::setRendererBackend`
+
+Sets renderer backend mRendererBackend of engine.
+
+Current valid values are: opengl, vulkan, software.
+
+#### Parameters
+
+| Name | Type | Description |
+|------|------|-------------|
+| `backend` | `const std::string &` | Renderer backend. |
 
 #### `void RipsawEngine::Engine::addActor`
 
