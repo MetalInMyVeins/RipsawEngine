@@ -18,6 +18,10 @@ public:
   /// Constructs actor with pointer to @ref Engine instance.
   /// @param engine Pointer to @ref Engine instance.
   Actor(class Engine* engine);
+  Actor(const Actor&) = delete;
+  Actor& operator=(const Actor&) = delete;
+  Actor(Actor&&) = delete;
+  Actor& operator=(Actor&&) = delete;
   /// Destructs actor.
   virtual ~Actor();
   /// Updates actor.
