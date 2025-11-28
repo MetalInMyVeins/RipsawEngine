@@ -2,6 +2,13 @@
 
 2D/3D game engine implemented from scratch in C++.
 
+# Dependencies
+
+- SDL3
+- GLM
+- GCC/Clang/Any C++ 20 compatible compiler
+- CMake
+
 # Directory Layout
 
 <!-- AUTODOC:BEGIN -->
@@ -10,6 +17,7 @@
 .
 ├── CMakeLists.txt
 ├── Doxyfile
+├── README.md
 ├── README.template.md
 ├── engine
 │   ├── CMakeLists.txt
@@ -49,7 +57,7 @@
 └── scripts
     └── gen_docs.py
 
-12 directories, 29 files
+12 directories, 30 files
 
 ```
 
