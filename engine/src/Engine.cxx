@@ -1,4 +1,5 @@
 #include "RipsawEngine/Core/Engine.hxx"
+#include "RipsawEngine/Core/Game.hxx"
 #include "RipsawEngine/Scene/Actor.hxx"
 #include "RipsawEngine/Scene/SpriteComponent.hxx"
 #include "RipsawEngine/Scene/TransformComponent.hxx"
@@ -6,8 +7,9 @@
 namespace RipsawEngine
 {
 
-Engine::Engine(const std::string& wname, int w, int h)
-  : mWname{wname}
+Engine::Engine(Game* game, const std::string& wname, int w, int h)
+  : mWname{wname},
+    mGame{game}
 {
   if (w != 0 and h != 0)
   {
@@ -75,6 +77,12 @@ bool Engine::init()
       &mRenderer
   );
   
+  if (mWindow == nullptr or mRenderer == nullptr)
+  {
+    SDL_Log("[ERROR] Failed to set up window and/or renderer");
+    return false;
+  }
+  
   SDL_SetRenderVSync(mRenderer, 1);
   SDL_SetRenderDrawBlendMode(mRenderer, SDL_BLENDMODE_BLEND);
 
@@ -83,11 +91,16 @@ bool Engine::init()
 
 void Engine::run()
 {
+  mGame->setEngine(this);
+  mGame->initGame();
+
   while (mIsRunning)
   {
     this->processInput();
     this->updateEngine();
+    mGame->updateGame(mDt);
     this->renderEngine();
+    mGame->renderGame();
   }
 }
 

@@ -17,10 +17,11 @@ class Engine
 {
 public:
   /// @brief Constructs engine with configurable window name and size.
+  /// @param game pointer to @ref Game instance
   /// @param wname Custom window name.
   /// @param w Custom window width.
   /// @param h Custom window height.
-  Engine(const std::string& wname = "RipsawEngine", int w = 0, int h = 0);
+  Engine(class Game* game, const std::string& wname = "RipsawEngine", int w = 0, int h = 0);
   /// Destructs engine.
   ~Engine();
   Engine(const Engine&) = delete;
@@ -62,6 +63,8 @@ private:
   SDL_Window* mWindow{nullptr};
   /// Renderer pointer.
   SDL_Renderer* mRenderer{nullptr};
+  /// Delta time.
+  double mDt{};
   /// Ticks passed since last frame.
   Uint64 mTicksCount{};
   /// Timer denoting if 1 second has passed.
@@ -85,6 +88,8 @@ public:
   void removeSprite(class SpriteComponent* sc);
 
 private:
+  /// Extendible Game class.
+  class Game* mGame{nullptr};
   /// List of all actors.
   std::vector<class Actor*> mActors{};
   /// List of all sprites to be drawn.

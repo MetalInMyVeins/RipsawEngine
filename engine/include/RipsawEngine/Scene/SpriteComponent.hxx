@@ -16,7 +16,6 @@ class SpriteComponent : public RipsawEngine::Component
 {
 public:
   /// Constructs sprite component with owning actor, renderer, and image file.
-  /// @brief Constructs transform component with owning actor, position, and velocity.
   /// @param actor Actor owning the component.
   /// @param renderer Renderer.
   /// @param imgfile Path to image file.

@@ -25,7 +25,8 @@
 │   │   └── RipsawEngine
 │   │       ├── Core
 │   │       │   ├── Core.hxx
-│   │       │   └── Engine.hxx
+│   │       │   ├── Engine.hxx
+│   │       │   └── Game.hxx
 │   │       └── Scene
 │   │           ├── Actor.hxx
 │   │           ├── Component.hxx
@@ -36,6 +37,7 @@
 │       ├── Actor.cxx
 │       ├── Component.cxx
 │       ├── Engine.cxx
+│       ├── Game.cxx
 │       ├── SpriteComponent.cxx
 │       ├── TransformComponent.cxx
 │       ├── processInput.cxx
@@ -57,7 +59,7 @@
 └── scripts
     └── gen_docs.py
 
-12 directories, 30 files
+12 directories, 32 files
 
 ```
 
@@ -307,8 +309,6 @@ Overridable method that says if a specific component is valid.
 
 Constructs sprite component with owning actor, renderer, and image file.
 
-Constructs transform component with owning actor, position, and velocity.
-
 #### Parameters
 
 | Name | Type | Description |
@@ -448,9 +448,11 @@ Sets velocity.
 - `bool` `mIsRunning`: True if game loop is running.
 - `SDL_Window*` `mWindow`: Window pointer.
 - `SDL_Renderer*` `mRenderer`: Renderer pointer.
+- `double` `mDt`: Delta time.
 - `Uint64` `mTicksCount`: Ticks passed since last frame.
 - `double` `mtimer`: Timer denoting if 1 second has passed.
 - `int` `mFrames`: Frames per second.
+- `class Game*` `mGame`: Extendible Game class.
 - `std::vector<class Actor*>` `mActors`: List of all actors.
 - `std::vector<class SpriteComponent*>` `mSprites`: List of all sprites to be drawn.
 - `size_t` `mTotalActorsSize`: Total size of all registered actors.
@@ -465,6 +467,7 @@ Constructs engine with configurable window name and size.
 
 | Name | Type | Description |
 |------|------|-------------|
+| `game` | `class Game *` | pointer to Game instance |
 | `wname` | `const std::string &` | Custom window name. |
 | `w` | `int` | Custom window width. |
 | `h` | `int` | Custom window height. |
@@ -560,6 +563,51 @@ Updates the game world.
 #### `void RipsawEngine::Engine::renderEngine`
 
 Renders game output on screen.
+
+
+---
+
+## RipsawEngine::Game
+
+### Member Variables
+
+- `class Engine*` `mEngine`: Pointer to main Engine instance.
+
+### Member Functions
+
+#### `RipsawEngine::Game::Game`
+
+Default constructor for Game .
+
+The philosophy as of now for the engine is, engine code and game code must have a clear line between them. Engine would act as an operating system for game, maintaining all low level subsystems and calculations. Engine would have no idea about what a game is. It would just run the main loop which would update and render all necessary systems. As the engine's update and render code would be locked down, it would be impossible to design and inject custom update code to entities. This class acts as a solution to that. It exposes some virtual API which can be extended in sandbox code to inject custom entity behavior in the engine. Game is instantiated in sandbox, then Engine receives a pointer to Game instance. Engine internally calls Game 's virtual APIs in appropriate places which enables integration of custom entity behavior without touching engine code. Game also needs access to Engine instance which it receives in Engine 's internal implementation via the setEngine() method.
+
+#### `void RipsawEngine::Game::setEngine`
+
+Sets mEngine with pointer to Engine instance.
+
+#### Parameters
+
+| Name | Type | Description |
+|------|------|-------------|
+| `engine` | `class Engine *` | Pointer to Engine instance. |
+
+#### `void RipsawEngine::Game::initGame`
+
+Custom initialization logic for Game .
+
+#### `void RipsawEngine::Game::updateGame`
+
+Custom update logic for Game .
+
+#### Parameters
+
+| Name | Type | Description |
+|------|------|-------------|
+| `dt` | `double` |  |
+
+#### `void RipsawEngine::Game::renderGame`
+
+Custom render logic for Game .
 
 
 ---
