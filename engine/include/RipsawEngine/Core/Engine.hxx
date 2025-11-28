@@ -23,6 +23,10 @@ public:
   Engine(const std::string& wname = "RipsawEngine", int w = 0, int h = 0);
   /// Destructs engine.
   ~Engine();
+  Engine(const Engine&) = delete;
+  Engine& operator=(const Engine&) = delete;
+  Engine(Engine&&) = delete;
+  Engine& operator=(Engine&&) = delete;
   /// @brief Initializes video, audio, window, renderer etc.
   /// @return True if successful, False otherwise.
   bool init();

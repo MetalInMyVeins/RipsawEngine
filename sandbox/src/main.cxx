@@ -11,12 +11,12 @@ int main(int argv, char** argc)
 
   // Engine testing code goes here.
   RipsawEngine::Actor* actor{new RipsawEngine::Actor{&engine}};
-  RipsawEngine::TransformComponent* tc{new RipsawEngine::TransformComponent(actor, {engine.getScreenSize().first / 2.f, engine.getScreenSize().second / 2.f}, {130, 30})};
-  RipsawEngine::SpriteComponent* sc{new RipsawEngine::SpriteComponent(actor, engine.getRenderer(), {40, 40}, {255, 0, 0, 255})};
-
+  RipsawEngine::TransformComponent* tc{new RipsawEngine::TransformComponent(actor, {300, 300}, {-100, 0})};
+  RipsawEngine::SpriteComponent* sc{new RipsawEngine::SpriteComponent(actor, engine.getRenderer(), {30, 30}, {255, 0, 0, 255})};
+  
   RipsawEngine::Actor* actor2{new RipsawEngine::Actor{&engine}};
-  RipsawEngine::TransformComponent* tc2{new RipsawEngine::TransformComponent(actor2, {engine.getScreenSize().first / 2.f, engine.getScreenSize().second / 2.f}, {-130, -30})};
-  RipsawEngine::SpriteComponent* sc2{new RipsawEngine::SpriteComponent(actor2, engine.getRenderer(), {40, 40}, {255, 0, 255, 255})};
+  RipsawEngine::TransformComponent* tc2{new RipsawEngine::TransformComponent(actor2, {1000, 300}, {-100, 0})};
+  RipsawEngine::SpriteComponent* sc2{new RipsawEngine::SpriteComponent(actor2, engine.getRenderer(), {30, 30}, {0, 0, 255, 255})};
 
   engine.run();
   engine.shutdown();

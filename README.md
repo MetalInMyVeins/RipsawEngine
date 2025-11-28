@@ -91,6 +91,14 @@ Constructs actor with pointer to Engine instance.
 |------|------|-------------|
 | `engine` | `class Engine *` | Pointer to Engine instance. |
 
+#### `RipsawEngine::Actor::Actor`
+
+#### `Actor & RipsawEngine::Actor::operator=`
+
+#### `RipsawEngine::Actor::Actor`
+
+#### `Actor & RipsawEngine::Actor::operator=`
+
 #### `RipsawEngine::Actor::~Actor`
 
 Destructs actor.
@@ -247,6 +255,14 @@ This is an abstract base class for defining components. All derived components m
 | Name | Type | Description |
 |------|------|-------------|
 | `actor` | `class Actor *` | Actor owning the component. |
+
+#### `RipsawEngine::Component::Component`
+
+#### `Component & RipsawEngine::Component::operator=`
+
+#### `RipsawEngine::Component::Component`
+
+#### `Component & RipsawEngine::Component::operator=`
 
 #### `RipsawEngine::Component::~Component`
 
@@ -456,6 +472,14 @@ Constructs engine with configurable window name and size.
 #### `RipsawEngine::Engine::~Engine`
 
 Destructs engine.
+
+#### `RipsawEngine::Engine::Engine`
+
+#### `Engine & RipsawEngine::Engine::operator=`
+
+#### `RipsawEngine::Engine::Engine`
+
+#### `Engine & RipsawEngine::Engine::operator=`
 
 #### `bool RipsawEngine::Engine::init`
 
