@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+
+# This script is AI generated. It has no relation to the engine
+# or game code. It just works as a documentation parser to
+# automatically inject them in README.md which saves a lot of
+# time.
+
 import os
 import xml.etree.ElementTree as ET
 import re
