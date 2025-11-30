@@ -46,20 +46,16 @@
 ├── sandbox
 │   ├── CMakeLists.txt
 │   ├── assets
-│   │   ├── back1.png
-│   │   ├── back2.png
-│   │   ├── ship1.png
-│   │   ├── ship2.png
-│   │   ├── ship3.png
-│   │   ├── ship4.png
-│   │   └── stars.png
+│   │   ├── bglayer1.png
+│   │   ├── bglayer2.png
+│   │   └── ship.png
 │   ├── include
 │   └── src
 │       └── main.cxx
 └── scripts
     └── gen_docs.py
 
-12 directories, 32 files
+12 directories, 28 files
 
 ```
 
