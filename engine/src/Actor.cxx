@@ -29,6 +29,7 @@ Actor::~Actor()
   {
     mTransformComponent = nullptr;
   }
+  mComponents.clear();
 
   mEngine->removeActor(this);
   SDL_Log("[INFO] Actor destroyed");
