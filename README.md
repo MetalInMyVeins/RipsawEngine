@@ -667,7 +667,7 @@ Custom update logic for Game .
 
 | Name | Type | Description |
 |------|------|-------------|
-| `dt` | `double` |  |
+| `dt` | `double` | Delta-time. |
 
 #### `void RipsawEngine::Game::renderGame`
 
