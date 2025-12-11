@@ -15,6 +15,7 @@ public:
   /// Custom initialization logic for Game.
   virtual void initGame();
   /// Custom update logic for Game.
+  /// @param dt Delta-time.
   virtual void updateGame(double dt);
   /// Custom render logic for Game.
   virtual void renderGame();
