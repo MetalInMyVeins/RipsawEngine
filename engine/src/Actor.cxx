@@ -4,6 +4,7 @@
 #include "RipsawEngine/Scene/Actor.hxx"
 #include "RipsawEngine/Scene/Component.hxx"
 #include "RipsawEngine/Scene/TransformComponent.hxx"
+#include "RipsawEngine/Scene/SpriteComponent.hxx"
 
 namespace RipsawEngine
 {
@@ -18,20 +19,12 @@ Actor::Actor(Engine* engine)
 
 Actor::~Actor()
 {
-  for (const auto& component : mComponents)
+  while (!mComponents.empty())
   {
-    if (component != nullptr)
-    {
-      delete component;
-    }
+    delete mComponents.back();
+    mComponents.back() = nullptr;
+    mComponents.pop_back();
   }
-  if (mTransformComponent != nullptr)
-  {
-    mTransformComponent = nullptr;
-  }
-  mComponents.clear();
-
-  mEngine->removeActor(this);
   SDL_Log("[INFO] Actor destroyed");
   SDL_Log("\tAddress: %p", (void*)this);
 }
@@ -61,8 +54,10 @@ void Actor::removeComponent(Component* component)
   auto it{std::find(mComponents.begin(), mComponents.end(), component)};
   if (it != mComponents.end())
   {
+    delete *it;
     mComponents.erase(it);
   }
+  component = nullptr;
 }
 
 TransformComponent* Actor::getTransformComponent() const
@@ -146,6 +141,21 @@ void Actor::helperRegisterComponent(const std::string& compname)
     throw std::runtime_error{"[ABORT] Actor already owns " + compname};
   }
   this->registerComponent(compname);
+}
+
+void Actor::createTransformComponent(const glm::vec2& pos, const glm::vec2& vel)
+{
+  Component* tempComponent{new TransformComponent(this, pos, vel)};
+}
+
+void Actor::createSpriteComponent(const std::string& imgfile)
+{
+  Component* tempComponent{new SpriteComponent{this, mEngine->getRenderer(), imgfile}};
+}
+
+void Actor::createSpriteComponent(const std::pair<float, float>& size, const std::tuple<unsigned char, unsigned char, unsigned char, unsigned char>& color)
+{
+  Component* tempComponent{new SpriteComponent(this, mEngine->getRenderer(), size, color)};
 }
 
 }

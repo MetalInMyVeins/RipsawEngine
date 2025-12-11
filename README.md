@@ -49,13 +49,12 @@
 │   │   ├── bglayer1.png
 │   │   ├── bglayer2.png
 │   │   └── ship.png
-│   ├── include
 │   └── src
 │       └── main.cxx
 └── scripts
     └── gen_docs.py
 
-12 directories, 28 files
+11 directories, 28 files
 
 ```
 
@@ -134,6 +133,8 @@ Adds component to actor storing in mComponents .
 #### `void RipsawEngine::Actor::removeComponent`
 
 Removes component from actor.
+
+As of now, this function is not needed because actor would automatically destroy all owned components upon destruction.
 
 #### Parameters
 
@@ -230,6 +231,38 @@ Helper method to ease out component registration avoiding code duplication.
 | Name | Type | Description |
 |------|------|-------------|
 | `compname` | `const std::string &` | Component name. |
+
+#### `void RipsawEngine::Actor::createTransformComponent`
+
+Dynamically allocates TransformComponent .
+
+#### Parameters
+
+| Name | Type | Description |
+|------|------|-------------|
+| `pos` | `const glm::vec2 &` | Position of actor. |
+| `vel` | `const glm::vec2 &` | Velocity of actor. |
+
+#### `void RipsawEngine::Actor::createSpriteComponent`
+
+Dynamically allocates SpriteComponent .
+
+#### Parameters
+
+| Name | Type | Description |
+|------|------|-------------|
+| `imgfile` | `const std::string &` | Image file for sprite. |
+
+#### `void RipsawEngine::Actor::createSpriteComponent`
+
+Dynamically allocates SpriteComponent .
+
+#### Parameters
+
+| Name | Type | Description |
+|------|------|-------------|
+| `size` | `const std::pair< float, float > &` | Size of sprite. |
+| `color` | `const std::tuple< unsigned char, unsigned char, unsigned char, unsigned char > &` | Color of sprite. |
 
 
 ---
@@ -518,6 +551,28 @@ Current valid values are: opengl, vulkan, software.
 | Name | Type | Description |
 |------|------|-------------|
 | `backend` | `const std::string &` | Renderer backend. |
+
+#### `Actor * RipsawEngine::Engine::createActor`
+
+Dynamically allocates actor.
+
+This is a high level virtual member function to be called from sandbox to create actor. It returns pointer to the allocated actor for custom manipulation. The returned pointer should never be deleted explicitly as Engine handles the ownership. An actor should only be detroyed using destroyActor() . After destroyActor() is called on an actor, trying to dereference that actor would result in crash as the actor is nullified.
+
+#### Return
+
+| Type | Description |
+|--------|-------------|
+| class Actor * | Returns pointer to the allocated actor. |
+
+#### `void RipsawEngine::Engine::destroyActor`
+
+Destroys specified actor by deleting and removing it from mActors and nullifying it.
+
+#### Parameters
+
+| Name | Type | Description |
+|------|------|-------------|
+| `actor` | `class Actor *` | Actor to be destroyed. |
 
 #### `void RipsawEngine::Engine::addActor`
 

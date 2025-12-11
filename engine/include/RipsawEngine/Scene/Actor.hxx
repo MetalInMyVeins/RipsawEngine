@@ -34,6 +34,7 @@ public:
   /// @param component Component to be added to actor.
   void addComponent(class Component* component);
   /// Removes component from actor.
+  /// @details As of now, this function is not needed because actor would automatically destroy all owned components upon destruction.
   /// @param component Component to be removed from actor.
   void removeComponent(class Component* component);
   /// Returns @ref mTransformComponent.
@@ -67,6 +68,19 @@ public:
   /// @warn Throws runtime error if specified component has already been injected in actor.
   /// @param compname Component name.
   void helperRegisterComponent(const std::string& compname);
+
+public:
+  /// Dynamically allocates TransformComponent.
+  /// @param pos Position of actor.
+  /// @param vel Velocity of actor.
+  void createTransformComponent(const glm::vec2& pos, const glm::vec2& vel);
+  /// Dynamically allocates SpriteComponent.
+  /// @param imgfile Image file for sprite.
+  void createSpriteComponent(const std::string& imgfile);
+  /// Dynamically allocates SpriteComponent.
+  /// @param size Size of sprite.
+  /// @param color Color of sprite.
+  void createSpriteComponent(const std::pair<float, float>& size, const std::tuple<unsigned char, unsigned char, unsigned char, unsigned char>& color);
 
 private:
   /// Main engine instance.

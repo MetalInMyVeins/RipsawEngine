@@ -21,10 +21,10 @@ Engine::Engine(Game* game, const std::string& wname, int w, int h)
 
 Engine::~Engine()
 {
-  for (const auto& actor : mActors)
+  while (!mActors.empty())
   {
-    if (actor != nullptr)
-      delete actor;
+    delete mActors.back();
+    mActors.pop_back();
   }
 }
 
@@ -94,12 +94,21 @@ bool Engine::init()
   )};
   SDL_Log("[INFO] Renderer Backend: %s", driver.c_str());
 
+  if (mGame != nullptr)
+  {
+    mGame->setEngine(this);
+  }
+  else
+  {
+    SDL_Log("[ERROR] Failed to create game object");
+    return false;
+  }
+
   return true;
 }
 
 void Engine::run()
 {
-  mGame->setEngine(this);
   mGame->initGame();
 
   while (mIsRunning)
@@ -144,6 +153,17 @@ void Engine::setRendererBackend(const std::string& backend)
   }
 }
 
+Actor* Engine::createActor()
+{
+  Actor* tempActor{new Actor{this}};
+  return tempActor;
+}
+
+void Engine::destroyActor(Actor* actor)
+{
+  this->removeActor(actor);
+}
+
 void Engine::addActor(Actor* actor)
 {
   mActors.emplace_back(actor);
@@ -156,8 +176,10 @@ void Engine::removeActor(Actor* actor)
   auto it{std::find(mActors.begin(), mActors.end(), actor)};
   if (it != mActors.end())
   {
+    delete *it;
     mActors.erase(it);
   }
+  actor = nullptr;
 }
 
 void Engine::addSprite(class SpriteComponent* sc)
