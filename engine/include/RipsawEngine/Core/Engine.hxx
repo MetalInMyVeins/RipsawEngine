@@ -85,7 +85,7 @@ public:
   virtual class Actor* createActor();
   /// Destroys specified actor by deleting and removing it from mActors and nullifying it.
   /// @param actor Actor to be destroyed.
-  void destroyActor(class Actor* actor);
+  void destroyActor(class Actor*& actor);
   /// Adds actor to @ref mActors.
   /// @param actor Pointer to @ref Actor instance.
   void addActor(class Actor* actor);

@@ -159,7 +159,7 @@ Actor* Engine::createActor()
   return tempActor;
 }
 
-void Engine::destroyActor(Actor* actor)
+void Engine::destroyActor(Actor*& actor)
 {
   this->removeActor(actor);
   actor = nullptr;
