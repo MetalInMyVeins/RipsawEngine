@@ -21,7 +21,6 @@ Actor::~Actor()
   while (!mComponents.empty())
   {
     delete mComponents.back();
-    mComponents.back() = nullptr;
     mComponents.pop_back();
   }
   SDL_Log("[INFO] Actor destroyed: %p", (void*)this);
