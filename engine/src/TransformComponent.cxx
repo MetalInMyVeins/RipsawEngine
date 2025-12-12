@@ -17,8 +17,7 @@ TransformComponent::TransformComponent(Actor* actor, const glm::vec2& pos, const
 
   if (this->isComponentValid())
   {
-    SDL_Log("[INFO] TransformComponent created: %p", (void*)this);
-    SDL_Log("\tAdded to Actor: %p", (void*)mOwner);
+    SDL_Log("[INFO] Component added: TransformComponent: %p to Actor: %p", (void*)this, (void*)mOwner);
   }
   else
   {

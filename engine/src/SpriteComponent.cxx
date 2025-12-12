@@ -27,8 +27,7 @@ SpriteComponent::SpriteComponent(Actor* actor, SDL_Renderer* renderer, const std
 
   if (this->isComponentValid())
   {
-    SDL_Log("[INFO] SpriteComponent created: %p", (void*)this);
-    SDL_Log("\tAdded to Actor: %p", (void*)mOwner);
+    SDL_Log("[INFO] Component added: SpriteComponent: %p to Actor: %p", (void*)this, (void*)mOwner);
     SDL_Log("\tTexture size: %.f X %.f", mTexSize.first, mTexSize.second);
     mOwner->getEngine()->addSprite(this);
   }
@@ -60,8 +59,7 @@ SpriteComponent::SpriteComponent(class Actor* actor, SDL_Renderer* renderer, con
 
   if (this->isComponentValid())
   {
-    SDL_Log("[INFO] SpriteComponent created: %p", (void*)this);
-    SDL_Log("\tAdded to Actor: %p", (void*)mOwner);
+    SDL_Log("[INFO] Component added: SpriteComponent: %p to Actor: %p", (void*)this, (void*)mOwner);
     SDL_Log("\tTexture size: %.f X %.f", mTexSize.first, mTexSize.second);
     mOwner->getEngine()->addSprite(this);
   }

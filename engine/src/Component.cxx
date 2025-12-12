@@ -12,8 +12,7 @@ Component::Component(Actor* actor)
 
 Component::~Component()
 {
-  SDL_Log("[INFO] Removed component from Actor: %p", (void*)mOwner);
-  SDL_Log("\tAddress: %p", (void*)this);
+  SDL_Log("[INFO] Removed Component: %p from Actor: %p", (void*)this, (void*)mOwner);
 }
 
 void Component::update(double dt)

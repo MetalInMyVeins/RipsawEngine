@@ -100,7 +100,7 @@ bool Engine::init()
   }
   else
   {
-    SDL_Log("[ERROR] Failed to create game object");
+    SDL_Log("[ERROR] Failed to create Game object");
     return false;
   }
 
@@ -162,6 +162,7 @@ Actor* Engine::createActor()
 void Engine::destroyActor(Actor* actor)
 {
   this->removeActor(actor);
+  actor = nullptr;
 }
 
 void Engine::addActor(Actor* actor)
@@ -185,7 +186,7 @@ void Engine::removeActor(Actor* actor)
 void Engine::addSprite(class SpriteComponent* sc)
 {
   mSprites.emplace_back(sc);
-  SDL_Log("[INFO] Total active sprites: %ld", mSprites.size());
+  SDL_Log("[INFO] Total active sprites++: %ld", mSprites.size());
 }
 
 void Engine::removeSprite(SpriteComponent* sprite)
@@ -195,7 +196,7 @@ void Engine::removeSprite(SpriteComponent* sprite)
   {
     mSprites.erase(it);
   }
-  SDL_Log("[INFO] Total active sprites: %ld", mSprites.size());
+  SDL_Log("[INFO] Total active sprites--: %ld", mSprites.size());
 }
 
 }

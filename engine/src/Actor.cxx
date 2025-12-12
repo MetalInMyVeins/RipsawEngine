@@ -12,8 +12,7 @@ namespace RipsawEngine
 Actor::Actor(Engine* engine)
   : mEngine{engine}
 {
-  SDL_Log("[INFO] Actor created: %p", (void*)this);
-  SDL_Log("\tSize: %ld bytes", sizeof(*this));
+  SDL_Log("[INFO] Actor (%ld bytes) created: %p", sizeof(*this), (void*)this);
   mEngine->addActor(this);
 }
 
@@ -25,8 +24,7 @@ Actor::~Actor()
     mComponents.back() = nullptr;
     mComponents.pop_back();
   }
-  SDL_Log("[INFO] Actor destroyed");
-  SDL_Log("\tAddress: %p", (void*)this);
+  SDL_Log("[INFO] Actor destroyed %p", (void*)this);
 }
 
 void Actor::update(double dt)
@@ -45,19 +43,6 @@ void Actor::updateComponents(double dt)
 void Actor::addComponent(Component* component)
 {
   mComponents.emplace_back(component);
-  mTotalComponentSize += sizeof(*component);
-  SDL_Log("[INFO] Cumulative component size of Actor %p: %ld bytes", (void*)this, mTotalComponentSize);
-}
-
-void Actor::removeComponent(Component* component)
-{
-  auto it{std::find(mComponents.begin(), mComponents.end(), component)};
-  if (it != mComponents.end())
-  {
-    delete *it;
-    mComponents.erase(it);
-  }
-  component = nullptr;
 }
 
 TransformComponent* Actor::getTransformComponent() const
@@ -74,7 +59,7 @@ glm::vec2 Actor::getPosition() const
 {
   if (mTransformComponent == nullptr)
   {
-    SDL_Log("[ERROR] TransformComponent not available for Actor: %p", (void*)this);
+    SDL_Log("[ERROR] TransformComponent unavailable for Actor: %p", (void*)this);
     return {};
   }
   return mTransformComponent->getPosition();
@@ -84,7 +69,7 @@ void Actor::setPosition(const glm::vec2& pos)
 {
   if (mTransformComponent == nullptr)
   {
-    SDL_Log("[ERROR] TransformComponent not available for Actor: %p", (void*)this);
+    SDL_Log("[ERROR] TransformComponent unavailable for Actor: %p", (void*)this);
     return;
   }
   mTransformComponent->setPosition(pos);
@@ -94,7 +79,7 @@ glm::vec2 Actor::getVelocity() const
 {
   if (mTransformComponent == nullptr)
   {
-    SDL_Log("[ERROR] TransformComponent not available for Actor: %p", (void*)this);
+    SDL_Log("[ERROR] TransformComponent unavailable for Actor: %p", (void*)this);
     return {};
   }
   return mTransformComponent->getVelocity();
@@ -104,10 +89,10 @@ void Actor::setVelocity(const glm::vec2& vel)
 {
   if (mTransformComponent == nullptr)
   {
-    SDL_Log("[ERROR] TransformComponent not available for Actor: %p", (void*)this);
+    SDL_Log("[ERROR] TransformComponent unavailable for Actor: %p", (void*)this);
     return;
   }
-  mTransformComponent->setPosition(vel);
+  mTransformComponent->setVelocity(vel);
 }
 
 Engine* Actor::getEngine() const

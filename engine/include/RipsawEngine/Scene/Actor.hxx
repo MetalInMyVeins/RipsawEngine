@@ -89,8 +89,6 @@ private:
   std::vector<class Component*> mComponents{};
   /// @ref TransformComponent tied to the actor (if any).
   class TransformComponent* mTransformComponent{nullptr};
-  /// Total size of all components held by actor.
-  size_t mTotalComponentSize{};
   /// Map of all possible components that actor can hold and their inclusion status in the actor.
   /// @details Components are capabilities of an actor. The philosophy as of now is, no actor should be able to hold the same type of component more than once. To ensure that, there should be a way in actor to verify in runtime if the same type of component is being injected more than once in the same actor. This map holds a list of {key, value} pairs where the keys are possible components and the values default to false which means that the associated component has not yet been injected in the actor.
   std::unordered_map<std::string, bool> mComponentMap
