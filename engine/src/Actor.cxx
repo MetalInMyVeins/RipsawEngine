@@ -24,7 +24,7 @@ Actor::~Actor()
     mComponents.back() = nullptr;
     mComponents.pop_back();
   }
-  SDL_Log("[INFO] Actor destroyed %p", (void*)this);
+  SDL_Log("[INFO] Actor destroyed: %p", (void*)this);
 }
 
 void Actor::update(double dt)
