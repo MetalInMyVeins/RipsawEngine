@@ -27,6 +27,9 @@
 │   │       │   ├── Core.hxx
 │   │       │   ├── Engine.hxx
 │   │       │   └── Game.hxx
+│   │       ├── Managers
+│   │       │   ├── BGManager.hxx
+│   │       │   └── Managers.hxx
 │   │       └── Scene
 │   │           ├── Actor.hxx
 │   │           ├── Component.hxx
@@ -35,6 +38,7 @@
 │   │           └── TransformComponent.hxx
 │   └── src
 │       ├── Actor.cxx
+│       ├── BGManager.cxx
 │       ├── Component.cxx
 │       ├── Engine.cxx
 │       ├── Game.cxx
@@ -54,7 +58,7 @@
 └── scripts
     └── gen_docs.py
 
-11 directories, 28 files
+12 directories, 31 files
 
 ```
 
@@ -71,7 +75,7 @@
 - `class Engine*` `mEngine`: Main engine instance.
 - `std::vector<class Component*>` `mComponents`: Vector of all components tied to the actor.
 - `class TransformComponent*` `mTransformComponent`: TransformComponent tied to the actor (if any).
-- `size_t` `mTotalComponentSize`: Total size of all components held by actor.
+- `class SpriteComponent*` `mSpriteComponent`: SpriteComponent tied to the actor (if any).
 - `std::unordered_map<std::string, bool>` `mComponentMap`: Map of all possible components that actor can hold and their inclusion status in the actor.
   
   Components are capabilities of an actor. The philosophy as of now is, no actor should be able to hold the same type of component more than once. To ensure that, there should be a way in actor to verify in runtime if the same type of component is being injected more than once in the same actor. This map holds a list of {key, value} pairs where the keys are possible components and the values default to false which means that the associated component has not yet been injected in the actor.
@@ -146,7 +150,7 @@ As of now, this function is not needed because actor would automatically destroy
 
 Returns mTransformComponent .
 
-This method works as a way for other components to get access to TransformComponent .
+This method works as a way for other components or entities to get access to TransformComponent .
 
 #### `void RipsawEngine::Actor::setTransformComponent`
 
@@ -157,6 +161,22 @@ Sets mTransformComponent .
 | Name | Type | Description |
 |------|------|-------------|
 | `tc` | `class TransformComponent *` | Transform component. |
+
+#### `SpriteComponent * RipsawEngine::Actor::getSpriteComponent`
+
+Returns mSpriteComponent .
+
+This method works as a way for other components or entities to get access to SpriteComponent .
+
+#### `void RipsawEngine::Actor::setSpriteComponent`
+
+Sets mSpriteComponent.
+
+#### Parameters
+
+| Name | Type | Description |
+|------|------|-------------|
+| `sc` | `class SpriteComponent *` | Sprite component. |
 
 #### `glm::vec2 RipsawEngine::Actor::getPosition`
 
@@ -267,6 +287,38 @@ Dynamically allocates SpriteComponent .
 
 ---
 
+## RipsawEngine::BGManager
+
+### Member Variables
+
+- `class Engine*` `mEngine`: Pointer to Engine instance.
+- `std::vector<std::string>` `mLayers`: Layers of background images.
+- `std::vector<glm::vec2>` `mLayerSpeeds`: Speed of background layers.
+- `std::vector<std::pair<class Actor*, class Actor*> >` `mActorPairs`: Vector of Actor pairs.
+
+### Member Functions
+
+#### `RipsawEngine::BGManager::BGManager`
+
+Constructs BGManager with Engine*, layers of background images, and the speed of each layers.
+
+This is a manager class. The purpose of manager classes are to create and manage already-programmed entities to complete a certain task. This background manager class implements parallax scrolling background with layers of provided images and their speeds. The philosophy is, any one-way scrolling 2D infinite background can be implemented with at least two actors. There would be two actors per layer. Each actor of a layer would contain the same layer sprite and would be placed after each other. When an actor goes out of screen bound, they would be repositioned after the next actor creating the illusion of infinite scrolling. The procedure is applied to all layers. And each layer would move at the speed of their respective speed.
+
+#### Parameters
+
+| Name | Type | Description |
+|------|------|-------------|
+| `engine` | `class Engine *` | Pointer to Engine instance. |
+| `layers` | `const std::vector< std::string > &` | Layers of background images. |
+| `layerSpeeds` | `const std::vector< glm::vec2 > &` | Vector of layer speed. |
+
+#### `void RipsawEngine::BGManager::update`
+
+Implements custom update logic for manager.
+
+
+---
+
 ## RipsawEngine::Component
 
 ### Member Variables
@@ -330,6 +382,7 @@ Overridable method that says if a specific component is valid.
 - `std::string` `mImgFile`: Image file path.
 - `SDL_Texture*` `mTexture`: Main texture.
 - `std::pair<float, float>` `mTexSize`: Texture size.
+- `std::pair<float, float>` `mTexSizeDynamic`: Modified texture dimension after scale change.
 - `float` `mScale`: Texture scale.
 
 ### Member Functions
@@ -371,7 +424,7 @@ Checks if SpriteComponent is valid.
 
 Returns mTexture.
 
-#### `std::pair< int, int > RipsawEngine::SpriteComponent::getTexSize`
+#### `std::pair< float, float > RipsawEngine::SpriteComponent::getTexSize`
 
 Returns texture size.
 
@@ -392,6 +445,10 @@ Sets scale of texture.
 | Name | Type | Description |
 |------|------|-------------|
 | `scale` | `float` | Texture scale. |
+
+#### `void RipsawEngine::SpriteComponent::fitByAspectRatio`
+
+Fits sprite covering entire screen preserving aspect ratio.
 
 
 ---
@@ -556,7 +613,7 @@ Current valid values are: opengl, vulkan, software.
 
 Dynamically allocates actor.
 
-This is a high level virtual member function to be called from sandbox to create actor. It returns pointer to the allocated actor for custom manipulation. The returned pointer should never be deleted explicitly as Engine handles the ownership. An actor should only be detroyed using destroyActor() . After destroyActor() is called on an actor, trying to dereference that actor would result in crash as the actor is nullified.
+This is a high level virtual member function to be called from sandbox to create actor. It returns pointer to the allocated actor for custom manipulation. The returned pointer should never be deleted explicitly as Engine handles the ownership. An actor should only be detroyed using destroyActor() when needed. After destroyActor() is called on an actor, trying to dereference that actor would result in crash as the actor is nullified.
 
 #### Return
 
@@ -572,7 +629,7 @@ Destroys specified actor by deleting and removing it from mActors and nullifying
 
 | Name | Type | Description |
 |------|------|-------------|
-| `actor` | `class Actor *` | Actor to be destroyed. |
+| `actor` | `class Actor *&` | Actor to be destroyed. |
 
 #### `void RipsawEngine::Engine::addActor`
 
