@@ -38,11 +38,17 @@ public:
   /// @param component Component to be removed from actor.
   void removeComponent(class Component* component);
   /// Returns @ref mTransformComponent.
-  /// @details This method works as a way for other components to get access to @ref TransformComponent.
+  /// @details This method works as a way for other components or entities to get access to @ref TransformComponent.
   class TransformComponent* getTransformComponent() const;
   /// Sets @ref mTransformComponent.
   /// @param tc Transform component.
   void setTransformComponent(class TransformComponent* tc);
+  /// Returns @ref mSpriteComponent.
+  /// @details This method works as a way for other components or entities to get access to @ref SpriteComponent.
+  class SpriteComponent* getSpriteComponent() const;
+  /// Sets mSpriteComponent.
+  /// @param sc Sprite component.
+  void setSpriteComponent(class SpriteComponent* sc);
   /// Returns position of actor.
   glm::vec2 getPosition() const;
   /// Sets position of actor.
@@ -89,6 +95,8 @@ private:
   std::vector<class Component*> mComponents{};
   /// @ref TransformComponent tied to the actor (if any).
   class TransformComponent* mTransformComponent{nullptr};
+  /// @ref SpriteComponent tied to the actor (if any).
+  class SpriteComponent* mSpriteComponent{nullptr};
   /// Map of all possible components that actor can hold and their inclusion status in the actor.
   /// @details Components are capabilities of an actor. The philosophy as of now is, no actor should be able to hold the same type of component more than once. To ensure that, there should be a way in actor to verify in runtime if the same type of component is being injected more than once in the same actor. This map holds a list of {key, value} pairs where the keys are possible components and the values default to false which means that the associated component has not yet been injected in the actor.
   std::unordered_map<std::string, bool> mComponentMap

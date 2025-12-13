@@ -1,5 +1,6 @@
 add_library(RipsawEngine STATIC
   src/Actor.cxx
+  src/BGManager.cxx
   src/Component.cxx
   src/Engine.cxx
   src/Game.cxx

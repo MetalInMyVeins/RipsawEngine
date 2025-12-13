@@ -54,6 +54,16 @@ void Actor::setTransformComponent(TransformComponent* tc)
   mTransformComponent = tc;
 }
 
+void Actor::setSpriteComponent(class SpriteComponent* sc)
+{
+  mSpriteComponent = sc;
+}
+
+SpriteComponent* Actor::getSpriteComponent() const
+{
+  return mSpriteComponent;
+}
+
 glm::vec2 Actor::getPosition() const
 {
   if (mTransformComponent == nullptr)

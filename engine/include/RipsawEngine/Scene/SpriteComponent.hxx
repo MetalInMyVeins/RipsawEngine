@@ -33,7 +33,7 @@ public:
   /// Returns mTexture.
   SDL_Texture* getTexture() const;
   /// Returns texture size.
-  std::pair<int, int> getTexSize() const;
+  std::pair<float, float> getTexSize() const;
   /// Draws texture on window.
   virtual void draw();
   /// Returns scale of texture.
@@ -41,6 +41,10 @@ public:
   /// Sets scale of texture.
   /// @param scale Texture scale.
   void setScale(float scale);
+
+public:
+  /// Fits sprite covering entire screen preserving aspect ratio.
+  void fitByAspectRatio();
 
 private:
   /// Renderer.
@@ -51,6 +55,8 @@ private:
   SDL_Texture* mTexture{nullptr};
   /// Texture size.
   std::pair<float, float> mTexSize{};
+  /// Modified texture dimension after scale change.
+  std::pair<float, float> mTexSizeDynamic{};
   /// Texture scale.
   float mScale{1.f};
 };

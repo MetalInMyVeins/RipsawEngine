@@ -80,7 +80,7 @@ private:
 
 public:
   /// Dynamically allocates actor.
-  /// @details This is a high level virtual member function to be called from sandbox to create actor. It returns pointer to the allocated actor for custom manipulation. The returned pointer should never be deleted explicitly as Engine handles the ownership. An actor should only be detroyed using destroyActor(). After destroyActor() is called on an actor, trying to dereference that actor would result in crash as the actor is nullified.
+  /// @details This is a high level virtual member function to be called from sandbox to create actor. It returns pointer to the allocated actor for custom manipulation. The returned pointer should never be deleted explicitly as Engine handles the ownership. An actor should only be detroyed using destroyActor() when needed. After destroyActor() is called on an actor, trying to dereference that actor would result in crash as the actor is nullified.
   /// @return Returns pointer to the allocated actor.
   virtual class Actor* createActor();
   /// Destroys specified actor by deleting and removing it from mActors and nullifying it.
