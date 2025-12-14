@@ -1,3 +1,5 @@
+message("-- sandbox binary would be created in sandbox/bin/")
+
 add_executable(sandbox src/main.cxx)
 
 set_target_properties(sandbox PROPERTIES
