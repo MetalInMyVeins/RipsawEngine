@@ -1,4 +1,4 @@
-message("-- sandbox binary would be created in sandbox/bin/")
+message("-- NOTE: sandbox binary would be created in sandbox/bin/")
 
 add_executable(sandbox src/main.cxx)
 
