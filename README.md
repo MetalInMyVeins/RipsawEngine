@@ -293,7 +293,7 @@ Dynamically allocates SpriteComponent .
 
 - `class Engine*` `mEngine`: Pointer to Engine instance.
 - `std::vector<std::string>` `mLayers`: Layers of background images.
-- `std::vector<glm::vec2>` `mLayerSpeeds`: Speed of background layers.
+- `std::vector<float>` `mLayerSpeeds`: Speed of background layers.
 - `std::vector<std::pair<class Actor*, class Actor*> >` `mActorPairs`: Vector of Actor pairs.
 
 ### Member Functions
@@ -310,11 +310,21 @@ This is a manager class. The purpose of manager classes are to create and manage
 |------|------|-------------|
 | `engine` | `class Engine *` | Pointer to Engine instance. |
 | `layers` | `const std::vector< std::string > &` | Layers of background images. |
-| `layerSpeeds` | `const std::vector< glm::vec2 > &` | Vector of layer speed. |
+| `layerSpeeds` | `const std::vector< float > &` | Vector of layer speed. |
 
 #### `void RipsawEngine::BGManager::update`
 
 Implements custom update logic for manager.
+
+#### `void RipsawEngine::BGManager::setSpeeds`
+
+Sets scrolling speed of layers.
+
+#### Parameters
+
+| Name | Type | Description |
+|------|------|-------------|
+| `speeds` | `const std::vector< float > &` | Vector of speed values of layers. |
 
 
 ---
