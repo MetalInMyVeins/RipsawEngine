@@ -46,11 +46,11 @@ void BGManager::update()
   {
     if (apair.first->getPosition().x + apair.first->getSpriteComponent()->getTexSize().first / 2.f < 0)
     {
-      apair.first->setPosition({apair.second->getPosition().x + apair.first->getSpriteComponent()->getTexSize().first, 384});
+      apair.first->setPosition({apair.second->getPosition().x + apair.first->getSpriteComponent()->getTexSize().first, mEngine->getScreenSize().second / 2.f});
     }
     if (apair.second->getPosition().x + apair.first->getSpriteComponent()->getTexSize().first / 2.f < 0)
     {
-      apair.second->setPosition({apair.first->getPosition().x + apair.first->getSpriteComponent()->getTexSize().first, 384});
+      apair.second->setPosition({apair.first->getPosition().x + apair.first->getSpriteComponent()->getTexSize().first, mEngine->getScreenSize().second / 2.f});
     }
   }
 }
