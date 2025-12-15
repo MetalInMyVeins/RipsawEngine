@@ -17,7 +17,7 @@ private:
 public:
   void initGame() override
   {
-    bgm = new RipsawEngine::BGManager{mEngine, {"sandbox/assets/bglayer1.png", "sandbox/assets/bglayer2.png"}, {{-80, 0}, {-200, 0}}};
+    bgm = new RipsawEngine::BGManager{mEngine, {"sandbox/assets/bglayer1.png", "sandbox/assets/bglayer2.png"}, {-80, -220}};
   }
 
   void updateGame(double dt) override

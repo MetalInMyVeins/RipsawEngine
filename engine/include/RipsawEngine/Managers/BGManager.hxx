@@ -18,9 +18,12 @@ public:
   /// @param engine Pointer to Engine instance.
   /// @param layers Layers of background images.
   /// @param layerSpeeds Vector of layer speed.
-  BGManager(class Engine* engine, const std::vector<std::string>& layers, const std::vector<glm::vec2>& layerSpeeds);
+  BGManager(class Engine* engine, const std::vector<std::string>& layers, const std::vector<float>& layerSpeeds);
   /// Implements custom update logic for manager.
   void update();
+  /// Sets scrolling speed of layers.
+  /// @param speeds Vector of speed values of layers.
+  void setSpeeds(const std::vector<float>& speeds);
 
 private:
   /// Pointer to Engine instance.
@@ -28,7 +31,7 @@ private:
   /// Layers of background images.
   std::vector<std::string> mLayers{};
   /// Speed of background layers.
-  std::vector<glm::vec2> mLayerSpeeds{};
+  std::vector<float> mLayerSpeeds{};
   /// Vector of Actor pairs.
   std::vector<std::pair<class Actor*, class Actor*>> mActorPairs{};
 };
