@@ -18,39 +18,90 @@ BGManager::BGManager(Engine* engine, const std::vector<std::string>& layers, con
   {
     throw std::runtime_error{"BGManager::BGManager(): layers should be provided with equal number of speed factors"};
   }
-  mActorPairs.reserve(mLayers.size() * 2);
+  mActorTriplets.reserve(mLayers.size() * 3);
 
   for (size_t i{}; i < mLayers.size(); ++i)
   {
-    std::pair<Actor*, Actor*> apair{};
+    Actor* middle{nullptr};
+    Actor* right{nullptr};
+    Actor* left{nullptr};
 
-    apair.first = mEngine->createActor();
-    apair.first->createTransformComponent({0, 0}, {mLayerSpeeds[i], 0});
-    apair.first->createSpriteComponent(mLayers[i]);
-    apair.first->getSpriteComponent()->fitByAspectRatio();
-    apair.first->setPosition({mEngine->getScreenSize().first / 2.f, mEngine->getScreenSize().second / 2.f});
+    middle = mEngine->createActor();
+    middle->createTransformComponent({0, 0}, {mLayerSpeeds[i], 0});
+    middle->createSpriteComponent(mLayers[i]);
+    middle->getSpriteComponent()->fitByAspectRatio();
+    middle->setPosition({mEngine->getScreenSize().first / 2.f, mEngine->getScreenSize().second / 2.f});
+
+    right = mEngine->createActor();
+    right->createTransformComponent({0, 0}, {mLayerSpeeds[i], 0});
+    right->createSpriteComponent(mLayers[i]);
+    right->getSpriteComponent()->fitByAspectRatio();
+    right->setPosition({middle->getPosition().x + middle->getSpriteComponent()->getTexSize().first, mEngine->getScreenSize().second / 2.f});
     
-    apair.second = mEngine->createActor();
-    apair.second->createTransformComponent({0, 0}, {mLayerSpeeds[i], 0});
-    apair.second->createSpriteComponent(mLayers[i]);
-    apair.second->getSpriteComponent()->fitByAspectRatio();
-    apair.second->setPosition({apair.first->getPosition().x + apair.first->getSpriteComponent()->getTexSize().first, mEngine->getScreenSize().second / 2.f});
+    left = mEngine->createActor();
+    left->createTransformComponent({0, 0}, {mLayerSpeeds[i], 0});
+    left->createSpriteComponent(mLayers[i]);
+    left->getSpriteComponent()->fitByAspectRatio();
+    left->setPosition({middle->getPosition().x - middle->getSpriteComponent()->getTexSize().first, mEngine->getScreenSize().second / 2.f});
 
-    mActorPairs.push_back(apair);
+    mActorTriplets.push_back(std::make_tuple(middle, right, left));
   }
 }
 
 void BGManager::update()
 {
-  for (auto& apair : mActorPairs)
+  for (const auto& triplet : mActorTriplets)
   {
-    if (apair.first->getPosition().x + apair.first->getSpriteComponent()->getTexSize().first / 2.f < 0)
+    Actor* middle{std::get<0>(triplet)};
+    Actor* right{std::get<1>(triplet)};
+    Actor* left{std::get<2>(triplet)};
+
+    if (middle->getPosition().x + middle->getSpriteComponent()->getTexSize().first / 2.f < 0)
     {
-      apair.first->setPosition({apair.second->getPosition().x + apair.first->getSpriteComponent()->getTexSize().first, mEngine->getScreenSize().second / 2.f});
+      left->setPosition({
+        right->getPosition().x + right->getSpriteComponent()->getTexSize().first,
+        right->getEngine()->getScreenSize().second / 2.f
+      });
     }
-    if (apair.second->getPosition().x + apair.first->getSpriteComponent()->getTexSize().first / 2.f < 0)
+    
+    if (right->getPosition().x + right->getSpriteComponent()->getTexSize().first / 2.f < 0)
     {
-      apair.second->setPosition({apair.first->getPosition().x + apair.first->getSpriteComponent()->getTexSize().first, mEngine->getScreenSize().second / 2.f});
+      middle->setPosition({
+        left->getPosition().x + left->getSpriteComponent()->getTexSize().first,
+        left->getEngine()->getScreenSize().second / 2.f
+      });
+    }
+    
+    if (left->getPosition().x + left->getSpriteComponent()->getTexSize().first / 2.f < 0)
+    {
+      right->setPosition({
+        middle->getPosition().x + middle->getSpriteComponent()->getTexSize().first,
+        middle->getEngine()->getScreenSize().second / 2.f
+      });
+    }
+    
+    if (middle->getPosition().x - middle->getSpriteComponent()->getTexSize().first / 2.f > middle->getEngine()->getScreenSize().first)
+    {
+      right->setPosition({
+        left->getPosition().x - left->getSpriteComponent()->getTexSize().first,
+        left->getEngine()->getScreenSize().second / 2.f
+      });
+    }
+    
+    if (left->getPosition().x - left->getSpriteComponent()->getTexSize().first / 2.f > left->getEngine()->getScreenSize().first)
+    {
+      middle->setPosition({
+        right->getPosition().x - right->getSpriteComponent()->getTexSize().first,
+        right->getEngine()->getScreenSize().second / 2.f
+      });
+    }
+    
+    if (right->getPosition().x - right->getSpriteComponent()->getTexSize().first / 2.f > right->getEngine()->getScreenSize().first)
+    {
+      left->setPosition({
+        middle->getPosition().x - middle->getSpriteComponent()->getTexSize().first,
+        middle->getEngine()->getScreenSize().second / 2.f
+      });
     }
   }
 }
@@ -64,10 +115,11 @@ void BGManager::setSpeeds(const std::vector<float>& speeds)
   mLayerSpeeds = speeds;
   int i{};
 
-  for (const auto& apair : mActorPairs)
+  for (const auto& triplet : mActorTriplets)
   {
-    apair.first->getTransformComponent()->setVelocity({mLayerSpeeds[i], 0});
-    apair.second->getTransformComponent()->setVelocity({mLayerSpeeds[i], 0});
+    std::get<0>(triplet)->getTransformComponent()->setVelocity({mLayerSpeeds[i], 0});
+    std::get<1>(triplet)->getTransformComponent()->setVelocity({mLayerSpeeds[i], 0});
+    std::get<2>(triplet)->getTransformComponent()->setVelocity({mLayerSpeeds[i], 0});
     ++i;
   }
 }
