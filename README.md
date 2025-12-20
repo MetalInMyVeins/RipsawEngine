@@ -9,6 +9,13 @@
 - GCC/Clang/Any C++ 20 compatible compiler
 - CMake
 
+### Optional Dependencies
+
+- Doxygen (for documentation)
+- GNU `tree` (for directory layout)
+- Ninja (for faster build)
+- Python 3 (for parsing documentation)
+
 # Directory Layout
 
 <!-- AUTODOC:BEGIN -->
