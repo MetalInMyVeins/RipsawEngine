@@ -16,8 +16,8 @@ namespace RipsawEngine
 class Engine
 {
 public:
-  /// @brief Constructs engine with configurable window name and size.
-  /// @param game pointer to @ref Game instance
+  /// @brief Constructs engine with Game* object, configurable window name and size.
+  /// @param game Pointer to @ref Game instance
   /// @param wname Custom window name.
   /// @param w Custom window width.
   /// @param h Custom window height.
