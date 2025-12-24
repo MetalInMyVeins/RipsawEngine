@@ -72,6 +72,11 @@
 
 <!-- AUTODOC:END -->
 
+# TODO
+
+- Controlled sprite draw order
+- Sprite animation
+
 # API Documentation
 
 <!-- AUTODOC:BEGIN -->
@@ -402,6 +407,8 @@ Overridable method that says if a specific component is valid.
 - `std::pair<float, float>` `mTexSize`: Texture size.
 - `std::pair<float, float>` `mTexSizeDynamic`: Modified texture dimension after scale change.
 - `float` `mScale`: Texture scale.
+- `double` `mRotationSpeed`: Speed of rotation controlling how fast to rotate sprite.
+- `double` `mRotationAmount`: The amount of rotation to take effect in texture.
 
 ### Member Functions
 
@@ -463,6 +470,20 @@ Sets scale of texture.
 | Name | Type | Description |
 |------|------|-------------|
 | `scale` | `float` | Texture scale. |
+
+#### `double RipsawEngine::SpriteComponent::getRotation`
+
+Returns amount of rotation mRotationAmount.
+
+#### `void RipsawEngine::SpriteComponent::setRotation`
+
+Sets rotation speed mRotationSpeed.
+
+#### Parameters
+
+| Name | Type | Description |
+|------|------|-------------|
+| `rotation` | `double` |  |
 
 #### `void RipsawEngine::SpriteComponent::fitByAspectRatio`
 
@@ -614,6 +635,10 @@ Returns mRenderer.
 #### `std::pair< int, int > RipsawEngine::Engine::getScreenSize`
 
 Returns screen size in a pair.
+
+#### `double RipsawEngine::Engine::getDt`
+
+Returns delta-time.
 
 #### `void RipsawEngine::Engine::setRendererBackend`
 

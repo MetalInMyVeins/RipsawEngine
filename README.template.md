@@ -21,6 +21,11 @@
 <!-- AUTODOC:BEGIN -->
 <!-- AUTODOC:END -->
 
+# TODO
+
+- Controlled sprite draw order
+- Sprite animation
+
 # API Documentation
 
 <!-- AUTODOC:BEGIN -->
