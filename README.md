@@ -817,6 +817,6 @@ Custom render logic for Game .
 
 # License
 
-Copyright (C) 2025  Hossain Md. Fahim  <hossainmdfahim66@gmail.com>  
+Copyright © 2025  Hossain Md. Fahim  <hossainmdfahim66@gmail.com>  
 See [LICENSE](./LICENSE.md) for more information.
 
