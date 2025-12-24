@@ -41,6 +41,10 @@ public:
   /// Sets scale of texture.
   /// @param scale Texture scale.
   void setScale(float scale);
+  /// Returns amount of rotation mRotationAmount.
+  double getRotation() const;
+  /// Sets rotation speed mRotationSpeed.
+  void setRotation(double rotation);
 
 public:
   /// Fits sprite covering entire screen preserving aspect ratio.
@@ -59,6 +63,10 @@ private:
   std::pair<float, float> mTexSizeDynamic{};
   /// Texture scale.
   float mScale{1.f};
+  /// Speed of rotation controlling how fast to rotate sprite.
+  double mRotationSpeed{0};
+  /// The amount of rotation to take effect in texture.
+  double mRotationAmount{0};
 };
 
 }

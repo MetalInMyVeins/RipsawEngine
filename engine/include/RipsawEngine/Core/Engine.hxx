@@ -39,6 +39,8 @@ public:
   SDL_Renderer* getRenderer() const;
   /// Returns screen size in a pair.
   std::pair<int, int> getScreenSize() const;
+  /// Returns delta-time.
+  double getDt() const;
   /// Sets renderer backend mRendererBackend of engine.
   /// @details Current valid values are: opengl, vulkan, software.
   /// @param backend Renderer backend.

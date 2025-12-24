@@ -100,8 +100,27 @@ std::pair<float, float> SpriteComponent::getTexSize() const
   return {mTexSize.first * mScale, mTexSize.second * mScale};
 }
 
+// void SpriteComponent::draw()
+// {
+//   SDL_FRect rect
+//   {
+//     mOwner->getTransformComponent()->getPosition().x - mTexSize.first * mScale / 2.f,
+//     mOwner->getTransformComponent()->getPosition().y - mTexSize.second * mScale / 2.f,
+//     mTexSize.first * mScale,
+//     mTexSize.second * mScale
+//   };
+//   if (!SDL_RenderTexture(mRenderer, mTexture, nullptr, &rect))
+//   {
+//     SDL_Log("[ERROR] Draw failed on SpriteComponent: %p", (void*)this);
+//   }
+// }
 void SpriteComponent::draw()
 {
+  if (mRotationAmount >= 360.0)
+  {
+    mRotationAmount = 0.0;
+  }
+
   SDL_FRect rect
   {
     mOwner->getTransformComponent()->getPosition().x - mTexSize.first * mScale / 2.f,
@@ -109,10 +128,12 @@ void SpriteComponent::draw()
     mTexSize.first * mScale,
     mTexSize.second * mScale
   };
-  if (!SDL_RenderTexture(mRenderer, mTexture, nullptr, &rect))
+  if (!SDL_RenderTextureRotated(mRenderer, mTexture, nullptr, &rect, mRotationAmount, nullptr, SDL_FLIP_NONE))
   {
     SDL_Log("[ERROR] Draw failed on SpriteComponent: %p", (void*)this);
   }
+
+  mRotationAmount += mRotationSpeed * mOwner->getEngine()->getDt();
 }
 
 float SpriteComponent::getScale() const
@@ -126,6 +147,16 @@ void SpriteComponent::setScale(float scale)
   mTexSizeDynamic.first = mTexSize.first * scale;
   mTexSizeDynamic.second = mTexSize.second * scale;
   SDL_Log("[INFO] SpriteComponent: %p scaled by %.2fx: %.2f X %.2f", (void*)this, scale, mTexSizeDynamic.first, mTexSizeDynamic.second);
+}
+
+double SpriteComponent::getRotation() const
+{
+  return mRotationAmount;
+}
+
+void SpriteComponent::setRotation(double rotation)
+{
+  mRotationSpeed = rotation;
 }
 
 void SpriteComponent::fitByAspectRatio()

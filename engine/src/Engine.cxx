@@ -138,6 +138,11 @@ std::pair<int, int> Engine::getScreenSize() const
   return std::make_pair(mScreenWidth, mScreenHeight);
 }
 
+double Engine::getDt() const
+{
+  return mDt;
+}
+
 void Engine::setRendererBackend(const std::string& backend)
 {
   std::vector<std::string> validBackends{"opengl", "vulkan", "software"};
