@@ -18,11 +18,10 @@ private:
 public:
   void initGame() override
   {
-    bgm = new RipsawEngine::BGManager{mEngine, {"sandbox/assets/bglayer1.png", "sandbox/assets/bglayer2.png"}, {-80, -220}};
+    bgm = new RipsawEngine::BGManager{mEngine, {"sandbox/assets/bglayer1.png", "sandbox/assets/bglayer2.png"}, {-40, -110}};
     a1 = mEngine->createActor();
     a1->createTransformComponent({300, 300}, {});
-    a1->createSpriteComponent("sandbox/assets/ship.png");
-    a1->getSpriteComponent()->setRotation(0);
+    a1->createSpriteComponent("sandbox/assets/7.png");
   }
 
   void updateGame(double dt) override
