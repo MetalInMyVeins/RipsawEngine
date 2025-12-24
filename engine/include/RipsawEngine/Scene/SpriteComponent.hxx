@@ -44,7 +44,11 @@ public:
   /// Returns amount of rotation mRotationAmount.
   double getRotationAmount() const;
   /// Sets rotation speed mRotationSpeed.
+  /// @param rotation Rotation speed by which rotation amount would be incremented.
   void setRotationSpeed(double rotation);
+  /// Rotates sprite clockwise by specified degrees.
+  /// @param degrees Amount of degrees by which sprite would be rotated.
+  void rotateClockwiseAmount(double degrees);
 
 public:
   /// Fits sprite covering entire screen preserving aspect ratio.

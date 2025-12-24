@@ -58,6 +58,26 @@
 ├── sandbox
 │   ├── CMakeLists.txt
 │   ├── assets
+│   │   ├── 1.png
+│   │   ├── 10.png
+│   │   ├── 11.png
+│   │   ├── 12.png
+│   │   ├── 13.png
+│   │   ├── 14.png
+│   │   ├── 15.png
+│   │   ├── 16.png
+│   │   ├── 17.png
+│   │   ├── 18.png
+│   │   ├── 19.png
+│   │   ├── 2.png
+│   │   ├── 20.png
+│   │   ├── 3.png
+│   │   ├── 4.png
+│   │   ├── 5.png
+│   │   ├── 6.png
+│   │   ├── 7.png
+│   │   ├── 8.png
+│   │   ├── 9.png
 │   │   ├── bglayer1.png
 │   │   ├── bglayer2.png
 │   │   └── ship.png
@@ -66,7 +86,7 @@
 └── scripts
     └── gen_docs.py
 
-12 directories, 32 files
+12 directories, 52 files
 
 ```
 
@@ -471,11 +491,11 @@ Sets scale of texture.
 |------|------|-------------|
 | `scale` | `float` | Texture scale. |
 
-#### `double RipsawEngine::SpriteComponent::getRotation`
+#### `double RipsawEngine::SpriteComponent::getRotationAmount`
 
 Returns amount of rotation mRotationAmount.
 
-#### `void RipsawEngine::SpriteComponent::setRotation`
+#### `void RipsawEngine::SpriteComponent::setRotationSpeed`
 
 Sets rotation speed mRotationSpeed.
 
@@ -483,7 +503,17 @@ Sets rotation speed mRotationSpeed.
 
 | Name | Type | Description |
 |------|------|-------------|
-| `rotation` | `double` |  |
+| `rotation` | `double` | Rotation speed by which rotation amount would be incremented. |
+
+#### `void RipsawEngine::SpriteComponent::rotateClockwiseAmount`
+
+Rotates sprite clockwise by specified degrees.
+
+#### Parameters
+
+| Name | Type | Description |
+|------|------|-------------|
+| `degrees` | `double` | Amount of degrees by which sprite would be rotated. |
 
 #### `void RipsawEngine::SpriteComponent::fitByAspectRatio`
 

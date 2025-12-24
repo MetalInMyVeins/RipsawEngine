@@ -22,6 +22,7 @@ public:
     a1 = mEngine->createActor();
     a1->createTransformComponent({300, 300}, {});
     a1->createSpriteComponent("sandbox/assets/7.png");
+    a1->getSpriteComponent()->rotateClockwiseAmount(90);
   }
 
   void updateGame(double dt) override
