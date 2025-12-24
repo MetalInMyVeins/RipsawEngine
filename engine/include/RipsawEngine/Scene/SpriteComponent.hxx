@@ -42,9 +42,9 @@ public:
   /// @param scale Texture scale.
   void setScale(float scale);
   /// Returns amount of rotation mRotationAmount.
-  double getRotation() const;
+  double getRotationAmount() const;
   /// Sets rotation speed mRotationSpeed.
-  void setRotation(double rotation);
+  void setRotationSpeed(double rotation);
 
 public:
   /// Fits sprite covering entire screen preserving aspect ratio.

@@ -135,12 +135,12 @@ void SpriteComponent::setScale(float scale)
   SDL_Log("[INFO] SpriteComponent: %p scaled by %.2fx: %.2f X %.2f", (void*)this, scale, mTexSizeDynamic.first, mTexSizeDynamic.second);
 }
 
-double SpriteComponent::getRotation() const
+double SpriteComponent::getRotationAmount() const
 {
   return mRotationAmount;
 }
 
-void SpriteComponent::setRotation(double rotation)
+void SpriteComponent::setRotationSpeed(double rotation)
 {
   mRotationSpeed = rotation;
 }
