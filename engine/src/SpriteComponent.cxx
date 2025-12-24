@@ -100,20 +100,6 @@ std::pair<float, float> SpriteComponent::getTexSize() const
   return {mTexSize.first * mScale, mTexSize.second * mScale};
 }
 
-// void SpriteComponent::draw()
-// {
-//   SDL_FRect rect
-//   {
-//     mOwner->getTransformComponent()->getPosition().x - mTexSize.first * mScale / 2.f,
-//     mOwner->getTransformComponent()->getPosition().y - mTexSize.second * mScale / 2.f,
-//     mTexSize.first * mScale,
-//     mTexSize.second * mScale
-//   };
-//   if (!SDL_RenderTexture(mRenderer, mTexture, nullptr, &rect))
-//   {
-//     SDL_Log("[ERROR] Draw failed on SpriteComponent: %p", (void*)this);
-//   }
-// }
 void SpriteComponent::draw()
 {
   if (mRotationAmount >= 360.0)
