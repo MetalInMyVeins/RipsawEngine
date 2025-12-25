@@ -94,7 +94,7 @@
 
 # TODO
 
-- Controlled sprite draw order
+- Controlled sprite draw order (in progress)
 - Sprite animation
 
 # API Documentation
@@ -610,8 +610,10 @@ Sets velocity.
 - `int` `mFrames`: Frames per second.
 - `class Game*` `mGame`: Extendible Game class.
 - `std::vector<class Actor*>` `mActors`: List of all actors.
+- `std::vector<class Actor**>` `mActorsToBeKilled`: List of actors that are to be killed before next actor update begins.
 - `std::vector<class SpriteComponent*>` `mSprites`: List of all sprites to be drawn.
 - `size_t` `mTotalActorsSize`: Total size of all registered actors.
+- `bool` `mActorsBeingUpdated`: Boolean signal depicting if actors are going through update loop.
 
 ### Member Functions
 
@@ -696,13 +698,15 @@ This is a high level virtual member function to be called from sandbox to create
 
 #### `void RipsawEngine::Engine::destroyActor`
 
-Destroys specified actor by deleting and removing it from mActors and nullifying it.
+Destroys specified actor by deleting and removing it from mActors and nullifies at the end.
+
+This method removes specified actor from mActors. But if removal occurs while actors are going through the update loop, this might crash the engine. To prevent that, a boolean signal mActorsBeingUpdated is introduced which is set before entering the update loop and unset after exiting the loop. The method first checks if the signal is set. If unset, it destroys the actor right away. But if set, it pushes the actor in another vector mActorsToBeKilled. Then, this method is called again on every actors in this vector before entering the update loop.
 
 #### Parameters
 
 | Name | Type | Description |
 |------|------|-------------|
-| `actor` | `class Actor *&` | Actor to be destroyed. |
+| `actor` | `class Actor **` | Adress of actor to be destroyed. |
 
 #### `void RipsawEngine::Engine::addActor`
 

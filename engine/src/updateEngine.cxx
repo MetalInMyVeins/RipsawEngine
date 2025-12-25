@@ -36,10 +36,18 @@ void Engine::updateEngine()
     }
   }
 
+  for (auto& actor : mActorsToBeKilled)
+  {
+    this->destroyActor(actor);
+  }
+  mActorsToBeKilled.clear();
+
+  mActorsBeingUpdated = true;
   for (const auto& actor : mActors)
   {
     actor->update(dt);
   }
+  mActorsBeingUpdated = false;
 }
 
 }

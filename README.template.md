@@ -23,7 +23,7 @@
 
 # TODO
 
-- Controlled sprite draw order
+- Controlled sprite draw order (in progress)
 - Sprite animation
 
 # API Documentation

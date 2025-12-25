@@ -23,11 +23,19 @@ public:
     a1->createTransformComponent({300, 300}, {});
     a1->createSpriteComponent("sandbox/assets/7.png");
     a1->getSpriteComponent()->rotateClockwiseAmount(90);
+    a1->setVelocity({100, 0});
   }
 
   void updateGame(double dt) override
   {
     bgm->update();
+    if (a1)
+    {
+      if (a1->getPosition().x > 600.f)
+      {
+        mEngine->destroyActor(&a1);
+      }
+    }
   }
 
   void renderGame() override

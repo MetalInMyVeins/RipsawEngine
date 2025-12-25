@@ -164,10 +164,17 @@ Actor* Engine::createActor()
   return tempActor;
 }
 
-void Engine::destroyActor(Actor*& actor)
+void Engine::destroyActor(Actor** actor)
 {
-  this->removeActor(actor);
-  actor = nullptr;
+  if (mActorsBeingUpdated == false)
+  {
+    this->removeActor(*actor);
+    *actor = nullptr;
+  }
+  else
+  {
+    mActorsToBeKilled.push_back(actor);
+  }
 }
 
 void Engine::addActor(Actor* actor)

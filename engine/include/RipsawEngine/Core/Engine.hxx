@@ -85,9 +85,10 @@ public:
   /// @details This is a high level virtual member function to be called from sandbox to create actor. It returns pointer to the allocated actor for custom manipulation. The returned pointer should never be deleted explicitly as Engine handles the ownership. An actor should only be detroyed using destroyActor() when needed. After destroyActor() is called on an actor, trying to dereference that actor would result in crash as the actor is nullified.
   /// @return Returns pointer to the allocated actor.
   virtual class Actor* createActor();
-  /// Destroys specified actor by deleting and removing it from mActors and nullifying it.
-  /// @param actor Actor to be destroyed.
-  void destroyActor(class Actor*& actor);
+  /// Destroys specified actor by deleting and removing it from mActors and nullifies at the end.
+  /// @details This method removes specified actor from mActors. But if removal occurs while actors are going through the update loop, this might crash the engine. To prevent that, a boolean signal mActorsBeingUpdated is introduced which is set before entering the update loop and unset after exiting the loop. The method first checks if the signal is set. If unset, it destroys the actor right away. But if set, it pushes the actor in another vector mActorsToBeKilled. Then, this method is called again on every actors in this vector before entering the update loop.
+  /// @param actor Adress of actor to be destroyed.
+  void destroyActor(class Actor** actor);
   /// Adds actor to @ref mActors.
   /// @param actor Pointer to @ref Actor instance.
   void addActor(class Actor* actor);
@@ -102,11 +103,17 @@ public:
   /// @param sc Sprite component.
   void removeSprite(class SpriteComponent* sc);
 
+public:
+  /// Boolean signal depicting if actors are going through update loop.
+  bool mActorsBeingUpdated{false};
+
 private:
   /// Extendible Game class.
   class Game* mGame{nullptr};
   /// List of all actors.
   std::vector<class Actor*> mActors{};
+  /// List of actors that are to be killed before next actor update begins.
+  std::vector<class Actor**> mActorsToBeKilled{};
   /// List of all sprites to be drawn.
   std::vector<class SpriteComponent*> mSprites{};
   /// Total size of all registered actors.
