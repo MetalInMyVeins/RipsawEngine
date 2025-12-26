@@ -29,7 +29,7 @@
 
 # TODO
 
-- Controlled sprite draw order (in progress)
+- Controlled sprite draw order (complete)
 - Spritesheet support (in progress)
 - Sprite animation (in progress)
 
