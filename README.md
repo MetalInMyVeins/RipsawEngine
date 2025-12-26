@@ -101,7 +101,8 @@
 # TODO
 
 - Controlled sprite draw order (in progress)
-- Sprite animation
+- Spritesheet support (in progress)
+- Sprite animation (in progress)
 
 # API Documentation
 
