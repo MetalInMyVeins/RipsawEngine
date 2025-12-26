@@ -515,6 +515,16 @@ Rotates sprite clockwise by specified degrees.
 |------|------|-------------|
 | `degrees` | `double` | Amount of degrees by which sprite would be rotated. |
 
+#### `void RipsawEngine::SpriteComponent::rotateAntiClockwiseAmount`
+
+Rotates sprite anti-clockwise by specified degrees.
+
+#### Parameters
+
+| Name | Type | Description |
+|------|------|-------------|
+| `degrees` | `double` | Amount of degrees by which sprite would be rotated. |
+
 #### `void RipsawEngine::SpriteComponent::fitByAspectRatio`
 
 Fits sprite covering entire screen preserving aspect ratio.
@@ -613,6 +623,7 @@ Sets velocity.
 - `std::vector<class Actor**>` `mActorsToBeKilled`: List of actors that are to be killed before next actor update begins.
 - `std::vector<class SpriteComponent*>` `mSprites`: List of all sprites to be drawn.
 - `size_t` `mTotalActorsSize`: Total size of all registered actors.
+- `std::unordered_map<class Actor*, class Component*>` `mActorSpritePairs`: List of Actor-SpriteComponent pairs associated with each other.
 - `bool` `mActorsBeingUpdated`: Boolean signal depicting if actors are going through update loop.
 
 ### Member Functions
@@ -749,6 +760,48 @@ Removes SpriteComponent from mSprites.
 | Name | Type | Description |
 |------|------|-------------|
 | `sc` | `class SpriteComponent *` | Sprite component. |
+
+#### `void RipsawEngine::Engine::insertActorSpritePair`
+
+Insert Actor-SpriteComponent pair into mActorSpritePairs.
+
+#### Parameters
+
+| Name | Type | Description |
+|------|------|-------------|
+| `asp` | `const std::pair< class Actor *, class Component * > &` | Actor-SpriteComponent pair. |
+
+#### `void RipsawEngine::Engine::removeActorSpritePair`
+
+Remove Actor-SpriteComponent pair from mActorSpritePairs.
+
+#### Parameters
+
+| Name | Type | Description |
+|------|------|-------------|
+| `actor` | `class Actor *` | Actor key to be removed from mActorSpritePairs. |
+
+#### `void RipsawEngine::Engine::actorGoesBelow`
+
+Moves sprite component associated with first actor below the sprite component associated with second actor in mSprites.
+
+#### Parameters
+
+| Name | Type | Description |
+|------|------|-------------|
+| `a1` | `class Actor *` | Actor to be moved. |
+| `a2` | `class Actor *` | Actor below which a1 would go to. |
+
+#### `void RipsawEngine::Engine::actorGoesAbove`
+
+Moves sprite component associated with first actor above the sprite component associated with second actor in mSprites.
+
+#### Parameters
+
+| Name | Type | Description |
+|------|------|-------------|
+| `a1` | `class Actor *` | Actor to be moved. |
+| `a2` | `class Actor *` | Actor above which a1 would go to. |
 
 #### `void RipsawEngine::Engine::processInput`
 

@@ -211,5 +211,35 @@ void Engine::removeSprite(SpriteComponent* sprite)
   SDL_Log("[INFO] Total active sprites--: %ld", mSprites.size());
 }
 
+void Engine::insertActorSpritePair(const std::pair<Actor*, Component*>& asp)
+{
+  mActorSpritePairs.insert(asp);
+}
+
+void Engine::removeActorSpritePair(class Actor* actor)
+{
+  mActorSpritePairs.erase(actor);
+}
+
+void Engine::actorGoesBelow(class Actor* a1, class Actor* a2)
+{
+  auto it1{std::find(mSprites.begin(), mSprites.end(), mActorSpritePairs[a1])};
+  auto it2{std::find(mSprites.begin(), mSprites.end(), mActorSpritePairs[a2])};
+
+  if (it1 < it2)
+    return;
+  std::rotate(it2, it1, it1 + 1);
+}
+
+void Engine::actorGoesAbove(class Actor* a1, class Actor* a2)
+{
+  auto it1{std::find(mSprites.begin(), mSprites.end(), mActorSpritePairs[a1])};
+  auto it2{std::find(mSprites.begin(), mSprites.end(), mActorSpritePairs[a2])};
+
+  if (it1 > it2)
+    return;
+  std::rotate(it1, it1 + 1, it2 + 1);
+}
+
 }
 

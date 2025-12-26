@@ -1,6 +1,8 @@
 #pragma once
 
+#include <algorithm>
 #include <string>
+#include <unordered_map>
 #include <utility>
 #include <vector>
 
@@ -102,10 +104,26 @@ public:
   /// Removes @ref SpriteComponent from mSprites.
   /// @param sc Sprite component.
   void removeSprite(class SpriteComponent* sc);
+  /// Insert Actor-SpriteComponent pair into mActorSpritePairs.
+  /// @param asp Actor-SpriteComponent pair.
+  void insertActorSpritePair(const std::pair<class Actor*, class Component*>& asp);
+  /// Remove Actor-SpriteComponent pair from mActorSpritePairs.
+  /// @param actor Actor key to be removed from mActorSpritePairs.
+  void removeActorSpritePair(class Actor* actor);
 
 public:
   /// Boolean signal depicting if actors are going through update loop.
   bool mActorsBeingUpdated{false};
+
+public:
+  /// Moves sprite component associated with first actor below the sprite component associated with second actor in mSprites.
+  /// @param a1 Actor to be moved.
+  /// @param a2 Actor below which a1 would go to.
+  void actorGoesBelow(class Actor* a1, class Actor* a2);
+  /// Moves sprite component associated with first actor above the sprite component associated with second actor in mSprites.
+  /// @param a1 Actor to be moved.
+  /// @param a2 Actor above which a1 would go to.
+  void actorGoesAbove(class Actor* a1, class Actor* a2);
 
 private:
   /// Extendible Game class.
@@ -118,6 +136,8 @@ private:
   std::vector<class SpriteComponent*> mSprites{};
   /// Total size of all registered actors.
   size_t mTotalActorsSize{};
+  /// List of Actor-SpriteComponent pairs associated with each other.
+  std::unordered_map<class Actor*, class Component*> mActorSpritePairs{};
 };
 
 }

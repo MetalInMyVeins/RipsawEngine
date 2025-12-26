@@ -18,6 +18,7 @@ Actor::Actor(Engine* engine)
 
 Actor::~Actor()
 {
+  mEngine->removeActorSpritePair(this);
   while (!mComponents.empty())
   {
     delete mComponents.back();
@@ -145,11 +146,13 @@ void Actor::createTransformComponent(const glm::vec2& pos, const glm::vec2& vel)
 void Actor::createSpriteComponent(const std::string& imgfile)
 {
   Component* tempComponent{new SpriteComponent{this, mEngine->getRenderer(), imgfile}};
+  mEngine->insertActorSpritePair(std::make_pair(this, tempComponent));
 }
 
 void Actor::createSpriteComponent(const std::pair<float, float>& size, const std::tuple<unsigned char, unsigned char, unsigned char, unsigned char>& color)
 {
   Component* tempComponent{new SpriteComponent(this, mEngine->getRenderer(), size, color)};
+  mEngine->insertActorSpritePair(std::make_pair(this, tempComponent));
 }
 
 }

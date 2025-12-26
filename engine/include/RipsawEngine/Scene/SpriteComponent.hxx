@@ -49,6 +49,9 @@ public:
   /// Rotates sprite clockwise by specified degrees.
   /// @param degrees Amount of degrees by which sprite would be rotated.
   void rotateClockwiseAmount(double degrees);
+  /// Rotates sprite anti-clockwise by specified degrees.
+  /// @param degrees Amount of degrees by which sprite would be rotated.
+  void rotateAntiClockwiseAmount(double degrees);
 
 public:
   /// Fits sprite covering entire screen preserving aspect ratio.

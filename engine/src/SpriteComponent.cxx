@@ -150,6 +150,11 @@ void SpriteComponent::rotateClockwiseAmount(double degrees)
   mRotationAmount += degrees;
 }
 
+void SpriteComponent::rotateAntiClockwiseAmount(double degrees)
+{
+  mRotationAmount -= degrees;
+}
+
 void SpriteComponent::fitByAspectRatio()
 {
   SDL_Log("[INFO] SpriteComponent: %p fitting by aspect ratio", (void*)this);
