@@ -340,7 +340,7 @@ Dynamically allocates SpriteComponent .
 
 #### `RipsawEngine::BGManager::BGManager`
 
-Constructs BGManager with Engine*, background image layers, and the speed of each layers.
+Constructs BGManager with Engine*, background image layers, and the speed of each layer.
 
 This is a manager class. The purpose of manager classes are to create and manage already-programmed entities to complete a certain task. This background manager class implements parallax scrolling background with layers of provided images and their speeds. The philosophy is, any both-way scrolling 2D infinite background can be implemented with at least three actors. So, there would be a triplet of actors per layer which would be placed side by side to each other. The middle actor would be placed at the center of the screen, right one to its right, and left one to its left. Each actor would receive the same layer sprite. When the middle actor would go out of screen bound, its left or right actor would be repositioned to the right or left depending on scroll direction creating the illusion of infinite scrolling. The procedure is applied to all layers. And each layer would move at the speed of their respective speed.
 
@@ -875,7 +875,7 @@ Custom render logic for Game .
 
 # Note
 
-- There is absolutely zero tolerance for any AI generated code in `engine/`. If you want to contribute in the engine, write everything by yourself. `sandbox/` is for testing the engine which can essentially mean that it's game code. You can test in any way you want but no AI generated code in `sandbox/` would be pushed to the main branch. On the other hand, scripts in `scripts/` are unrelated to the engine codebase. So, as long as the functionality works properly, anything is acceptable. For example, `scripts/gen_docs.py` is completely AI generated whose functionality is to parse documentation from engine codebase and automatically generate [README.md](README.md).
+- There is absolutely zero tolerance for any AI generated code in `engine/`. If you want to contribute in the engine, write everything by yourself. `sandbox/` is for testing engine features. You can test in any way you want but no AI generated code in `sandbox/` would be pushed into the main branch. On the other hand, scripts in `scripts/` are just helper scripts unrelated to engine. So, as long as the functionality works properly, anything is acceptable. For example, `scripts/gen_docs.py` is completely AI generated whose functionality is to parse documentation from engine codebase and automatically generate [README.md](README.md).
 
 - All methods and variables in engine must be properly documented abiding by doxygen documentation rules.
 
