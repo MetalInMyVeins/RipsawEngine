@@ -21,6 +21,12 @@
 <!-- AUTODOC:BEGIN -->
 <!-- AUTODOC:END -->
 
+# Project Components
+
+- `engine/`: All engine code goes here.
+- `sandbox/`: All engine feature testing code goes here.
+- `scripts/`: All supplementary scripts go here.
+
 # TODO
 
 - Controlled sprite draw order (in progress)
