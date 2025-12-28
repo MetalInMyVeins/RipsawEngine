@@ -12,7 +12,6 @@ SpriteComponent::SpriteComponent(Actor* actor, SDL_Renderer* renderer, const std
     mImgFile{imgfile}
 {
   mOwner->helperRegisterComponent("SpriteComponent");
-
   mOwner->setSpriteComponent(this);
 
   SDL_Surface* surface{IMG_Load(mImgFile.c_str())};
@@ -44,7 +43,6 @@ SpriteComponent::SpriteComponent(class Actor* actor, SDL_Renderer* renderer, con
     mRenderer{renderer}
 {
   mOwner->helperRegisterComponent("SpriteComponent");
-
   mOwner->setSpriteComponent(this);
 
   SDL_Surface* surface{SDL_CreateSurface(size.first, size.second, SDL_PIXELFORMAT_RGBA8888)};

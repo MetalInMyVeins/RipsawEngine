@@ -19,7 +19,7 @@ private:
 public:
   void initGame() override
   {
-    bgm = new RipsawEngine::BGManager{mEngine, {"sandbox/assets/bglayer1.png", "sandbox/assets/bglayer2.png"}, {-40, -110}};
+    bgm = new RipsawEngine::BGManager{mEngine, {"sandbox/assets/bglayer1.png", "sandbox/assets/bglayer2.png"}, {-240, -310}};
     a1 = mEngine->createActor();
     a1->createTransformComponent({600, 350}, {});
     a1->createSpriteComponent("sandbox/assets/7.png");
