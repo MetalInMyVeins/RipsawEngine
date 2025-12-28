@@ -15,6 +15,8 @@
 - GNU `tree` (for directory layout)
 - Ninja (for faster build)
 - Python 3 (for parsing documentation)
+- GNU Binutils (for `strip`)
+- `upx` (for compressing binary)
 
 # Directory Layout
 

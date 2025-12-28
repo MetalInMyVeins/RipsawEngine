@@ -15,6 +15,8 @@
 - GNU `tree` (for directory layout)
 - Ninja (for faster build)
 - Python 3 (for parsing documentation)
+- GNU Binutils (for `strip`)
+- `upx` (for compressing binary)
 
 # Directory Layout
 
@@ -535,6 +537,53 @@ Rotates sprite anti-clockwise by specified degrees.
 #### `void RipsawEngine::SpriteComponent::fitByAspectRatio`
 
 Fits sprite covering entire screen preserving aspect ratio.
+
+
+---
+
+## RipsawEngine::SpritesheetComponent
+
+### Member Variables
+
+- `std::pair<int, int>` `mDims`: n X m grid dimension of spritesheet where n = columns, m = rows.
+- `SDL_Renderer*` `mRenderer`: Renderer.
+- `std::pair<int, int>` `mPublicSheetCoord`: Modifiable spritesheet coordinate to select sprite from spritesheet in runtime.
+- `SDL_Texture*` `mSpritesheetTexture`: Texture of spritesheet.
+- `std::pair<float, float>` `mSingleSpriteSize`: Size of a single sprite selected from spritesheet.
+
+### Member Functions
+
+#### `RipsawEngine::SpritesheetComponent::SpritesheetComponent`
+
+Constructs spritesheet component with owning actor, renderer, spritesheet image file, spritesheet grid dimension, and default spritesheet coordinate.
+
+#### Parameters
+
+| Name | Type | Description |
+|------|------|-------------|
+| `actor` | `class Actor *` | Actor owning the component. |
+| `renderer` | `SDL_Renderer *` | Renderer. |
+| `imgfile` | `const std::string &` | Path to image file. |
+| `dims` | `const std::pair< int, int > &` | n X m grids of spritesheet where n = columns, m = rows. |
+| `defaultCoord` | `const std::pair< int, int >` | Default spritesheet coordinate. |
+
+#### `RipsawEngine::SpritesheetComponent::~SpritesheetComponent`
+
+Destructs SpritesheetComponent .
+
+#### `void RipsawEngine::SpritesheetComponent::draw`
+
+Overrides SpriteComponent::draw() enabling drawing sprites from spritesheet.
+
+#### `void RipsawEngine::SpritesheetComponent::chooseSpriteFromSheet`
+
+Selects sprite from spritesheet to draw.
+
+#### Parameters
+
+| Name | Type | Description |
+|------|------|-------------|
+| `coord` | `const std::pair< int, int > &` | Spritesheet coordinate. |
 
 
 ---
