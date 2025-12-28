@@ -436,8 +436,8 @@ Overridable method that says if a specific component is valid.
 - `std::pair<float, float>` `mTexSize`: Texture size.
 - `std::pair<float, float>` `mTexSizeDynamic`: Modified texture dimension after scale change.
 - `float` `mScale`: Texture scale.
-- `double` `mRotationSpeed`: Speed of rotation controlling how fast to rotate sprite.
-- `double` `mRotationAmount`: The amount of rotation to take effect in texture.
+- `double` `mRotationSpeed`: Speed of rotation (degree) controlling how fast to rotate sprite.
+- `double` `mRotationAmount`: The amount of rotation (degree) to take effect in texture.
 
 ### Member Functions
 
@@ -522,7 +522,7 @@ Rotates sprite clockwise by specified degrees.
 
 | Name | Type | Description |
 |------|------|-------------|
-| `degrees` | `double` | Amount of degrees by which sprite would be rotated. |
+| `degrees` | `double` | Angle in degrees by which sprite would be rotated. |
 
 #### `void RipsawEngine::SpriteComponent::rotateAntiClockwiseAmount`
 
@@ -532,11 +532,21 @@ Rotates sprite anti-clockwise by specified degrees.
 
 | Name | Type | Description |
 |------|------|-------------|
-| `degrees` | `double` | Amount of degrees by which sprite would be rotated. |
+| `degrees` | `double` | Angle in degrees by which sprite would be rotated. |
 
 #### `void RipsawEngine::SpriteComponent::fitByAspectRatio`
 
 Fits sprite covering entire screen preserving aspect ratio.
+
+#### `void RipsawEngine::SpriteComponent::normalizeDegrees`
+
+Normalizes angle in [0, 360) range.
+
+#### Parameters
+
+| Name | Type | Description |
+|------|------|-------------|
+| `degrees` | `double &` | Angle in degrees to be normalized. |
 
 
 ---

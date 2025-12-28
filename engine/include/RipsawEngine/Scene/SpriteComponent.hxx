@@ -47,15 +47,18 @@ public:
   /// @param rotation Rotation speed by which rotation amount would be incremented.
   void setRotationSpeed(double rotation);
   /// Rotates sprite clockwise by specified degrees.
-  /// @param degrees Amount of degrees by which sprite would be rotated.
+  /// @param degrees Angle in degrees by which sprite would be rotated.
   void rotateClockwiseAmount(double degrees);
   /// Rotates sprite anti-clockwise by specified degrees.
-  /// @param degrees Amount of degrees by which sprite would be rotated.
+  /// @param degrees Angle in degrees by which sprite would be rotated.
   void rotateAntiClockwiseAmount(double degrees);
 
 public:
   /// Fits sprite covering entire screen preserving aspect ratio.
   void fitByAspectRatio();
+  /// Normalizes angle in [0, 360) range.
+  /// @param degrees Angle in degrees to be normalized.
+  void normalizeDegrees(double& degrees);
 
 private:
   /// Renderer.
@@ -70,9 +73,9 @@ private:
   std::pair<float, float> mTexSizeDynamic{};
   /// Texture scale.
   float mScale{1.f};
-  /// Speed of rotation controlling how fast to rotate sprite.
+  /// Speed of rotation (degree) controlling how fast to rotate sprite.
   double mRotationSpeed{0};
-  /// The amount of rotation to take effect in texture.
+  /// The amount of rotation (degree) to take effect in texture.
   double mRotationAmount{0};
 };
 

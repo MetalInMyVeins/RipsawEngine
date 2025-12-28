@@ -1,3 +1,5 @@
+#include <cmath>
+
 #include "RipsawEngine/Core/Core.hxx"
 #include "RipsawEngine/Scene/Actor.hxx"
 #include "RipsawEngine/Scene/SpriteComponent.hxx"
@@ -100,10 +102,9 @@ std::pair<float, float> SpriteComponent::getTexSize() const
 
 void SpriteComponent::draw()
 {
-  if (mRotationAmount >= 360.0)
-  {
-    mRotationAmount = 0.0;
-  }
+  mRotationAmount += mRotationSpeed * mOwner->getEngine()->getDt();
+
+  this->normalizeDegrees(mRotationAmount);
 
   SDL_FRect rect
   {
@@ -116,8 +117,6 @@ void SpriteComponent::draw()
   {
     SDL_Log("[ERROR] Draw failed on SpriteComponent: %p", (void*)this);
   }
-
-  mRotationAmount += mRotationSpeed * mOwner->getEngine()->getDt();
 }
 
 float SpriteComponent::getScale() const
@@ -145,12 +144,26 @@ void SpriteComponent::setRotationSpeed(double rotation)
 
 void SpriteComponent::rotateClockwiseAmount(double degrees)
 {
+  if (degrees < 0)
+  {
+    SDL_Log("[ERROR] Clockwise degree amount should be positive");
+    return;
+  }
+
   mRotationAmount += degrees;
+  this->normalizeDegrees(mRotationAmount);
 }
 
 void SpriteComponent::rotateAntiClockwiseAmount(double degrees)
 {
+  if (degrees < 0)
+  {
+    SDL_Log("[ERROR] Anti-Clockwise degree amount should be positive");
+    return;
+  }
+
   mRotationAmount -= degrees;
+  this->normalizeDegrees(mRotationAmount);
 }
 
 void SpriteComponent::fitByAspectRatio()
@@ -162,6 +175,13 @@ void SpriteComponent::fitByAspectRatio()
   float rath{sh / mTexSize.second};
   float ratbig{(ratw >= rath) ? ratw : rath};
   this->setScale(ratbig);
+}
+
+void SpriteComponent::normalizeDegrees(double& degrees)
+{
+  degrees = fmod(degrees, 360.0);
+  if (degrees < 0.0)
+    degrees += 360.0;
 }
 
 }

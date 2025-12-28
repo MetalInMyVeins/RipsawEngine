@@ -24,6 +24,7 @@ public:
     a1->createTransformComponent({600, 350}, {});
     a1->createSpriteComponent("sandbox/assets/7.png");
     a1->getSpriteComponent()->rotateClockwiseAmount(90);
+    a1->getSpriteComponent()->setRotationSpeed(100);
     
     a2 = mEngine->createActor();
     a2->createTransformComponent({450, 350}, {});
