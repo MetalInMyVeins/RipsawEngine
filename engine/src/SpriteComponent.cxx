@@ -113,7 +113,7 @@ void SpriteComponent::draw()
     mTexSize.first * mScale,
     mTexSize.second * mScale
   };
-  if (!SDL_RenderTextureRotated(mRenderer, mTexture, nullptr, &rect, mRotationAmount, nullptr, SDL_FLIP_NONE))
+  if (!SDL_RenderTextureRotated(mRenderer, mTexture, nullptr, &rect, mRotationAmount, nullptr, mFlipState))
   {
     SDL_Log("[ERROR] Draw failed on SpriteComponent: %p", (void*)this);
   }
@@ -140,6 +140,11 @@ double SpriteComponent::getRotationAmount() const
 void SpriteComponent::setRotationSpeed(double rotation)
 {
   mRotationSpeed = rotation;
+
+  if (rotation != 0.0)
+  {
+    mHasRotated = true;
+  }
 }
 
 void SpriteComponent::rotateClockwiseAmount(double degrees)
@@ -152,6 +157,7 @@ void SpriteComponent::rotateClockwiseAmount(double degrees)
 
   mRotationAmount += degrees;
   this->normalizeDegrees(mRotationAmount);
+  mHasRotated = true;
 }
 
 void SpriteComponent::rotateAntiClockwiseAmount(double degrees)
@@ -164,6 +170,40 @@ void SpriteComponent::rotateAntiClockwiseAmount(double degrees)
 
   mRotationAmount -= degrees;
   this->normalizeDegrees(mRotationAmount);
+  mHasRotated = true;
+}
+  
+void SpriteComponent::flipHorizontally()
+{
+  if (mHasRotated == true)
+  {
+    SDL_Log("[ERROR] Cannot flip after rotation");
+    return;
+  }
+
+  mFlipState = SDL_FLIP_HORIZONTAL;
+}
+  
+void SpriteComponent::flipVertically()
+{
+  if (mHasRotated == true)
+  {
+    SDL_Log("[ERROR] Cannot flip after rotation");
+    return;
+  }
+
+  mFlipState = SDL_FLIP_VERTICAL;
+}
+  
+void SpriteComponent::flipDefault()
+{
+  if (mHasRotated == true)
+  {
+    SDL_Log("[ERROR] Cannot flip after rotation");
+    return;
+  }
+
+  mFlipState = SDL_FLIP_NONE;
 }
 
 void SpriteComponent::fitByAspectRatio()

@@ -438,6 +438,8 @@ Overridable method that says if a specific component is valid.
 - `float` `mScale`: Texture scale.
 - `double` `mRotationSpeed`: Speed of rotation (degree) controlling how fast to rotate sprite.
 - `double` `mRotationAmount`: The amount of rotation (degree) to take effect in texture.
+- `bool` `mHasRotated`: Boolean flag to track if sprite has rotated.
+- `SDL_FlipMode` `mFlipState`: Current flip state of sprite.
 
 ### Member Functions
 
@@ -512,7 +514,7 @@ Sets rotation speed mRotationSpeed.
 
 | Name | Type | Description |
 |------|------|-------------|
-| `rotation` | `double` | Rotation speed by which rotation amount would be incremented. |
+| `rotation` | `double` | Rotation speed per second in degrees by which rotation amount would be incremented/decremented. |
 
 #### `void RipsawEngine::SpriteComponent::rotateClockwiseAmount`
 
@@ -533,6 +535,18 @@ Rotates sprite anti-clockwise by specified degrees.
 | Name | Type | Description |
 |------|------|-------------|
 | `degrees` | `double` | Angle in degrees by which sprite would be rotated. |
+
+#### `void RipsawEngine::SpriteComponent::flipHorizontally`
+
+Flips sprite horizontally unless any rotation has occurred.
+
+#### `void RipsawEngine::SpriteComponent::flipVertically`
+
+Flips sprite vertically unless any rotation has occurred.
+
+#### `void RipsawEngine::SpriteComponent::flipDefault`
+
+Sets flip state to default.
 
 #### `void RipsawEngine::SpriteComponent::fitByAspectRatio`
 

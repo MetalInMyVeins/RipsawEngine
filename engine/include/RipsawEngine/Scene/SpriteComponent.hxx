@@ -44,7 +44,7 @@ public:
   /// Returns amount of rotation mRotationAmount.
   double getRotationAmount() const;
   /// Sets rotation speed mRotationSpeed.
-  /// @param rotation Rotation speed by which rotation amount would be incremented.
+  /// @param rotation Rotation speed per second in degrees by which rotation amount would be incremented/decremented.
   void setRotationSpeed(double rotation);
   /// Rotates sprite clockwise by specified degrees.
   /// @param degrees Angle in degrees by which sprite would be rotated.
@@ -52,6 +52,12 @@ public:
   /// Rotates sprite anti-clockwise by specified degrees.
   /// @param degrees Angle in degrees by which sprite would be rotated.
   void rotateAntiClockwiseAmount(double degrees);
+  /// Flips sprite horizontally unless any rotation has occurred.
+  void flipHorizontally();
+  /// Flips sprite vertically unless any rotation has occurred.
+  void flipVertically();
+  /// Sets flip state to default.
+  void flipDefault();
 
 public:
   /// Fits sprite covering entire screen preserving aspect ratio.
@@ -77,6 +83,10 @@ private:
   double mRotationSpeed{0};
   /// The amount of rotation (degree) to take effect in texture.
   double mRotationAmount{0};
+  /// Boolean flag to track if sprite has rotated.
+  bool mHasRotated{false};
+  /// Current flip state of sprite.
+  SDL_FlipMode mFlipState{SDL_FLIP_NONE};
 };
 
 }

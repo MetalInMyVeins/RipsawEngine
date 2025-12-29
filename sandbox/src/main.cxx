@@ -41,6 +41,7 @@ public:
       a2->getSpriteComponent()->rotateClockwiseAmount(180);
       a2->setVelocity({-150, 0});
       mEngine->actorGoesBelow(a2, a1);
+      a2->getSpriteComponent()->flipHorizontally();
     }
     if (a2->getPosition().x < 450.f)
     {
