@@ -4,6 +4,7 @@
 #include <string>
 #include <unordered_map>
 #include <utility>
+#include <variant>
 #include <vector>
 
 #include <SDL3/SDL.h>
@@ -14,6 +15,11 @@
 
 namespace RipsawEngine
 {
+
+/// Variant type for all possible manager classes.
+using AnyManager = std::variant<
+  class BGManager*
+>;
 
 class Engine
 {
@@ -104,12 +110,17 @@ public:
   /// Removes @ref SpriteComponent from mSprites.
   /// @param sc Sprite component.
   void removeSprite(class SpriteComponent* sc);
-  /// Insert Actor-SpriteComponent pair into mActorSpritePairs.
+  /// Inserts Actor-SpriteComponent pair into mActorSpritePairs.
   /// @param asp Actor-SpriteComponent pair.
   void insertActorSpritePair(const std::pair<class Actor*, class Component*>& asp);
-  /// Remove Actor-SpriteComponent pair from mActorSpritePairs.
+  /// Removes Actor-SpriteComponent pair from mActorSpritePairs.
   /// @param actor Actor key to be removed from mActorSpritePairs.
   void removeActorSpritePair(class Actor* actor);
+  /// Helper method to create BGManager with specified layers and speeds.
+  /// @warning Throws runtime error if number of layers and number of speeds doesn't equate.
+  /// @param layers Images of each layer.
+  /// @param layerSpeeds Speed values of each layers.
+  class BGManager* createBGManager(const std::vector<std::string>& layers, const std::vector<float>& layerSpeeds);
 
 public:
   /// Boolean signal depicting if actors are going through update loop.
@@ -138,6 +149,8 @@ private:
   size_t mTotalActorsSize{};
   /// List of Actor-SpriteComponent pairs associated with each other.
   std::unordered_map<class Actor*, class Component*> mActorSpritePairs{};
+  /// List of all managers.
+  std::vector<AnyManager> mManagers{};
 };
 
 }

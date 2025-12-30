@@ -7,9 +7,7 @@ class Sandbox : public RipsawEngine::Game
 public:
   Sandbox() = default;
   ~Sandbox()
-  {
-    delete bgm;
-  }
+  {}
 
 private:
   RipsawEngine::BGManager* bgm{nullptr};
@@ -19,7 +17,7 @@ private:
 public:
   void initGame() override
   {
-    bgm = new RipsawEngine::BGManager{mEngine, {"sandbox/assets/bglayer1.png", "sandbox/assets/bglayer2.png"}, {-240, -310}};
+    bgm = mEngine->createBGManager({"sandbox/assets/bglayer1.png", "sandbox/assets/bglayer2.png"}, {-240, -310});
     a1 = mEngine->createActor();
     a1->createTransformComponent({600, 350}, {});
     a1->createSpriteComponent("sandbox/assets/7.png");
@@ -41,13 +39,14 @@ public:
       a2->getSpriteComponent()->rotateClockwiseAmount(180);
       a2->setVelocity({-150, 0});
       mEngine->actorGoesBelow(a2, a1);
-      a2->getSpriteComponent()->flipHorizontally();
+      bgm->changeSpeedBy(-100);
     }
     if (a2->getPosition().x < 450.f)
     {
       a2->getSpriteComponent()->rotateAntiClockwiseAmount(180);
       a2->setVelocity({150, 0});
       mEngine->actorGoesAbove(a2, a1);
+      bgm->changeSpeedBy(100);
     }
   }
 

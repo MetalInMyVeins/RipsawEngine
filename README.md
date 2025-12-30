@@ -57,6 +57,7 @@
 │       ├── processInput.cxx
 │       ├── renderEngine.cxx
 │       └── updateEngine.cxx
+├── heaptrack.sandbox.204694.zst
 ├── sandbox
 │   ├── CMakeLists.txt
 │   ├── assets
@@ -88,7 +89,7 @@
 └── scripts
     └── gen_docs.py
 
-12 directories, 52 files
+12 directories, 53 files
 
 ```
 
@@ -367,6 +368,17 @@ Sets scrolling speed of layers.
 | Name | Type | Description |
 |------|------|-------------|
 | `speeds` | `const std::vector< float > &` | Vector of speed values of layers. |
+
+#### `void RipsawEngine::BGManager::changeSpeedBy`
+
+Changes scrolling speed of layers by specified amount of speed.
+
+#### Parameters
+
+| Name | Type | Description |
+|------|------|-------------|
+| `dx` | `float` | Speed to change in X-axis. |
+| `dy` | `float` | Speed to change in Y-axis. |
 
 
 ---
@@ -704,6 +716,7 @@ Sets velocity.
 - `std::vector<class SpriteComponent*>` `mSprites`: List of all sprites to be drawn.
 - `size_t` `mTotalActorsSize`: Total size of all registered actors.
 - `std::unordered_map<class Actor*, class Component*>` `mActorSpritePairs`: List of Actor-SpriteComponent pairs associated with each other.
+- `std::vector<AnyManager>` `mManagers`: List of all managers.
 - `bool` `mActorsBeingUpdated`: Boolean signal depicting if actors are going through update loop.
 
 ### Member Functions
@@ -843,7 +856,7 @@ Removes SpriteComponent from mSprites.
 
 #### `void RipsawEngine::Engine::insertActorSpritePair`
 
-Insert Actor-SpriteComponent pair into mActorSpritePairs.
+Inserts Actor-SpriteComponent pair into mActorSpritePairs.
 
 #### Parameters
 
@@ -853,13 +866,24 @@ Insert Actor-SpriteComponent pair into mActorSpritePairs.
 
 #### `void RipsawEngine::Engine::removeActorSpritePair`
 
-Remove Actor-SpriteComponent pair from mActorSpritePairs.
+Removes Actor-SpriteComponent pair from mActorSpritePairs.
 
 #### Parameters
 
 | Name | Type | Description |
 |------|------|-------------|
 | `actor` | `class Actor *` | Actor key to be removed from mActorSpritePairs. |
+
+#### `BGManager * RipsawEngine::Engine::createBGManager`
+
+Helper method to create BGManager with specified layers and speeds.
+
+#### Parameters
+
+| Name | Type | Description |
+|------|------|-------------|
+| `layers` | `const std::vector< std::string > &` | Images of each layer. |
+| `layerSpeeds` | `const std::vector< float > &` | Speed values of each layers. |
 
 #### `void RipsawEngine::Engine::actorGoesBelow`
 

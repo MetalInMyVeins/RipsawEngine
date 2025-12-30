@@ -1,5 +1,8 @@
+#include <stdexcept>
+
 #include "RipsawEngine/Core/Engine.hxx"
 #include "RipsawEngine/Core/Game.hxx"
+#include "RipsawEngine/Managers/BGManager.hxx"
 #include "RipsawEngine/Scene/Actor.hxx"
 #include "RipsawEngine/Scene/SpriteComponent.hxx"
 #include "RipsawEngine/Scene/TransformComponent.hxx"
@@ -21,6 +24,12 @@ Engine::Engine(Game* game, const std::string& wname, int w, int h)
 
 Engine::~Engine()
 {
+  for (auto& manager : mManagers)
+  {
+    std::visit([](auto* ptr){
+        delete ptr;
+    }, manager);
+  }
   while (!mActors.empty())
   {
     delete mActors.back();
@@ -219,6 +228,18 @@ void Engine::insertActorSpritePair(const std::pair<Actor*, Component*>& asp)
 void Engine::removeActorSpritePair(class Actor* actor)
 {
   mActorSpritePairs.erase(actor);
+}
+
+BGManager* Engine::createBGManager(const std::vector<std::string>& layers, const std::vector<float>& layerSpeeds)
+{
+  if (layers.size() != layerSpeeds.size())
+  {
+    throw std::runtime_error{"BGManager::setSpeeds(): layers should be provided with equal number of speed factors"};
+  }
+
+  BGManager* tempBGManager{new BGManager{this, layers, layerSpeeds}};
+  mManagers.push_back(tempBGManager);
+  return tempBGManager;
 }
 
 void Engine::actorGoesBelow(Actor* a1, Actor* a2)

@@ -20,8 +20,13 @@ public:
   /// Implements custom update logic for manager.
   void update();
   /// Sets scrolling speed of layers.
+  /// @warning Throws runtime error if number of layers and number of speeds doesn't equate.
   /// @param speeds Vector of speed values of layers.
   void setSpeeds(const std::vector<float>& speeds);
+  /// Changes scrolling speed of layers by specified amount of speed.
+  /// @param dx Speed to change in X-axis.
+  /// @param dy Speed to change in Y-axis.
+  void changeSpeedBy(float dx, float dy = 0);
 
 private:
   /// Pointer to Engine instance.

@@ -1,5 +1,7 @@
 #include <stdexcept>
 
+#include <glm/glm.hpp>
+
 #include "RipsawEngine/Core/Engine.hxx"
 #include "RipsawEngine/Managers/BGManager.hxx"
 #include "RipsawEngine/Scene/Actor.hxx"
@@ -121,6 +123,18 @@ void BGManager::setSpeeds(const std::vector<float>& speeds)
     std::get<1>(triplet)->getTransformComponent()->setVelocity({mLayerSpeeds[i], 0});
     std::get<2>(triplet)->getTransformComponent()->setVelocity({mLayerSpeeds[i], 0});
     ++i;
+  }
+}
+  
+void BGManager::changeSpeedBy(float dx, float dy)
+{
+  for (const auto& triplet : mActorTriplets)
+  {
+    glm::vec2 currentVel{std::get<0>(triplet)->getTransformComponent()->getVelocity()};
+    
+    std::get<0>(triplet)->getTransformComponent()->setVelocity({currentVel.x + dx, currentVel.y + dy});
+    std::get<1>(triplet)->getTransformComponent()->setVelocity({currentVel.x + dx, currentVel.y + dy});
+    std::get<2>(triplet)->getTransformComponent()->setVelocity({currentVel.x + dx, currentVel.y + dy});
   }
 }
 
