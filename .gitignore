@@ -10,5 +10,6 @@ vimbin
 *.nvim
 *.vim
 .rn
+*.log
 quirks
 
