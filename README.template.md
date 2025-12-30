@@ -17,6 +17,9 @@
 - Python 3 (for parsing documentation)
 - GNU Binutils (for `strip`)
 - `upx` (for compressing binary)
+- `libc++`
+- `libc++abi`
+- `lld`
 
 # Directory Layout
 
