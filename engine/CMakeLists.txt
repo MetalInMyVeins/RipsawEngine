@@ -1,4 +1,4 @@
-add_library(RipsawEngine STATIC
+add_library(RipsawEngine SHARED
   src/Actor.cxx
   src/BGManager.cxx
   src/Component.cxx
@@ -15,6 +15,7 @@ set_target_properties(RipsawEngine PROPERTIES
   ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/lib
   LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/lib
   RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/lib
+  INTERPROCEDURAL_OPTIMIZATION TRUE
 )
 
 target_include_directories(RipsawEngine PUBLIC
@@ -22,10 +23,35 @@ target_include_directories(RipsawEngine PUBLIC
 )
 
 target_compile_options(RipsawEngine PRIVATE
-  $<$<AND:$<COMPILE_LANGUAGE:C>,$<CONFIG:Debug>>:${DEBUG_C_FLAGS}>
-  $<$<AND:$<COMPILE_LANGUAGE:CXX>,$<CONFIG:Debug>>:${DEBUG_CXX_FLAGS}>
-  $<$<AND:$<COMPILE_LANGUAGE:C>,$<CONFIG:Release>>:${RELEASE_C_FLAGS}>
-  $<$<AND:$<COMPILE_LANGUAGE:CXX>,$<CONFIG:Release>>:${RELEASE_CXX_FLAGS}>
+  -Wall
+  -Wextra
+  -Wpedantic
+  -Werror
+  -Wshadow
+  -Wconversion
+  -Wsign-conversion
+  -Wformat=2
+  -Wundef
+)
+
+target_compile_options(RipsawEngine PRIVATE
+  $<$<CONFIG:Release>:
+    -O3
+    -fvisibility=hidden
+    -fomit-frame-pointer
+    -fcf-protection=full
+    -fstack-clash-protection
+    -D_FORTIFY_SOURCE=3
+    -DNDEBUG
+  >
+)
+
+target_link_options(RipsawEngine PRIVATE
+  $<$<CONFIG:Release>:
+    -flto
+    -pie
+    -Wl,-z,relro,-z,now
+  >
 )
 
 target_link_libraries(RipsawEngine PRIVATE

@@ -7,25 +7,89 @@ set(CMAKE_C_EXTENSIONS OFF)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
-set(CMAKE_SUPPRESS_DEVELOPER_WARNINGS ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-set(CMAKE_INTERPROCEDURAL_OPTIMIZATION_RELEASE TRUE)
-set(CMAKE_INTERPROCEDURAL_OPTIMIZATION_RELWITHDEBINFO TRUE)
+
+option(USE_LIBCXX OFF)
+option(ENABLE_SANITIZERS_ADDUB "Enable Address + Undefined sanitizers" OFF)
+option(ENABLE_SANITIZERS_MEMUB "Enable Memory + Undefined sanitizers" OFF)
+option(ENABLE_SANITIZERS_THREAD "Enable Thread sanitizer" OFF)
+
+if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang" AND USE_LIBCXX)
+  add_compile_options(-stdlib=libc++)
+  add_link_options(-stdlib=libc++)
+endif()
+
+if(ENABLE_SANITIZERS_ADDUB)
+  if(NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
+    message(FATAL_ERROR "Sanitizers are only supported in Debug builds")
+  endif()
+
+  if(CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
+    add_compile_options(
+      -g
+      -fsanitize=address,undefined
+      -fno-omit-frame-pointer
+    )
+    add_link_options(
+      -fsanitize=address,undefined
+    )
+  endif()
+elseif(ENABLE_SANITIZERS_MEMUB)
+  if(NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
+    message(FATAL_ERROR "Sanitizers are only supported in Debug builds")
+  endif()
+
+  if(CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
+    add_compile_options(
+      -g
+      -fsanitize=memory,undefined
+      -fno-omit-frame-pointer
+    )
+    add_link_options(
+      -fsanitize=memory,undefined
+    )
+  endif()
+elseif(ENABLE_SANITIZERS_THREAD)
+  if(NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
+    message(FATAL_ERROR "Sanitizers are only supported in Debug builds")
+  endif()
+
+  if(CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
+    add_compile_options(
+      -g
+      -fsanitize=thread
+      -fno-omit-frame-pointer
+    )
+    add_link_options(
+      -fsanitize=thread
+    )
+  endif()
+endif()
+
+set(SANITIZER_COUNT 0)
+if(ENABLE_SANITIZERS_ADDUB)
+  math(EXPR SANITIZER_COUNT "${SANITIZER_COUNT}+1")
+endif()
+if(ENABLE_SANITIZERS_MEMUB)
+  math(EXPR SANITIZER_COUNT "${SANITIZER_COUNT}+1")
+endif()
+if(ENABLE_SANITIZERS_THREAD)
+  math(EXPR SANITIZER_COUNT "${SANITIZER_COUNT}+1")
+endif()
+
+if(SANITIZER_COUNT GREATER 1)
+  message(FATAL_ERROR "Only one sanitizer option can be enabled at a time")
+endif()
 
 if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
-    message(STATUS "No build type specified. Setting to Debug.")
-    set(CMAKE_BUILD_TYPE Debug CACHE STRING "Choose the type of build, options are: Debug Release RelWithDebInfo MinSizeRel." FORCE)
-    set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release" "RelWithDebInfo" "MinSizeRel")
+  message(STATUS "No build type specified. Setting to Debug.")
+  set(CMAKE_BUILD_TYPE Debug CACHE STRING "Choose the type of build, options are: Debug Release RelWithDebInfo MinSizeRel." FORCE)
+  set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release" "RelWithDebInfo" "MinSizeRel")
 endif()
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-
-set(DEBUG_C_FLAGS -g -Wall -Wextra -Wpedantic -Werror)
-set(DEBUG_CXX_FLAGS -g -Wall -Wextra -Wpedantic -Werror)
-set(RELEASE_C_FLAGS -Wall -Wextra -Wpedantic -Werror -O3 -flto -ffast-math -march=native -mtune=native -fomit-frame-pointer -funroll-loops -fno-stack-protector -fvisibility=hidden -fcf-protection=full -fstack-clash-protection -D_FORTIFY_SOURCE=3 -fPIE)
-set(RELEASE_CXX_FLAGS -Wall -Wextra -Wpedantic -Werror -O3 -flto -ffast-math -march=native -mtune=native -fomit-frame-pointer -funroll-loops -fno-stack-protector -fvisibility=hidden -fcf-protection=full -fstack-clash-protection -D_FORTIFY_SOURCE=3 -fPIE)
 
 add_subdirectory(engine)
 add_subdirectory(sandbox)
