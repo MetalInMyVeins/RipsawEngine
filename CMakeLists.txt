@@ -23,9 +23,9 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 set(DEBUG_C_FLAGS -g -Wall -Wextra -Wpedantic -Werror)
-set(DEBUG_CXX_FLAGS -g -Wall -Wextra -Wpedantic -Werror -Wno-unused-parameter -Wno-unused-private-field -Wno-unused-variable)
+set(DEBUG_CXX_FLAGS -g -Wall -Wextra -Wpedantic -Werror)
 set(RELEASE_C_FLAGS -Wall -Wextra -Wpedantic -Werror -O3 -flto -ffast-math -march=native -mtune=native -fomit-frame-pointer -funroll-loops -fno-stack-protector -fvisibility=hidden -fcf-protection=full -fstack-clash-protection -D_FORTIFY_SOURCE=3 -fPIE)
-set(RELEASE_CXX_FLAGS -Wall -Wextra -Wpedantic -Werror -Wno-unused-parameter -Wno-unused-private-field -Wno-unused-variable -O3 -flto -ffast-math -march=native -mtune=native -fomit-frame-pointer -funroll-loops -fno-stack-protector -fvisibility=hidden -fcf-protection=full -fstack-clash-protection -D_FORTIFY_SOURCE=3 -fPIE)
+set(RELEASE_CXX_FLAGS -Wall -Wextra -Wpedantic -Werror -O3 -flto -ffast-math -march=native -mtune=native -fomit-frame-pointer -funroll-loops -fno-stack-protector -fvisibility=hidden -fcf-protection=full -fstack-clash-protection -D_FORTIFY_SOURCE=3 -fPIE)
 
 add_subdirectory(engine)
 add_subdirectory(sandbox)
