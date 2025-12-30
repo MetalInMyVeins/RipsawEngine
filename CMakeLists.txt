@@ -19,6 +19,10 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang" AND USE_LIBCXX)
   add_link_options(-stdlib=libc++)
 endif()
 
+if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+  add_link_options(-fuse-ld=lld)
+endif()
+
 if(ENABLE_SANITIZERS_ADDUB)
   if(NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
     message(FATAL_ERROR "Sanitizers are only supported in Debug builds")

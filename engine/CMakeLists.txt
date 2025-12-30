@@ -1,4 +1,10 @@
-add_library(RipsawEngine SHARED
+if(CMAKE_BUILD_TYPE STREQUAL "Release")
+  set(LIB_TYPE STATIC)
+else()
+  set(LIB_TYPE SHARED)
+endif()
+
+add_library(RipsawEngine ${LIB_TYPE}
   src/Actor.cxx
   src/BGManager.cxx
   src/Component.cxx
