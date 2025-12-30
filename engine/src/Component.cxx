@@ -15,7 +15,7 @@ Component::~Component()
   SDL_Log("[INFO] Removed Component: %p from Actor: %p", (void*)this, (void*)mOwner);
 }
 
-void Component::update(double dt)
+void Component::update([[maybe_unused]] double dt)
 {}
 
 }

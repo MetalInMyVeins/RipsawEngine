@@ -12,7 +12,7 @@ void Game::setEngine(Engine* engine)
 void Game::initGame()
 {}
 
-void Game::updateGame(double dt)
+void Game::updateGame([[maybe_unused]] double dt)
 {}
 
 void Game::renderGame()

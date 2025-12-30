@@ -140,7 +140,7 @@ void Actor::helperRegisterComponent(const std::string& compname)
 
 void Actor::createTransformComponent(const glm::vec2& pos, const glm::vec2& vel)
 {
-  Component* tempComponent{new TransformComponent(this, pos, vel)};
+  [[maybe_unused]] Component* tempComponent{new TransformComponent(this, pos, vel)};
 }
 
 void Actor::createSpriteComponent(const std::string& imgfile)

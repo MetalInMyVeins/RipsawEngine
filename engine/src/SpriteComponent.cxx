@@ -47,7 +47,7 @@ SpriteComponent::SpriteComponent(class Actor* actor, SDL_Renderer* renderer, con
   mOwner->helperRegisterComponent("SpriteComponent");
   mOwner->setSpriteComponent(this);
 
-  SDL_Surface* surface{SDL_CreateSurface(size.first, size.second, SDL_PIXELFORMAT_RGBA8888)};
+  SDL_Surface* surface{SDL_CreateSurface(static_cast<int>(size.first), static_cast<int>(size.second), SDL_PIXELFORMAT_RGBA8888)};
   Uint32 col{SDL_MapSurfaceRGBA(surface, std::get<0>(color), std::get<1>(color), std::get<2>(color), std::get<3>(color))};
   SDL_FillSurfaceRect(surface, nullptr, col);
   if (surface != nullptr)

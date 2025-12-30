@@ -37,8 +37,8 @@ bool TransformComponent::isComponentValid() const
 
 void TransformComponent::update(double dt)
 {
-  mPos.x += mVel.x * dt;
-  mPos.y += mVel.y * dt;
+  mPos.x += mVel.x * static_cast<float>(dt);
+  mPos.y += mVel.y * static_cast<float>(dt);
 }
 
 glm::vec2 TransformComponent::getPosition() const
