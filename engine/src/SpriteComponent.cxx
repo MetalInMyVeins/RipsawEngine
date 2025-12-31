@@ -25,13 +25,15 @@ SpriteComponent::SpriteComponent(Actor* actor, SDL_Renderer* renderer, const std
 
   if (mTexture != nullptr)
   {
-    mTexSize = std::make_pair(mTexture->w, mTexture->h);
+    float w{}, h{};
+    SDL_GetTextureSize(mTexture, &w, &h);
+    mTexSize = {w, h};
   }
 
   if (this->isComponentValid())
   {
     SDL_Log("[INFO] Component added: SpriteComponent: %p to Actor: %p", (void*)this, (void*)mOwner);
-    SDL_Log("\tTexture size: %.2f X %.2f", mTexSize.first, mTexSize.second);
+    SDL_Log("\tTexture size: %.2f X %.2f", mTexSize.x, mTexSize.y);
     mOwner->getEngine()->addSprite(this);
   }
   else
@@ -40,14 +42,14 @@ SpriteComponent::SpriteComponent(Actor* actor, SDL_Renderer* renderer, const std
   }
 }
 
-SpriteComponent::SpriteComponent(class Actor* actor, SDL_Renderer* renderer, const std::pair<float, float>& size, const std::tuple<unsigned char, unsigned char, unsigned char, unsigned char>& color)
+SpriteComponent::SpriteComponent(class Actor* actor, SDL_Renderer* renderer, const glm::vec2& size, const std::tuple<unsigned char, unsigned char, unsigned char, unsigned char>& color)
   : Component{actor},
     mRenderer{renderer}
 {
   mOwner->helperRegisterComponent("SpriteComponent");
   mOwner->setSpriteComponent(this);
 
-  SDL_Surface* surface{SDL_CreateSurface(static_cast<int>(size.first), static_cast<int>(size.second), SDL_PIXELFORMAT_RGBA8888)};
+  SDL_Surface* surface{SDL_CreateSurface(static_cast<int>(size.x), static_cast<int>(size.y), SDL_PIXELFORMAT_RGBA8888)};
   Uint32 col{SDL_MapSurfaceRGBA(surface, std::get<0>(color), std::get<1>(color), std::get<2>(color), std::get<3>(color))};
   SDL_FillSurfaceRect(surface, nullptr, col);
   if (surface != nullptr)
@@ -58,13 +60,15 @@ SpriteComponent::SpriteComponent(class Actor* actor, SDL_Renderer* renderer, con
   
   if (mTexture != nullptr)
   {
-    mTexSize = std::make_pair(mTexture->w, mTexture->h);
+    float w{}, h{};
+    SDL_GetTextureSize(mTexture, &w, &h);
+    mTexSize = {w, h};
   }
 
   if (this->isComponentValid())
   {
     SDL_Log("[INFO] Component added: SpriteComponent: %p to Actor: %p", (void*)this, (void*)mOwner);
-    SDL_Log("\tTexture size: %.2f X %.2f", mTexSize.first, mTexSize.second);
+    SDL_Log("\tTexture size: %.2f X %.2f", mTexSize.x, mTexSize.y);
     mOwner->getEngine()->addSprite(this);
   }
   else
@@ -95,23 +99,23 @@ SDL_Texture* SpriteComponent::getTexture() const
   return mTexture;
 }
 
-std::pair<float, float> SpriteComponent::getTexSize() const
+glm::vec2 SpriteComponent::getTexSize() const
 {
-  return {mTexSize.first * mScale, mTexSize.second * mScale};
+  return {mTexSize.x * mScale, mTexSize.y * mScale};
 }
 
-void SpriteComponent::draw()
+void SpriteComponent::draw(double dt)
 {
-  mRotationAmount += mRotationSpeed * mOwner->getEngine()->getDt();
+  mRotationAmount += mRotationSpeed * dt;
 
   this->normalizeDegrees(mRotationAmount);
 
   SDL_FRect rect
   {
-    mOwner->getTransformComponent()->getPosition().x - mTexSize.first * mScale / 2.f,
-    mOwner->getTransformComponent()->getPosition().y - mTexSize.second * mScale / 2.f,
-    mTexSize.first * mScale,
-    mTexSize.second * mScale
+    mOwner->getTransformComponent()->getPosition().x - mTexSize.x * mScale / 2.f,
+    mOwner->getTransformComponent()->getPosition().y - mTexSize.y * mScale / 2.f,
+    mTexSize.x * mScale,
+    mTexSize.y * mScale
   };
   if (!SDL_RenderTextureRotated(mRenderer, mTexture, nullptr, &rect, mRotationAmount, nullptr, mFlipState))
   {
@@ -127,9 +131,9 @@ float SpriteComponent::getScale() const
 void SpriteComponent::setScale(float scale)
 {
   mScale = scale;
-  mTexSizeDynamic.first = mTexSize.first * scale;
-  mTexSizeDynamic.second = mTexSize.second * scale;
-  SDL_Log("[INFO] SpriteComponent: %p scaled by %.2fx: %.2f X %.2f", (void*)this, scale, mTexSizeDynamic.first, mTexSizeDynamic.second);
+  mTexSizeDynamic.x = mTexSize.x * scale;
+  mTexSizeDynamic.y = mTexSize.y * scale;
+  SDL_Log("[INFO] SpriteComponent: %p scaled by %.2fx: %.2f X %.2f", (void*)this, scale, mTexSizeDynamic.x, mTexSizeDynamic.y);
 }
 
 double SpriteComponent::getRotationAmount() const
@@ -211,8 +215,8 @@ void SpriteComponent::fitByAspectRatio()
   SDL_Log("[INFO] SpriteComponent: %p fitting by aspect ratio", (void*)this);
   float sw{static_cast<float>(mOwner->getEngine()->getScreenSize().first)};
   float sh{static_cast<float>(mOwner->getEngine()->getScreenSize().second)};
-  float ratw{sw / mTexSize.first};
-  float rath{sh / mTexSize.second};
+  float ratw{sw / mTexSize.x};
+  float rath{sh / mTexSize.y};
   float ratbig{(ratw >= rath) ? ratw : rath};
   this->setScale(ratbig);
 }

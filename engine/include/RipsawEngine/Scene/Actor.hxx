@@ -6,7 +6,6 @@
 #include <vector>
 
 #include <SDL3/SDL_log.h>
-
 #include <glm/glm.hpp>
 
 namespace RipsawEngine
@@ -86,7 +85,7 @@ public:
   /// Dynamically allocates SpriteComponent.
   /// @param size Size of sprite.
   /// @param color Color of sprite.
-  void createSpriteComponent(const std::pair<float, float>& size, const std::tuple<unsigned char, unsigned char, unsigned char, unsigned char>& color);
+  void createSpriteComponent(const glm::vec2& size, const std::tuple<unsigned char, unsigned char, unsigned char, unsigned char>& color);
 
 private:
   /// Main engine instance.

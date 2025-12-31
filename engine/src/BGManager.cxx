@@ -38,13 +38,13 @@ BGManager::BGManager(Engine* engine, const std::vector<std::string>& layers, con
     right->createTransformComponent({0, 0}, {mLayerSpeeds[i], 0});
     right->createSpriteComponent(mLayers[i]);
     right->getSpriteComponent()->fitByAspectRatio();
-    right->setPosition({middle->getPosition().x + middle->getSpriteComponent()->getTexSize().first, static_cast<float>(mEngine->getScreenSize().second) / 2.f});
+    right->setPosition({middle->getPosition().x + middle->getSpriteComponent()->getTexSize().x, static_cast<float>(mEngine->getScreenSize().second) / 2.f});
     
     left = mEngine->createActor();
     left->createTransformComponent({0, 0}, {mLayerSpeeds[i], 0});
     left->createSpriteComponent(mLayers[i]);
     left->getSpriteComponent()->fitByAspectRatio();
-    left->setPosition({middle->getPosition().x - middle->getSpriteComponent()->getTexSize().first, static_cast<float>(mEngine->getScreenSize().second) / 2.f});
+    left->setPosition({middle->getPosition().x - middle->getSpriteComponent()->getTexSize().x, static_cast<float>(mEngine->getScreenSize().second) / 2.f});
 
     mActorTriplets.push_back(std::make_tuple(middle, right, left));
   }
@@ -58,50 +58,50 @@ void BGManager::update()
     Actor* right{std::get<1>(triplet)};
     Actor* left{std::get<2>(triplet)};
 
-    if (middle->getPosition().x + middle->getSpriteComponent()->getTexSize().first / 2.f < 0)
+    if (middle->getPosition().x + middle->getSpriteComponent()->getTexSize().x / 2.f < 0)
     {
       left->setPosition({
-        right->getPosition().x + right->getSpriteComponent()->getTexSize().first,
+        right->getPosition().x + right->getSpriteComponent()->getTexSize().x,
         static_cast<float>(right->getEngine()->getScreenSize().second) / 2.f
       });
     }
     
-    if (right->getPosition().x + right->getSpriteComponent()->getTexSize().first / 2.f < 0)
+    if (right->getPosition().x + right->getSpriteComponent()->getTexSize().x / 2.f < 0)
     {
       middle->setPosition({
-        left->getPosition().x + left->getSpriteComponent()->getTexSize().first,
+        left->getPosition().x + left->getSpriteComponent()->getTexSize().x,
         static_cast<float>(left->getEngine()->getScreenSize().second) / 2.f
       });
     }
     
-    if (left->getPosition().x + left->getSpriteComponent()->getTexSize().first / 2.f < 0)
+    if (left->getPosition().x + left->getSpriteComponent()->getTexSize().x / 2.f < 0)
     {
       right->setPosition({
-        middle->getPosition().x + middle->getSpriteComponent()->getTexSize().first,
+        middle->getPosition().x + middle->getSpriteComponent()->getTexSize().x,
         static_cast<float>(middle->getEngine()->getScreenSize().second) / 2.f
       });
     }
     
-    if (middle->getPosition().x - middle->getSpriteComponent()->getTexSize().first / 2.f > static_cast<float>(middle->getEngine()->getScreenSize().first))
+    if (middle->getPosition().x - middle->getSpriteComponent()->getTexSize().x / 2.f > static_cast<float>(middle->getEngine()->getScreenSize().first))
     {
       right->setPosition({
-        left->getPosition().x - left->getSpriteComponent()->getTexSize().first,
+        left->getPosition().x - left->getSpriteComponent()->getTexSize().x,
         static_cast<float>(left->getEngine()->getScreenSize().second) / 2.f
       });
     }
     
-    if (left->getPosition().x - left->getSpriteComponent()->getTexSize().first / 2.f > static_cast<float>(left->getEngine()->getScreenSize().first))
+    if (left->getPosition().x - left->getSpriteComponent()->getTexSize().x / 2.f > static_cast<float>(left->getEngine()->getScreenSize().first))
     {
       middle->setPosition({
-        right->getPosition().x - right->getSpriteComponent()->getTexSize().first,
+        right->getPosition().x - right->getSpriteComponent()->getTexSize().x,
         static_cast<float>(right->getEngine()->getScreenSize().second) / 2.f
       });
     }
     
-    if (right->getPosition().x - right->getSpriteComponent()->getTexSize().first / 2.f > static_cast<float>(right->getEngine()->getScreenSize().first))
+    if (right->getPosition().x - right->getSpriteComponent()->getTexSize().x / 2.f > static_cast<float>(right->getEngine()->getScreenSize().first))
     {
       left->setPosition({
-        middle->getPosition().x - middle->getSpriteComponent()->getTexSize().first,
+        middle->getPosition().x - middle->getSpriteComponent()->getTexSize().x,
         static_cast<float>(middle->getEngine()->getScreenSize().second) / 2.f
       });
     }

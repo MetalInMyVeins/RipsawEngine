@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Component.hxx"
-
 #include <glm/glm.hpp>
+
+#include "Component.hxx"
 
 namespace RipsawEngine
 {

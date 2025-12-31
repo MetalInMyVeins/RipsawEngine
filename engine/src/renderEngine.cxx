@@ -11,7 +11,7 @@ void Engine::renderEngine()
 
   for (const auto& sprite : mSprites)
   {
-    sprite->draw();
+    sprite->draw(mDt);
   }
 
   SDL_RenderPresent(mRenderer);

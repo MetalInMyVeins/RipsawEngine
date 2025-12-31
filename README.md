@@ -326,7 +326,7 @@ Dynamically allocates SpriteComponent .
 
 | Name | Type | Description |
 |------|------|-------------|
-| `size` | `const std::pair< float, float > &` | Size of sprite. |
+| `size` | `const glm::vec2 &` | Size of sprite. |
 | `color` | `const std::tuple< unsigned char, unsigned char, unsigned char, unsigned char > &` | Color of sprite. |
 
 
@@ -447,8 +447,8 @@ Overridable method that says if a specific component is valid.
 - `SDL_Renderer*` `mRenderer`: Renderer.
 - `std::string` `mImgFile`: Image file path.
 - `SDL_Texture*` `mTexture`: Main texture.
-- `std::pair<float, float>` `mTexSize`: Texture size.
-- `std::pair<float, float>` `mTexSizeDynamic`: Modified texture dimension after scale change.
+- `glm::vec2` `mTexSize`: Texture size.
+- `glm::vec2` `mTexSizeDynamic`: Modified texture dimension after scale change.
 - `float` `mScale`: Texture scale.
 - `double` `mRotationSpeed`: Speed of rotation (degree) controlling how fast to rotate sprite.
 - `double` `mRotationAmount`: The amount of rotation (degree) to take effect in texture.
@@ -479,7 +479,7 @@ Constructs sprite component with owning actor, renderer, rectangle size, and col
 |------|------|-------------|
 | `actor` | `class Actor *` | Actor owning the component. |
 | `renderer` | `SDL_Renderer *` | Renderer. |
-| `size` | `const std::pair< float, float > &` | Pair of float containing rectangle width and height. |
+| `size` | `const glm::vec2 &` | Pair of float containing rectangle width and height. |
 | `color` | `const std::tuple< unsigned char, unsigned char, unsigned char, unsigned char > &` | Tuple of RGBA color values. |
 
 #### `RipsawEngine::SpriteComponent::~SpriteComponent`
@@ -494,13 +494,19 @@ Checks if SpriteComponent is valid.
 
 Returns mTexture.
 
-#### `std::pair< float, float > RipsawEngine::SpriteComponent::getTexSize`
+#### `glm::vec2 RipsawEngine::SpriteComponent::getTexSize`
 
 Returns texture size.
 
 #### `void RipsawEngine::SpriteComponent::draw`
 
 Draws texture on window.
+
+#### Parameters
+
+| Name | Type | Description |
+|------|------|-------------|
+| `dt` | `double` | Delta-time. |
 
 #### `float RipsawEngine::SpriteComponent::getScale`
 

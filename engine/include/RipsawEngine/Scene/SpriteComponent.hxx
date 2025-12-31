@@ -6,6 +6,7 @@
 
 #include <SDL3/SDL.h>
 #include <SDL3_image/SDL_image.h>
+#include <glm/glm.hpp>
 
 #include "Component.hxx"
 
@@ -25,7 +26,7 @@ public:
   /// @param renderer Renderer.
   /// @param size Pair of float containing rectangle width and height.
   /// @param color Tuple of RGBA color values.
-  SpriteComponent(class Actor* actor, SDL_Renderer* renderer, const std::pair<float, float>& size = {}, const std::tuple<unsigned char, unsigned char, unsigned char, unsigned char>& color = {});
+  SpriteComponent(class Actor* actor, SDL_Renderer* renderer, const glm::vec2& size = {}, const std::tuple<unsigned char, unsigned char, unsigned char, unsigned char>& color = {});
   /// Destructs SpriteComponent.
   ~SpriteComponent();
   /// Checks if SpriteComponent is valid.
@@ -33,9 +34,10 @@ public:
   /// Returns mTexture.
   SDL_Texture* getTexture() const;
   /// Returns texture size.
-  std::pair<float, float> getTexSize() const;
+  glm::vec2 getTexSize() const;
   /// Draws texture on window.
-  virtual void draw();
+  /// @param dt Delta-time.
+  virtual void draw(double dt);
   /// Returns scale of texture.
   float getScale() const;
   /// Sets scale of texture.
@@ -74,9 +76,9 @@ private:
   /// Main texture.
   SDL_Texture* mTexture{nullptr};
   /// Texture size.
-  std::pair<float, float> mTexSize{};
+  glm::vec2 mTexSize{};
   /// Modified texture dimension after scale change.
-  std::pair<float, float> mTexSizeDynamic{};
+  glm::vec2 mTexSizeDynamic{};
   /// Texture scale.
   float mScale{1.f};
   /// Speed of rotation (degree) controlling how fast to rotate sprite.
