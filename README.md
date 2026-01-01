@@ -48,6 +48,7 @@
 │   │           ├── Component.hxx
 │   │           ├── Scene.hxx
 │   │           ├── SpriteComponent.hxx
+│   │           ├── SpritesheetComponent.hxx
 │   │           └── TransformComponent.hxx
 │   └── src
 │       ├── Actor.cxx
@@ -56,6 +57,7 @@
 │       ├── Engine.cxx
 │       ├── Game.cxx
 │       ├── SpriteComponent.cxx
+│       ├── SpritesheetComponent.cxx
 │       ├── TransformComponent.cxx
 │       ├── processInput.cxx
 │       ├── renderEngine.cxx
@@ -63,35 +65,16 @@
 ├── sandbox
 │   ├── CMakeLists.txt
 │   ├── assets
-│   │   ├── 1.png
-│   │   ├── 10.png
-│   │   ├── 11.png
-│   │   ├── 12.png
-│   │   ├── 13.png
-│   │   ├── 14.png
-│   │   ├── 15.png
-│   │   ├── 16.png
-│   │   ├── 17.png
-│   │   ├── 18.png
-│   │   ├── 19.png
-│   │   ├── 2.png
-│   │   ├── 20.png
-│   │   ├── 3.png
-│   │   ├── 4.png
-│   │   ├── 5.png
-│   │   ├── 6.png
-│   │   ├── 7.png
-│   │   ├── 8.png
-│   │   ├── 9.png
 │   │   ├── bglayer1.png
 │   │   ├── bglayer2.png
-│   │   └── ship.png
+│   │   ├── ships1.png
+│   │   └── ships2.png
 │   └── src
 │       └── main.cxx
 └── scripts
     └── gen_docs.py
 
-12 directories, 52 files
+12 directories, 35 files
 
 ```
 
@@ -106,7 +89,7 @@
 # TODO
 
 - Controlled sprite draw order (complete)
-- Spritesheet support (in progress)
+- Spritesheet support (complete)
 - Sprite animation (in progress)
 
 # API Documentation
@@ -329,6 +312,18 @@ Dynamically allocates SpriteComponent .
 | `size` | `const glm::vec2 &` | Size of sprite. |
 | `color` | `const std::tuple< unsigned char, unsigned char, unsigned char, unsigned char > &` | Color of sprite. |
 
+#### `void RipsawEngine::Actor::createSpritesheetComponent`
+
+Dynamically allocates SpritesheetComponent .
+
+#### Parameters
+
+| Name | Type | Description |
+|------|------|-------------|
+| `imgfile` | `const std::string &` | Image file for sprite. |
+| `dims` | `const glm::vec2 &` | Dimension of spritesheet {col, row}. |
+| `defaultCoord` | `const glm::vec2 &` | Default coordinate of spritesheet for rendering. |
+
 
 ---
 
@@ -526,6 +521,10 @@ Sets scale of texture.
 
 Returns amount of rotation mRotationAmount.
 
+#### `double RipsawEngine::SpriteComponent::getRotationSpeed`
+
+Returns rotation speed mRotationSpeed.
+
 #### `void RipsawEngine::SpriteComponent::setRotationSpeed`
 
 Sets rotation speed mRotationSpeed.
@@ -568,6 +567,16 @@ Flips sprite vertically unless any rotation has occurred.
 
 Sets flip state to default.
 
+#### `void RipsawEngine::SpriteComponent::changeCoord`
+
+Virtual function to be called from SpritesheetComponent .
+
+#### Parameters
+
+| Name | Type | Description |
+|------|------|-------------|
+| `coord` | `const glm::vec2 &` |  |
+
 #### `void RipsawEngine::SpriteComponent::fitByAspectRatio`
 
 Fits sprite covering entire screen preserving aspect ratio.
@@ -581,6 +590,70 @@ Normalizes angle in [0, 360) range.
 | Name | Type | Description |
 |------|------|-------------|
 | `degrees` | `double &` | Angle in degrees to be normalized. |
+
+#### `void RipsawEngine::SpriteComponent::setRotationAmount`
+
+Sets amount of rotation.
+
+#### Parameters
+
+| Name | Type | Description |
+|------|------|-------------|
+| `rotationAmount` | `double` | Amount of rotation. |
+
+#### `SDL_Renderer * RipsawEngine::SpriteComponent::getRenderer`
+
+Returns renderer mRenderer.
+
+#### `SDL_FlipMode RipsawEngine::SpriteComponent::getFlipState`
+
+Returns flip state mFlipState.
+
+
+---
+
+## RipsawEngine::SpritesheetComponent
+
+### Member Variables
+
+- `glm::vec2` `mDims`: Dimension of spritesheet in {col, row} where col is number of sprites horizontally, and row is number of sprites vertically.
+- `glm::vec2` `mDefaultCoord`: Default coordinate of spritesheet.
+
+### Member Functions
+
+#### `RipsawEngine::SpritesheetComponent::SpritesheetComponent`
+
+Constructs spritesheet component with owning actor, renderer, spritesheet image, dimension of spritesheet, and default rendering coordinate of spritesheet.
+
+#### Parameters
+
+| Name | Type | Description |
+|------|------|-------------|
+| `actor` | `class Actor *` | Actor owning the component. |
+| `renderer` | `SDL_Renderer *` | Renderer. |
+| `imgfile` | `const std::string &` | Path to image file. |
+| `dims` | `const glm::vec2 &` | Dimension of spritesheet. |
+| `defaultCoord` | `const glm::vec2 &` | Default coordinate of spritesheet. |
+
+#### `void RipsawEngine::SpritesheetComponent::draw`
+
+Draws texture on window.
+
+#### Parameters
+
+| Name | Type | Description |
+|------|------|-------------|
+| `dt` | `double` | Delta-time. |
+
+#### `void RipsawEngine::SpritesheetComponent::changeCoord`
+
+Changes default coordinate of spritesheet.
+
+#### Parameters
+
+| Name | Type | Description |
+|------|------|-------------|
+| `coord` | `const glm::vec2 &` |  |
 
 
 ---
