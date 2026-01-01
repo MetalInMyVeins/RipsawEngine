@@ -22,25 +22,27 @@ void SpritesheetComponent::draw(double dt)
   double rotationAmount{SpriteComponent::getRotationAmount()};
   double rotationSpeed{SpriteComponent::getRotationSpeed()};
   rotationAmount += rotationSpeed * dt;
-  SpriteComponent::setRotationAmount(rotationAmount);
   SpriteComponent::normalizeDegrees(rotationAmount);
+  SpriteComponent::setRotationAmount(rotationAmount);
   SDL_Texture* texture{SpriteComponent::getTexture()};
   glm::vec2 texSize{SpriteComponent::getTexSize()};
   float scale{SpriteComponent::getScale()};
+  float texw{texSize.x / mDims.x};
+  float texh{texSize.y / mDims.y};
   
   SDL_FRect srcrect
   {
-    texSize.x / mDims.x * (mDefaultCoord.x - 1),
-    texSize.y / mDims.y * (mDefaultCoord.y - 1),
-    texSize.x / mDims.x,
-    texSize.y / mDims.y
+    texw * (mDefaultCoord.x - 1),
+    texh * (mDefaultCoord.y - 1),
+    texw,
+    texh
   };
   SDL_FRect dstrect
   {
-    mOwner->getTransformComponent()->getPosition().x - texSize.x / mDims.x * scale / 2.f,
-    mOwner->getTransformComponent()->getPosition().y - texSize.y / mDims.y * scale / 2.f,
-    texSize.x / mDims.x * scale,
-    texSize.y / mDims.y * scale
+    mOwner->getTransformComponent()->getPosition().x - texw * scale / 2.f,
+    mOwner->getTransformComponent()->getPosition().y - texh * scale / 2.f,
+    texw * scale,
+    texh * scale
   };
   if (!SDL_RenderTextureRotated(SpriteComponent::getRenderer(), texture, &srcrect, &dstrect, rotationAmount, nullptr, SpriteComponent::getFlipState()))
   {
