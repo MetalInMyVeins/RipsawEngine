@@ -86,6 +86,11 @@ public:
   /// @param size Size of sprite.
   /// @param color Color of sprite.
   void createSpriteComponent(const glm::vec2& size, const std::tuple<unsigned char, unsigned char, unsigned char, unsigned char>& color);
+  /// Dynamically allocates SpritesheetComponent.
+  /// @param imgfile Image file for sprite.
+  /// @param dims Dimension of spritesheet {col, row}.
+  /// @param defaultCoord Default coordinate of spritesheet for rendering.
+  void createSpritesheetComponent(const std::string& imgfile, const glm::vec2& dims, const glm::vec2& defaultCoord = {1, 1});
 
 private:
   /// Main engine instance.

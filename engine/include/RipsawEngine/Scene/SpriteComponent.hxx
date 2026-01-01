@@ -45,6 +45,8 @@ public:
   void setScale(float scale);
   /// Returns amount of rotation mRotationAmount.
   double getRotationAmount() const;
+  /// Returns rotation speed mRotationSpeed.
+  double getRotationSpeed();
   /// Sets rotation speed mRotationSpeed.
   /// @param rotation Rotation speed per second in degrees by which rotation amount would be incremented/decremented.
   void setRotationSpeed(double rotation);
@@ -60,6 +62,17 @@ public:
   void flipVertically();
   /// Sets flip state to default.
   void flipDefault();
+  /// Virtual function to be called from SpritesheetComponent.
+  virtual void changeCoord(const glm::vec2& coord);
+
+protected:
+  /// Sets amount of rotation.
+  /// @param rotationAmount Amount of rotation.
+  void setRotationAmount(double rotationAmount);
+  /// Returns renderer mRenderer.
+  SDL_Renderer* getRenderer() const;
+  /// Returns flip state mFlipState.
+  SDL_FlipMode getFlipState() const;
 
 public:
   /// Fits sprite covering entire screen preserving aspect ratio.

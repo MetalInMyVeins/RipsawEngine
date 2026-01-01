@@ -107,7 +107,6 @@ glm::vec2 SpriteComponent::getTexSize() const
 void SpriteComponent::draw(double dt)
 {
   mRotationAmount += mRotationSpeed * dt;
-
   this->normalizeDegrees(mRotationAmount);
 
   SDL_FRect rect
@@ -139,6 +138,11 @@ void SpriteComponent::setScale(float scale)
 double SpriteComponent::getRotationAmount() const
 {
   return mRotationAmount;
+}
+
+double SpriteComponent::getRotationSpeed()
+{
+  return mRotationSpeed;
 }
 
 void SpriteComponent::setRotationSpeed(double rotation)
@@ -208,6 +212,24 @@ void SpriteComponent::flipDefault()
   }
 
   mFlipState = SDL_FLIP_NONE;
+}
+
+void SpriteComponent::changeCoord([[maybe_unused]] const glm::vec2& coord)
+{}
+
+void SpriteComponent::setRotationAmount(double rotationAmount)
+{
+  mRotationAmount = rotationAmount;
+}
+ 
+SDL_Renderer* SpriteComponent::getRenderer() const
+{
+  return mRenderer;
+}
+
+SDL_FlipMode SpriteComponent::getFlipState() const
+{
+  return mFlipState;
 }
 
 void SpriteComponent::fitByAspectRatio()

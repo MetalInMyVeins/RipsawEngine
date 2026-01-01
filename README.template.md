@@ -35,7 +35,7 @@
 # TODO
 
 - Controlled sprite draw order (complete)
-- Spritesheet support (in progress)
+- Spritesheet support (complete)
 - Sprite animation (in progress)
 
 # API Documentation

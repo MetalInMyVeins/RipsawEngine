@@ -6,6 +6,7 @@
 #include "RipsawEngine/Scene/Component.hxx"
 #include "RipsawEngine/Scene/TransformComponent.hxx"
 #include "RipsawEngine/Scene/SpriteComponent.hxx"
+#include "RipsawEngine/Scene/SpritesheetComponent.hxx"
 
 namespace RipsawEngine
 {
@@ -152,7 +153,13 @@ void Actor::createSpriteComponent(const std::string& imgfile)
 
 void Actor::createSpriteComponent(const glm::vec2& size, const std::tuple<unsigned char, unsigned char, unsigned char, unsigned char>& color)
 {
-  Component* tempComponent{new SpriteComponent(this, mEngine->getRenderer(), size, color)};
+  Component* tempComponent{new SpriteComponent{this, mEngine->getRenderer(), size, color}};
+  mEngine->insertActorSpritePair(std::make_pair(this, tempComponent));
+}
+
+void Actor::createSpritesheetComponent(const std::string& imgfile, const glm::vec2& dims, const glm::vec2& defaultCoords)
+{
+  Component* tempComponent{new SpritesheetComponent{this, mEngine->getRenderer(), imgfile, dims, defaultCoords}};
   mEngine->insertActorSpritePair(std::make_pair(this, tempComponent));
 }
 

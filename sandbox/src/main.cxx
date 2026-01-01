@@ -20,14 +20,13 @@ public:
     bgm = mEngine->createBGManager({"sandbox/assets/bglayer1.png", "sandbox/assets/bglayer2.png"}, {-240, -310});
     a1 = mEngine->createActor();
     a1->createTransformComponent({600, 350}, {});
-    a1->createSpriteComponent("sandbox/assets/7.png");
+    a1->createSpritesheetComponent("sandbox/assets/ships2.png", {4, 5}, {3, 2});
     a1->getSpriteComponent()->rotateClockwiseAmount(90);
     a1->getSpriteComponent()->setRotationSpeed(100);
     
     a2 = mEngine->createActor();
     a2->createTransformComponent({450, 350}, {});
-    a2->createSpriteComponent("sandbox/assets/20.png");
-    a2->getSpriteComponent()->rotateClockwiseAmount(90);
+    a2->createSpritesheetComponent("sandbox/assets/ships1.png", {4, 2}, {1, 1});
     a2->setVelocity({150, 0});
   }
 
@@ -36,15 +35,15 @@ public:
     bgm->update();
     if (a2->getPosition().x > 750.f)
     {
-      a2->getSpriteComponent()->rotateClockwiseAmount(180);
       a2->setVelocity({-150, 0});
+      a2->getSpriteComponent()->changeCoord({1, 2});
       mEngine->actorGoesBelow(a2, a1);
       bgm->changeSpeedBy(-100);
     }
     if (a2->getPosition().x < 450.f)
     {
-      a2->getSpriteComponent()->rotateAntiClockwiseAmount(180);
       a2->setVelocity({150, 0});
+      a2->getSpriteComponent()->changeCoord({1, 1});
       mEngine->actorGoesAbove(a2, a1);
       bgm->changeSpeedBy(100);
     }
