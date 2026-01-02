@@ -64,6 +64,6 @@ Features in the engine are added incrementally. And each commit contains a demo 
 
 # License
 
-Copyright © 2025  Hossain Md. Fahim  <hossainmdfahim66@gmail.com>  
+Copyright © 2026  Hossain Md. Fahim  <hossainmdfahim66@gmail.com>  
 See [LICENSE](./LICENSE.md) for more information.
 
