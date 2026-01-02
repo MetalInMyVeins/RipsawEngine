@@ -20,6 +20,7 @@
 - `libc++` (for better compliance with sanitizers)
 - `libc++abi`
 - `lld` (for clang-specific builds)
+- `valgrind` (for leak detection)
 
 # Directory Layout
 
@@ -50,6 +51,29 @@ Features in the engine are added incrementally. And each commit contains a demo 
 - Controlled sprite draw order (complete)
 - Spritesheet support (complete)
 - Sprite animation (in progress)
+
+# Building
+
+`build.sh` is provided for easier building of engine and sandbox demo providing multiple build options. The demo binary path after building is `sandbox/bin/sandbox`. Examples:
+
+```bash
+# For debug build with libstdc++ (works well with valgrind)
+./build.sh
+# For debug build with libc++
+./build.sh --libcxx
+# For debug build with ASan + UBSan
+./build.sh --aubsan
+# For debug build with MSan
+./build.sh --msan
+# For debug build with TSan
+./build.sh --tsan
+# For release build
+./build.sh --release
+# For building with gcc (default is clang)
+./build.sh --gcc
+# For release build with gcc
+./build.sh --gcc --release
+```
 
 # API Documentation
 
