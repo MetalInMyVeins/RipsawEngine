@@ -130,7 +130,8 @@ Features in the engine are added incrementally. And each commit contains a demo 
 ./build.sh --gcc --release
 ```
 
-# API Documentation
+<details>
+<summary><strong>API Documentation</strong></summary>
 
 <!-- AUTODOC:BEGIN -->
 
@@ -1041,6 +1042,7 @@ Custom render logic for Game .
 
 
 <!-- AUTODOC:END -->
+</details>
 
 # Note
 
