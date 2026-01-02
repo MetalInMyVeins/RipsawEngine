@@ -1,6 +1,6 @@
 # RipsawEngine
 
-2D/3D game engine being implemented from scratch in C++.
+2D/3D game engine being implemented from scratch in C++. This is a pet project and I work on it in my free time, for fun. Grew up playing lots of games and it's been quite some time I have been wishing to write my own engine. As I enjoy understanding and working on complex systems, this is the perfect type of project to have fun from. So, seeing where it goes.
 
 # Dependencies
 
@@ -17,9 +17,9 @@
 - Python 3 (for parsing documentation)
 - GNU Binutils (for `strip`)
 - `upx` (for compressing binary)
-- `libc++`
+- `libc++` (for better compliance with sanitizers)
 - `libc++abi`
-- `lld`
+- `lld` (for clang-specific builds)
 
 # Directory Layout
 
@@ -85,6 +85,19 @@
 - `engine/`: All engine code goes here.
 - `sandbox/`: All engine feature testing code goes here.
 - `scripts/`: All supplementary scripts go here.
+
+# Features
+
+Features in the engine are added incrementally. And each commit contains a demo of the feature in sandbox which can be built and run. Engine is still in zygote phase, so not a lot of features as of now. The notable features for now include but are not limited to:
+
+- Actor-Component system
+- Strong ownership model
+- Clear separation of engine code and game code
+- 2D rendering pipeline
+- Flexible but strict build system
+- Sanitizer-aware debug builds by default (ASan, UBSan, TSan)
+- Strict compliance with C++ standard
+- Detailed documentation of engine code
 
 # TODO
 
