@@ -131,7 +131,7 @@ Features in the engine are added incrementally. And each commit contains a demo 
 ```
 
 <details>
-<summary><strong>API Documentation</strong></summary>
+<summary><h1>API Documentation</h1></summary>
 
 <!-- AUTODOC:BEGIN -->
 
