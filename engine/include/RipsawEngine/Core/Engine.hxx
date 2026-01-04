@@ -89,11 +89,11 @@ private:
 
 public:
   /// Dynamically allocates actor.
-  /// @details This is a high level virtual member function to be called from sandbox to create actor. It returns pointer to the allocated actor for custom manipulation. The returned pointer should never be deleted explicitly as Engine handles the ownership. An actor should only be detroyed using destroyActor() when needed. After destroyActor() is called on an actor, trying to dereference that actor would result in crash as the actor is nullified.
+  /// @details This is a high level virtual member function to create actor. It returns pointer to the allocated actor for custom manipulation. The returned pointer should never be deleted manually as Engine handles the ownership. An actor should only be detroyed using destroyActor() when needed. After destroyActor() is called on an actor, trying to dereference that actor would result in crash as the actor would be nullified. So it's highly recommended to do any operation on the returned Actor pointer by checking if it's nullptr.
   /// @return Returns pointer to the allocated actor.
   virtual class Actor* createActor();
-  /// Destroys specified actor by deleting and removing it from mActors and nullifies at the end.
-  /// @details This method removes specified actor from mActors. But if removal occurs while actors are going through the update loop, this might crash the engine. To prevent that, a boolean signal mActorsBeingUpdated is introduced which is set before entering the update loop and unset after exiting the loop. The method first checks if the signal is set. If unset, it destroys the actor right away. But if set, it pushes the actor in another vector mActorsToBeKilled. Then, this method is called again on every actors in this vector before entering the update loop.
+  /// Destroys specified actor by deleting and removing it from mActors, nullifying at the end.
+  /// @details This method removes specified actor from mActors. But if removal occurs while actors are going through the update loop, this might crash the engine. To prevent that, a boolean signal mActorsBeingUpdated is introduced which is set before entering the update loop and unset after exiting the loop. The method first checks if the signal is set. If unset, it destroys the actor right away. But if set, it pushes the actor in another vector mActorsToBeKilled. Then, this method is called again on every actors of mActorsToBeKilled before entering the update loop.
   /// @param actor Adress of actor to be destroyed.
   void destroyActor(class Actor** actor);
   /// Adds actor to @ref mActors.
@@ -127,10 +127,12 @@ public:
 
 public:
   /// Moves sprite component associated with first actor below the sprite component associated with second actor in mSprites.
+  /// @details This member function directly manipulates the order of sprite components in mSprites.
   /// @param a1 Actor to be moved.
   /// @param a2 Actor below which a1 would go to.
   void actorGoesBelow(class Actor* a1, class Actor* a2);
   /// Moves sprite component associated with first actor above the sprite component associated with second actor in mSprites.
+  /// @details This member function directly manipulates the order of sprite components in mSprites.
   /// @param a1 Actor to be moved.
   /// @param a2 Actor above which a1 would go to.
   void actorGoesAbove(class Actor* a1, class Actor* a2);

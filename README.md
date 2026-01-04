@@ -865,7 +865,7 @@ Defaults to opengl.  Current valid values are: opengl, vulkan, software.
 
 Dynamically allocates actor.
 
-This is a high level virtual member function to be called from sandbox to create actor. It returns pointer to the allocated actor for custom manipulation. The returned pointer should never be deleted explicitly as Engine handles the ownership. An actor should only be detroyed using destroyActor() when needed. After destroyActor() is called on an actor, trying to dereference that actor would result in crash as the actor is nullified.
+This is a high level virtual member function to create actor. It returns pointer to the allocated actor for custom manipulation. The returned pointer should never be deleted manually as Engine handles the ownership. An actor should only be detroyed using destroyActor() when needed. After destroyActor() is called on an actor, trying to dereference that actor would result in crash as the actor would be nullified. So it's highly recommended to do any operation on the returned Actor pointer by checking if it's nullptr.
 
 #### Return
 
@@ -875,9 +875,9 @@ This is a high level virtual member function to be called from sandbox to create
 
 #### `void RipsawEngine::Engine::destroyActor`
 
-Destroys specified actor by deleting and removing it from mActors and nullifies at the end.
+Destroys specified actor by deleting and removing it from mActors, nullifying at the end.
 
-This method removes specified actor from mActors. But if removal occurs while actors are going through the update loop, this might crash the engine. To prevent that, a boolean signal mActorsBeingUpdated is introduced which is set before entering the update loop and unset after exiting the loop. The method first checks if the signal is set. If unset, it destroys the actor right away. But if set, it pushes the actor in another vector mActorsToBeKilled. Then, this method is called again on every actors in this vector before entering the update loop.
+This method removes specified actor from mActors. But if removal occurs while actors are going through the update loop, this might crash the engine. To prevent that, a boolean signal mActorsBeingUpdated is introduced which is set before entering the update loop and unset after exiting the loop. The method first checks if the signal is set. If unset, it destroys the actor right away. But if set, it pushes the actor in another vector mActorsToBeKilled. Then, this method is called again on every actors of mActorsToBeKilled before entering the update loop.
 
 #### Parameters
 
@@ -962,6 +962,8 @@ Helper method to create BGManager with specified layers and speeds.
 
 Moves sprite component associated with first actor below the sprite component associated with second actor in mSprites.
 
+This member function directly manipulates the order of sprite components in mSprites.
+
 #### Parameters
 
 | Name | Type | Description |
@@ -972,6 +974,8 @@ Moves sprite component associated with first actor below the sprite component as
 #### `void RipsawEngine::Engine::actorGoesAbove`
 
 Moves sprite component associated with first actor above the sprite component associated with second actor in mSprites.
+
+This member function directly manipulates the order of sprite components in mSprites.
 
 #### Parameters
 
