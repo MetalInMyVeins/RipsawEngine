@@ -32,6 +32,7 @@
 - `engine/`: All engine code goes here.
 - `sandbox/`: All engine feature testing code goes here.
 - `scripts/`: All supplementary scripts go here.
+- `supp/`: All suppression files go here. Suppression files are files to suppress errors from libraries that are out of scope of the engine.
 
 # Features
 

@@ -73,10 +73,12 @@
 │   │   └── ships2.png
 │   └── src
 │       └── main.cxx
-└── scripts
-    └── gen_docs.py
+├── scripts
+│   └── gen_docs.py
+└── supp
+    └── tsan.supp
 
-12 directories, 36 files
+13 directories, 37 files
 
 ```
 
@@ -87,6 +89,7 @@
 - `engine/`: All engine code goes here.
 - `sandbox/`: All engine feature testing code goes here.
 - `scripts/`: All supplementary scripts go here.
+- `supp/`: All suppression files go here. Suppression files are files to suppress errors from libraries that are out of scope of the engine.
 
 # Features
 
