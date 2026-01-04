@@ -12,7 +12,7 @@ void Engine::updateEngine()
 
   // Delta-time calculation goes here.
   Uint64 now{SDL_GetTicksNS()};
-  double dt{ (now - mTicksCount) / 1'000'000'000.0 };
+  double dt{ static_cast<double>(now - mTicksCount) / 1'000'000'000.0 };
   mDt = dt;
   mTicksCount = now;
 

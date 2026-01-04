@@ -853,7 +853,7 @@ Returns delta-time.
 
 Sets renderer backend mRendererBackend of engine.
 
-Current valid values are: opengl, vulkan, software.
+Defaults to opengl.  Current valid values are: opengl, vulkan, software.
 
 #### Parameters
 

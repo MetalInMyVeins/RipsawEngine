@@ -48,10 +48,10 @@ public:
   std::pair<int, int> getScreenSize() const;
   /// Returns delta-time.
   double getDt() const;
-  /// Sets renderer backend mRendererBackend of engine.
+  /// Sets renderer backend mRendererBackend of engine. Defaults to opengl.
   /// @details Current valid values are: opengl, vulkan, software.
   /// @param backend Renderer backend.
-  void setRendererBackend(const std::string& backend);
+  void setRendererBackend(const std::string& backend = "opengl");
 
 private:
   /// @brief Processes inputs.
