@@ -28,11 +28,11 @@ void Engine::updateEngine()
     mFrames = 0;
     mtimer = 0;
 
-    for (const auto& actor : mActors)
+    for ([[maybe_unused]] const auto& actor : mActors)
     {
-      SDL_Log("[INFO] Actor: %p", (void*)actor);
-      SDL_Log("\tPosition: (%.2f, %.2f)", actor->getPosition().x, actor->getPosition().y);
-      SDL_Log("\tVelocity: (%.2f, %.2f)", actor->getVelocity().x, actor->getVelocity().y);
+      // SDL_Log("[INFO] Actor: %p", (void*)actor);
+      // SDL_Log("\tPosition: (%.2f, %.2f)", actor->getPosition().x, actor->getPosition().y);
+      // SDL_Log("\tVelocity: (%.2f, %.2f)", actor->getVelocity().x, actor->getVelocity().y);
     }
   }
 
