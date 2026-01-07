@@ -791,6 +791,7 @@ Sets velocity.
 - `double` `mFrameTime`: Timer denoting if 1 second has passed.
 - `int` `mFrames`: Frames per second.
 - `const double` `mDtClamp`: Delta-time clamp value clamped to 60 FPS dt equivalent.
+- `bool` `mVsyncEnabled`: 
 - `class Game*` `mGame`: Extendible Game class.
 - `std::vector<class Actor*>` `mActors`: List of all actors.
 - `std::vector<class Actor**>` `mActorsToBeKilled`: List of actors that are to be killed before next actor update begins.
@@ -869,6 +870,16 @@ Returns screen size in a pair.
 #### `double RipsawEngine::Engine::getDt`
 
 Returns delta-time.
+
+#### `void RipsawEngine::Engine::setVsync`
+
+Enables/disables vsync.
+
+#### Parameters
+
+| Name | Type | Description |
+|------|------|-------------|
+| `vsync` | `bool` | Boolean vsync value. |
 
 #### `void RipsawEngine::Engine::setRendererBackend`
 

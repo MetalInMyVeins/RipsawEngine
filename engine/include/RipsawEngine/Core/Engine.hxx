@@ -59,6 +59,9 @@ public:
   std::pair<int, int> getScreenSize() const;
   /// Returns delta-time.
   double getDt() const;
+  /// Enables/disables vsync.
+  /// @param vsync Boolean vsync value.
+  void setVsync(bool vsync);
   /// Sets renderer backend mRendererBackend of engine. Defaults to opengl.
   /// @details Current valid values are: opengl, vulkan, software.
   /// @param backend Renderer backend.
@@ -99,6 +102,7 @@ private:
   int mFrames{};
   /// Delta-time clamp value clamped to 60 FPS dt equivalent.
   const double mDtClamp{static_cast<double>(1) / 60};
+  bool mVsyncEnabled{true};
 
 public:
   /// Dynamically allocates actor.

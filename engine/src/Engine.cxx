@@ -50,7 +50,7 @@ bool Engine::init()
     SDL_Log("[ERROR] TTF_Init failed");
     return false;
   }
-  
+
   if (mIsDisplaySetManually == false)
   {
     int count{};
@@ -85,14 +85,19 @@ bool Engine::init()
       &mWindow,
       &mRenderer
   );
-  
+
   if (mWindow == nullptr or mRenderer == nullptr)
   {
     SDL_Log("[ERROR] Failed to set up window and/or renderer");
     return false;
   }
-  
-  SDL_SetRenderVSync(mRenderer, 1);
+
+  if (mVsyncEnabled == true)
+  {
+    if (SDL_SetRenderVSync(mRenderer, 1) == false)
+    SDL_Log("[ERROR] Failed to enable vsync");
+  }
+
   SDL_SetRenderDrawBlendMode(mRenderer, SDL_BLENDMODE_BLEND);
 
   SDL_PropertiesID props = SDL_GetRendererProperties(mRenderer);
@@ -195,10 +200,15 @@ double Engine::getDt() const
   return mDt;
 }
 
+void Engine::setVsync(bool vsync)
+{
+  mVsyncEnabled = vsync;
+}
+
 void Engine::setRendererBackend(const std::string& backend)
 {
   std::vector<std::string> validBackends{"opengl", "vulkan", "software"};
-  
+
   auto it{std::find(validBackends.begin(), validBackends.end(), backend)};
   if (it == validBackends.end())
   {
