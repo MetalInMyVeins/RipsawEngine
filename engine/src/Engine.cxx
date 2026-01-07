@@ -119,6 +119,7 @@ bool Engine::init()
 void Engine::run()
 {
   mGame->initGame();
+  mTimer.start();
 
   while (mIsRunning)
   {
@@ -132,6 +133,7 @@ void Engine::run()
 
 void Engine::shutdown()
 {
+  mTimer.stop();
   SDL_DestroyRenderer(mRenderer);
   SDL_DestroyWindow(mWindow);
   SDL_Quit();

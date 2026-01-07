@@ -12,6 +12,8 @@
 #include <SDL3_ttf/SDL_ttf.h>
 #include <glm/glm.hpp>
 
+#include "RipsawEngine/Core/Timer.hxx"
+
 namespace RipsawEngine
 {
 
@@ -35,6 +37,8 @@ public:
   Engine& operator=(const Engine&) = delete;
   Engine(Engine&&) = delete;
   Engine& operator=(Engine&&) = delete;
+  /// Engine timer.
+  Timer mTimer{};
   /// @brief Initializes video, audio, window, renderer etc.
   /// @return True if successful, False otherwise.
   bool init();
@@ -83,9 +87,11 @@ private:
   /// Ticks passed since last frame.
   Uint64 mTicksCount{};
   /// Timer denoting if 1 second has passed.
-  double mtimer{};
+  double mFrameTime{};
   /// Frames per second.
   int mFrames{};
+  /// Delta-time clamp value clamped to 60 FPS dt equivalent.
+  const double mDtClamp{static_cast<double>(1) / 60};
 
 public:
   /// Dynamically allocates actor.

@@ -12,6 +12,7 @@ add_library(RipsawEngine ${LIB_TYPE}
   src/Game.cxx
   src/SpriteComponent.cxx
   src/SpritesheetComponent.cxx
+  src/Timer.cxx
   src/TransformComponent.cxx
   src/processInput.cxx
   src/renderEngine.cxx

@@ -11,22 +11,29 @@ void Engine::updateEngine()
   // run as fast as possible depending on the hardware.
 
   // Delta-time calculation goes here.
+  // Get the current time since library initialization, in nanosec.
   Uint64 now{SDL_GetTicksNS()};
-  double dt{ static_cast<double>(now - mTicksCount) / 1'000'000'000.0 };
+  // How many seconds have passed since last frame? That's dt.
+  // mTicksCount is the current time of previous frame.
+  double dt{static_cast<double>(now - mTicksCount) / 1000000000};
+  // Set dt for engine's use.
   mDt = dt;
   mTicksCount = now;
 
-  if (dt > 0.05)
-    dt = 0.05;
-  
-  mtimer += dt;
+  // Clamp dt to not grow beyond clamp time.
+  if (dt > mDtClamp)
+    dt = mDtClamp;
+
+  // Accumulate dt and frames to check later.
+  mFrameTime += dt;
   ++mFrames;
-  
-  if (mtimer >= 1.f)
+
+  // If dt accumulation becomes 1 second, print number of passed frames and reset both to 0.
+  if (mFrameTime >= 1.0)
   {
     SDL_Log("[INFO] Rendering at: %d FPS", mFrames);
+    mFrameTime = 0;
     mFrames = 0;
-    mtimer = 0;
 
     for ([[maybe_unused]] const auto& actor : mActors)
     {
@@ -45,6 +52,7 @@ void Engine::updateEngine()
   mActorsBeingUpdated = true;
   for (const auto& actor : mActors)
   {
+    // All actor update occurs as a function of dt.
     actor->update(dt);
   }
   mActorsBeingUpdated = false;

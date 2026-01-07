@@ -41,7 +41,8 @@
 │   │       ├── Core
 │   │       │   ├── Core.hxx
 │   │       │   ├── Engine.hxx
-│   │       │   └── Game.hxx
+│   │       │   ├── Game.hxx
+│   │       │   └── Timer.hxx
 │   │       ├── Managers
 │   │       │   ├── BGManager.hxx
 │   │       │   └── Managers.hxx
@@ -60,6 +61,7 @@
 │       ├── Game.cxx
 │       ├── SpriteComponent.cxx
 │       ├── SpritesheetComponent.cxx
+│       ├── Timer.cxx
 │       ├── TransformComponent.cxx
 │       ├── processInput.cxx
 │       ├── renderEngine.cxx
@@ -78,7 +80,7 @@
 └── supp
     └── tsan.supp
 
-13 directories, 37 files
+13 directories, 39 files
 
 ```
 
@@ -774,6 +776,8 @@ Sets velocity.
 
 ### Member Variables
 
+- `Timer` `mTimer`: Engine timer.
+- `bool` `mActorsBeingUpdated`: Boolean signal depicting if actors are going through update loop.
 - `std::string` `mWname`: Window name.
 - `int` `mScreenWidth`: Screen width.
 - `int` `mScreenHeight`: Screen height.
@@ -784,8 +788,9 @@ Sets velocity.
 - `std::string` `mRendererBackend`: Renderer backend for engine.
 - `double` `mDt`: Delta time.
 - `Uint64` `mTicksCount`: Ticks passed since last frame.
-- `double` `mtimer`: Timer denoting if 1 second has passed.
+- `double` `mFrameTime`: Timer denoting if 1 second has passed.
 - `int` `mFrames`: Frames per second.
+- `const double` `mDtClamp`: Delta-time clamp value clamped to 60 FPS dt equivalent.
 - `class Game*` `mGame`: Extendible Game class.
 - `std::vector<class Actor*>` `mActors`: List of all actors.
 - `std::vector<class Actor**>` `mActorsToBeKilled`: List of actors that are to be killed before next actor update begins.
@@ -793,7 +798,6 @@ Sets velocity.
 - `size_t` `mTotalActorsSize`: Total size of all registered actors.
 - `std::unordered_map<class Actor*, class Component*>` `mActorSpritePairs`: List of Actor-SpriteComponent pairs associated with each other.
 - `std::vector<AnyManager>` `mManagers`: List of all managers.
-- `bool` `mActorsBeingUpdated`: Boolean signal depicting if actors are going through update loop.
 
 ### Member Functions
 
@@ -1043,6 +1047,59 @@ Custom update logic for Game .
 #### `void RipsawEngine::Game::renderGame`
 
 Custom render logic for Game .
+
+
+---
+
+## Timer
+
+### Member Variables
+
+- `Uint64` `mStartTime`: Initial system time.
+- `Uint64` `mPauseTime`: Time point when timer is paused.
+- `bool` `mRunning`: Timer running state.
+- `bool` `mPaused`: Timer pause state.
+- `Uint64` `mOneNS`: Portion of 1 second that is 1 nanosecond.
+
+### Member Functions
+
+#### `Timer::Timer`
+
+Constructs time.
+
+This is high resolution timer class that works on nanosecond level using SDL3.
+
+#### `void Timer::start`
+
+Starts the timer.
+
+#### `void Timer::stop`
+
+Stops the timer.
+
+#### `void Timer::pause`
+
+Pauses the timer.
+
+#### `void Timer::resume`
+
+Resumes the timer.
+
+#### `Uint64 Timer::elapsedNS`
+
+Returns elapsed time in nanoseconds.
+
+#### `double Timer::elapsedSec`
+
+Returns elapsed time in seconds.
+
+#### `bool Timer::isRunning`
+
+Returns true if timer is running.
+
+#### `bool Timer::isPaused`
+
+Returns true if timer is paused.
 
 
 ---
