@@ -11,8 +11,8 @@ void Engine::updateEngine()
   // run as fast as possible depending on the hardware.
 
   // Delta-time calculation goes here.
-  // Get the current time since library initialization, in nanosec.
-  Uint64 now{SDL_GetTicksNS()};
+  // Get the current time since library initialization, in nanoseconds.
+  Uint64 now{mTimer.elapsedNS()};
   // How many seconds have passed since last frame? That's dt.
   // mTicksCount is the current time of previous frame.
   double dt{static_cast<double>(now - mTicksCount) / 1000000000};
@@ -25,8 +25,12 @@ void Engine::updateEngine()
     dt = mDtClamp;
 
   // Accumulate dt and frames to check later.
-  mFrameTime += dt;
-  ++mFrames;
+  // dt becomes 0 when engine is in paused state. So check for that first.
+  if (dt != 0)
+  {
+    mFrameTime += dt;
+    ++mFrames;
+  }
 
   // If dt accumulation becomes 1 second, print number of passed frames and reset both to 0.
   if (mFrameTime >= 1.0)

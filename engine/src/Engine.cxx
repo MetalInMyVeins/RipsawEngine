@@ -139,6 +139,47 @@ void Engine::shutdown()
   SDL_Quit();
 }
 
+void Engine::pauseEngine()
+{
+  if (mTimer.isRunning())
+  {
+    if (mTimer.isPaused() == false)
+    {
+      mTimer.pause();
+      SDL_Log("[INFO] Paused");
+    }
+  }
+}
+
+void Engine::resumeEngine()
+{
+  if (mTimer.isRunning())
+  {
+    if (mTimer.isPaused() == true)
+    {
+      mTimer.resume();
+      SDL_Log("[INFO] Resumed");
+    }
+  }
+}
+
+void Engine::enginePauseResumeToggle()
+{
+  if (mTimer.isRunning())
+  {
+    if (mTimer.isPaused() == false)
+    {
+      mTimer.pause();
+      SDL_Log("[INFO] Paused");
+    }
+    else
+    {
+      mTimer.resume();
+      SDL_Log("[INFO] Resumed");
+    }
+  }
+}
+
 SDL_Renderer* Engine::getRenderer() const
 {
   return mRenderer;

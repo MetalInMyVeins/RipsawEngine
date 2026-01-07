@@ -18,6 +18,8 @@ void Engine::processInput()
     {
       if (event.key.key == SDLK_ESCAPE)
         mIsRunning = false;
+      if (event.key.key == SDLK_P)
+        enginePauseResumeToggle();
     }
   }
 }

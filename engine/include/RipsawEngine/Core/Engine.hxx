@@ -46,6 +46,13 @@ public:
   void run();
   /// @brief Frees resources and prepares for program shutdown.
   void shutdown();
+  /// Pauses engine by pausing the timer.
+  /// @details Every actor updates as a function of dt. When timer is paused, dt becomes 0 and all actor freeze.
+  void pauseEngine();
+  /// Resumes engine.
+  void resumeEngine();
+  /// Toggles between pausing and resuming engine.
+  void enginePauseResumeToggle();
   /// Returns mRenderer.
   SDL_Renderer* getRenderer() const;
   /// Returns screen size in a pair.

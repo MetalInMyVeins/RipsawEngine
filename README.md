@@ -844,6 +844,20 @@ Runs the main game loop.
 
 Frees resources and prepares for program shutdown.
 
+#### `void RipsawEngine::Engine::pauseEngine`
+
+Pauses engine by pausing the timer.
+
+Every actor updates as a function of dt. When timer is paused, dt becomes 0 and all actor freeze.
+
+#### `void RipsawEngine::Engine::resumeEngine`
+
+Resumes engine.
+
+#### `void RipsawEngine::Engine::enginePauseResumeToggle`
+
+Toggles between pausing and resuming engine.
+
 #### `SDL_Renderer * RipsawEngine::Engine::getRenderer`
 
 Returns mRenderer.
