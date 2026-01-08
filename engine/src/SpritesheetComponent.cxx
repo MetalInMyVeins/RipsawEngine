@@ -1,3 +1,4 @@
+#include "RipsawEngine/Core/Engine.hxx"
 #include "RipsawEngine/Scene/Actor.hxx"
 #include "RipsawEngine/Scene/SpritesheetComponent.hxx"
 #include "RipsawEngine/Scene/TransformComponent.hxx"
@@ -5,10 +6,12 @@
 namespace RipsawEngine
 {
 
-SpritesheetComponent::SpritesheetComponent(Actor* actor, SDL_Renderer* renderer, const std::string& imgfile, const glm::vec2& dims, const glm::vec2& defaultCoord)
+SpritesheetComponent::SpritesheetComponent(Actor* actor, SDL_Renderer* renderer, const std::string& imgfile, const glm::ivec2& dims, const glm::ivec2& defaultCoord, bool doAnimate, float animFPS)
   : SpriteComponent{actor, renderer, imgfile},
     mDims{dims},
-    mDefaultCoord{defaultCoord}
+    mDefaultCoord{defaultCoord},
+    mDoAnimate{doAnimate},
+    mAnimFPS{animFPS}
 {
   if (defaultCoord.x > mDims.x or defaultCoord.x < 1 or defaultCoord.y > mDims.y or defaultCoord.y < 1)
   {
@@ -29,7 +32,20 @@ void SpritesheetComponent::draw(double dt)
   float scale{SpriteComponent::getScale()};
   float texw{texSize.x / mDims.x};
   float texh{texSize.y / mDims.y};
-  
+
+  if (mDoAnimate == true)
+  {
+    mCurrentFrame += mAnimFPS * dt;
+    int frame{static_cast<int>(mCurrentFrame)};
+    if (frame >= mDims.x)
+    {
+      mDefaultCoord.x = 1;
+      mCurrentFrame = 1;
+    }
+    else
+      mDefaultCoord.x = frame;
+  }
+
   SDL_FRect srcrect
   {
     texw * (mDefaultCoord.x - 1),
@@ -50,7 +66,7 @@ void SpritesheetComponent::draw(double dt)
   }
 }
 
-void SpritesheetComponent::changeCoord(const glm::vec2& coord)
+void SpritesheetComponent::changeCoord(const glm::ivec2& coord)
 {
   mDefaultCoord = coord;
 }

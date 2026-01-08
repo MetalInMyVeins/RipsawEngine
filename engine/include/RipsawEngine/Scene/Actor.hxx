@@ -90,7 +90,9 @@ public:
   /// @param imgfile Image file for sprite.
   /// @param dims Dimension of spritesheet {col, row}.
   /// @param defaultCoord Default coordinate of spritesheet for rendering.
-  void createSpritesheetComponent(const std::string& imgfile, const glm::vec2& dims, const glm::vec2& defaultCoord = {1, 1});
+  /// @param doAnimate Animation state.
+  /// @param animFPS Animation FPS.
+  void createSpritesheetComponent(const std::string& imgfile, const glm::vec2& dims, const glm::vec2& defaultCoord = {1, 1}, bool doAnimate = false, float animFPS = 24.f);
 
 private:
   /// Main engine instance.

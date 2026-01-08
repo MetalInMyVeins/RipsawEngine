@@ -214,7 +214,7 @@ void SpriteComponent::flipDefault()
   mFlipState = SDL_FLIP_NONE;
 }
 
-void SpriteComponent::changeCoord([[maybe_unused]] const glm::vec2& coord)
+void SpriteComponent::changeCoord([[maybe_unused]] const glm::ivec2& coord)
 {}
 
 void SpriteComponent::setRotationAmount(double rotationAmount)

@@ -71,6 +71,7 @@
 │   ├── assets
 │   │   ├── bglayer1.png
 │   │   ├── bglayer2.png
+│   │   ├── man.png
 │   │   ├── ships1.png
 │   │   └── ships2.png
 │   └── src
@@ -80,7 +81,7 @@
 └── supp
     └── tsan.supp
 
-13 directories, 39 files
+13 directories, 40 files
 
 ```
 
@@ -367,6 +368,8 @@ Dynamically allocates SpritesheetComponent .
 | `imgfile` | `const std::string &` | Image file for sprite. |
 | `dims` | `const glm::vec2 &` | Dimension of spritesheet {col, row}. |
 | `defaultCoord` | `const glm::vec2 &` | Default coordinate of spritesheet for rendering. |
+| `doAnimate` | `bool` | Animation state. |
+| `animFPS` | `float` | Animation FPS. |
 
 
 ---
@@ -619,7 +622,7 @@ Virtual function to be called from SpritesheetComponent .
 
 | Name | Type | Description |
 |------|------|-------------|
-| `coord` | `const glm::vec2 &` |  |
+| `coord` | `const glm::ivec2 &` |  |
 
 #### `void RipsawEngine::SpriteComponent::fitByAspectRatio`
 
@@ -660,8 +663,11 @@ Returns flip state mFlipState.
 
 ### Member Variables
 
-- `glm::vec2` `mDims`: Dimension of spritesheet in {col, row} where col is number of sprites horizontally, and row is number of sprites vertically.
-- `glm::vec2` `mDefaultCoord`: Default coordinate of spritesheet.
+- `glm::ivec2` `mDims`: Dimension of spritesheet in {col, row} where col is number of sprites horizontally, and row is number of sprites vertically.
+- `glm::ivec2` `mDefaultCoord`: Default coordinate of spritesheet.
+- `bool` `mDoAnimate`: Animation state.
+- `float` `mAnimFPS`: Animation FPS.
+- `double` `mCurrentFrame`: Current animation frame in spritesheet.
 
 ### Member Functions
 
@@ -676,8 +682,10 @@ Constructs spritesheet component with owning actor, renderer, spritesheet image,
 | `actor` | `class Actor *` | Actor owning the component. |
 | `renderer` | `SDL_Renderer *` | Renderer. |
 | `imgfile` | `const std::string &` | Path to image file. |
-| `dims` | `const glm::vec2 &` | Dimension of spritesheet. |
-| `defaultCoord` | `const glm::vec2 &` | Default coordinate of spritesheet. |
+| `dims` | `const glm::ivec2 &` | Dimension of spritesheet. |
+| `defaultCoord` | `const glm::ivec2 &` | Default coordinate of spritesheet. |
+| `doAnimate` | `bool` | Animation state. |
+| `animFPS` | `float` | Animation FPS. |
 
 #### `void RipsawEngine::SpritesheetComponent::draw`
 
@@ -697,7 +705,7 @@ Changes default coordinate of spritesheet.
 
 | Name | Type | Description |
 |------|------|-------------|
-| `coord` | `const glm::vec2 &` |  |
+| `coord` | `const glm::ivec2 &` |  |
 
 
 ---

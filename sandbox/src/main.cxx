@@ -20,13 +20,13 @@ public:
     bgm = mEngine->createBGManager({"sandbox/assets/bglayer1.png", "sandbox/assets/bglayer2.png"}, {-240, -310});
     a1 = mEngine->createActor();
     a1->createTransformComponent({600, 350}, {});
-    a1->createSpritesheetComponent("sandbox/assets/ships2.png", {4, 5}, {3, 2});
+    a1->createSpritesheetComponent("sandbox/assets/ships2.png", {4, 5}, {3, 2}, false);
     a1->getSpriteComponent()->rotateClockwiseAmount(90);
     a1->getSpriteComponent()->setRotationSpeed(100);
     
     a2 = mEngine->createActor();
     a2->createTransformComponent({450, 350}, {});
-    a2->createSpritesheetComponent("sandbox/assets/ships1.png", {4, 2}, {1, 1});
+    a2->createSpritesheetComponent("sandbox/assets/ships1.png", {4, 2}, {1, 1}, true);
     a2->setVelocity({150, 0});
   }
 

@@ -157,9 +157,9 @@ void Actor::createSpriteComponent(const glm::vec2& size, const std::tuple<unsign
   mEngine->insertActorSpritePair(std::make_pair(this, tempComponent));
 }
 
-void Actor::createSpritesheetComponent(const std::string& imgfile, const glm::vec2& dims, const glm::vec2& defaultCoords)
+void Actor::createSpritesheetComponent(const std::string& imgfile, const glm::vec2& dims, const glm::vec2& defaultCoords, bool doAnimate, float animFPS)
 {
-  Component* tempComponent{new SpritesheetComponent{this, mEngine->getRenderer(), imgfile, dims, defaultCoords}};
+  Component* tempComponent{new SpritesheetComponent{this, mEngine->getRenderer(), imgfile, dims, defaultCoords, doAnimate, animFPS}};
   mEngine->insertActorSpritePair(std::make_pair(this, tempComponent));
 }
 

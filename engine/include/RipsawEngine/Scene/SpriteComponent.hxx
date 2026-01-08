@@ -63,7 +63,7 @@ public:
   /// Sets flip state to default.
   void flipDefault();
   /// Virtual function to be called from SpritesheetComponent.
-  virtual void changeCoord(const glm::vec2& coord);
+  virtual void changeCoord(const glm::ivec2& coord);
 
 protected:
   /// Sets amount of rotation.
