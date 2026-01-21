@@ -30,8 +30,8 @@ void SpritesheetComponent::draw(double dt)
   SDL_Texture* texture{SpriteComponent::getTexture()};
   glm::vec2 texSize{SpriteComponent::getTexSize()};
   float scale{SpriteComponent::getScale()};
-  float texw{texSize.x / mDims.x};
-  float texh{texSize.y / mDims.y};
+  float texw{texSize.x / mDims.x * scale};
+  float texh{texSize.y / mDims.y * scale};
 
   if (mDoAnimate == true)
   {
@@ -57,8 +57,8 @@ void SpritesheetComponent::draw(double dt)
   {
     mOwner->getTransformComponent()->getPosition().x - texw * scale / 2.f,
     mOwner->getTransformComponent()->getPosition().y - texh * scale / 2.f,
-    texw * scale,
-    texh * scale
+    texw,
+    texh
   };
   if (!SDL_RenderTextureRotated(SpriteComponent::getRenderer(), texture, &srcrect, &dstrect, rotationAmount, nullptr, SpriteComponent::getFlipState()))
   {
