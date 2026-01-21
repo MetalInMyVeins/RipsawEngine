@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SCENE_SPRITESHEETCOMPONENT_HXX
+#define SCENE_SPRITESHEETCOMPONENT_HXX
 
 #include <string>
 
@@ -42,4 +43,6 @@ private:
 };
 
 }
+
+#endif
 

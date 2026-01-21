@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SCENE_SPRITECOMPONENT_HXX
+#define SCENE_SPRITECOMPONENT_HXX
 
 #include <string>
 #include <tuple>
@@ -105,4 +106,6 @@ private:
 };
 
 }
+
+#endif
 

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef CORE_ENGINE_HXX
+#define CORE_ENGINE_HXX
 
 #include <algorithm>
 #include <string>
@@ -172,4 +173,6 @@ private:
 };
 
 }
+
+#endif
 

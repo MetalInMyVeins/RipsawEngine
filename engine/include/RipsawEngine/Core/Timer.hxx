@@ -1,4 +1,5 @@
-#pragma once
+#ifndef CORE_TIMER_HXX
+#define CORE_TIMER_HXX
 
 #include <SDL3/SDL.h>
 
@@ -37,4 +38,6 @@ private:
   /// Portion of 1 second that is 1 nanosecond.
   Uint64 mOneNS{1000000000};
 };
+
+#endif
 

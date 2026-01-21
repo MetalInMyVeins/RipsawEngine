@@ -1,4 +1,5 @@
-#pragma once
+#ifndef MANAGERS_BGMANAGER_HXX
+#define MANAGERS_BGMANAGER_HXX
 
 #include <string>
 #include <tuple>
@@ -40,4 +41,6 @@ private:
 };
 
 }
+
+#endif
 

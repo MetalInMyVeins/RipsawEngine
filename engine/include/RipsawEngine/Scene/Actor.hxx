@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SCENE_ACTOR_HXX
+#define SCENE_ACTOR_HXX
 
 #include <algorithm>
 #include <string>
@@ -113,4 +114,6 @@ private:
 };
 
 }
+
+#endif
 

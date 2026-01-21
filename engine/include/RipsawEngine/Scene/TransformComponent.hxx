@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SCENE_TRANSFORMCOMPONENT_HXX
+#define SCENE_TRANSFORMCOMPONENT_HXX
 
 #include <glm/glm.hpp>
 
@@ -41,4 +42,6 @@ private:
 };
 
 }
+
+#endif
 

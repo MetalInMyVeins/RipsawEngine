@@ -1,4 +1,5 @@
-#pragma once
+#ifndef CORE_GAME_HXX
+#define CORE_GAME_HXX
 
 namespace RipsawEngine
 {
@@ -26,4 +27,6 @@ public:
 };
 
 }
+
+#endif
 

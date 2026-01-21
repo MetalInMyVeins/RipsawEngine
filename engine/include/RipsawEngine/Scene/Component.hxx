@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SCENE_COMPONENT_HXX
+#define SCENE_COMPONENT_HXX
 
 namespace RipsawEngine
 {
@@ -27,4 +28,6 @@ public:
 };
 
 }
+
+#endif
 
