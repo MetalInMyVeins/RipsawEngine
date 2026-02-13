@@ -1,6 +1,7 @@
 .cache/
 bin/
 build/
+dist/
 docs/
 lib/
 tests/

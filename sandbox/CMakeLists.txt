@@ -19,3 +19,20 @@ if(CMAKE_BUILD_TYPE STREQUAL "Release")
   )
 endif()
 
+install(TARGETS sandboxbin
+  RUNTIME DESTINATION .
+)
+
+install(TARGETS RipsawEngine
+  LIBRARY DESTINATION lib
+)
+
+install(DIRECTORY ${CMAKE_SOURCE_DIR}/sandbox/assets
+  DESTINATION .
+)
+
+set_target_properties(sandboxbin PROPERTIES
+  INSTALL_RPATH "$ORIGIN/lib"
+  BUILD_RPATH_USE_ORIGIN ON
+)
+
