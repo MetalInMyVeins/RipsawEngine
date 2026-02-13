@@ -28,6 +28,9 @@ set_target_properties(RipsawEngine PROPERTIES
 
 target_include_directories(RipsawEngine PUBLIC
   ${CMAKE_CURRENT_SOURCE_DIR}/include
+  ${CMAKE_SOURCE_DIR}/external/SDL3/include
+  ${CMAKE_SOURCE_DIR}/external/SDL3_image/include
+  ${CMAKE_SOURCE_DIR}/external/SDL3_ttf/include
 )
 
 target_compile_options(RipsawEngine PRIVATE
@@ -73,13 +76,8 @@ target_link_options(RipsawEngine PRIVATE
   >
 )
 
-if (LIB_TYPE STREQUAL "Release")
 target_link_libraries(RipsawEngine PRIVATE
-  SDL3 SDL3_image SDL3_ttf -static
+  SDL3::SDL3-static SDL3_image::SDL3_image-static
+  SDL3_ttf::SDL3_ttf-static
 )
-else()
-  target_link_libraries(RipsawEngine PRIVATE
-    SDL3 SDL3_image SDL3_ttf
-  )
-endif()
 

@@ -4,11 +4,7 @@ set_target_properties(sandboxbin PROPERTIES
   RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
 )
 
-if (CMAKE_BUILD_TYPE STREQUAL "Release")
-  target_link_libraries(sandboxbin PRIVATE RipsawEngine -static)
-else()
-  target_link_libraries(sandboxbin PRIVATE RipsawEngine)
-endif()
+target_link_libraries(sandboxbin PRIVATE RipsawEngine)
 
 if(CMAKE_BUILD_TYPE STREQUAL "Release")
   add_custom_command(

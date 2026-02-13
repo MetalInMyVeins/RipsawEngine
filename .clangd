@@ -4,3 +4,13 @@ Diagnostics:
 
 header-insertion: never
 
+---
+
+If:
+  PathMatch: external/.*
+
+Index:
+  Background: Skip
+
+Diagnostics:
+  Suppress: '*'
