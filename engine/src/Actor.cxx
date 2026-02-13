@@ -14,7 +14,7 @@ namespace RipsawEngine
 Actor::Actor(Engine* engine)
   : mEngine{engine}
 {
-  SDL_Log("[INFO] Actor (%ld bytes) created: %p", sizeof(*this), (void*)this);
+  SDL_Log("[INFO] Actor (%ld bytes) created: %p", sizeof(*this), static_cast<void*>(this));
   mEngine->addActor(this);
 }
 
@@ -26,7 +26,7 @@ Actor::~Actor()
     delete mComponents.back();
     mComponents.pop_back();
   }
-  SDL_Log("[INFO] Actor destroyed: %p", (void*)this);
+  SDL_Log("[INFO] Actor destroyed: %p", static_cast<void*>(this));
 }
 
 void Actor::update(double dt)
@@ -71,7 +71,7 @@ glm::vec2 Actor::getPosition() const
 {
   if (mTransformComponent == nullptr)
   {
-    SDL_Log("[ERROR] TransformComponent unavailable for Actor: %p", (void*)this);
+    SDL_Log("[ERROR] TransformComponent unavailable for Actor: %p", static_cast<const void*>(this));
     return {};
   }
   return mTransformComponent->getPosition();
@@ -81,7 +81,7 @@ void Actor::setPosition(const glm::vec2& pos)
 {
   if (mTransformComponent == nullptr)
   {
-    SDL_Log("[ERROR] TransformComponent unavailable for Actor: %p", (void*)this);
+    SDL_Log("[ERROR] TransformComponent unavailable for Actor: %p", static_cast<void*>(this));
     return;
   }
   mTransformComponent->setPosition(pos);
@@ -91,17 +91,16 @@ glm::vec2 Actor::getVelocity() const
 {
   if (mTransformComponent == nullptr)
   {
-    SDL_Log("[ERROR] TransformComponent unavailable for Actor: %p", (void*)this);
+    SDL_Log("[ERROR] TransformComponent unavailable for Actor: %p", static_cast<const void*>(this));
     return {};
   }
   return mTransformComponent->getVelocity();
 }
-
 void Actor::setVelocity(const glm::vec2& vel)
 {
   if (mTransformComponent == nullptr)
   {
-    SDL_Log("[ERROR] TransformComponent unavailable for Actor: %p", (void*)this);
+    SDL_Log("[ERROR] TransformComponent unavailable for Actor: %p", static_cast<void*>(this));
     return;
   }
   mTransformComponent->setVelocity(vel);

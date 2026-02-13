@@ -31,6 +31,7 @@ if(ENABLE_SANITIZERS_ADDUB)
   if(CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
     add_compile_options(
       -g
+      -O0
       -fsanitize=address,undefined
       -fno-omit-frame-pointer
     )
@@ -46,6 +47,7 @@ elseif(ENABLE_SANITIZERS_MEMUB)
   if(CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
     add_compile_options(
       -g
+      -O0
       -fsanitize=memory,undefined
       -fno-omit-frame-pointer
     )
@@ -61,6 +63,7 @@ elseif(ENABLE_SANITIZERS_THREAD)
   if(CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
     add_compile_options(
       -g
+      -O0
       -fsanitize=thread
       -fno-omit-frame-pointer
     )

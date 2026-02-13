@@ -35,7 +35,7 @@ void SpritesheetComponent::draw(double dt)
 
   if (mDoAnimate == true)
   {
-    mCurrentFrame += mAnimFPS * dt;
+    mCurrentFrame += static_cast<double>(mAnimFPS) * dt;
     int frame{static_cast<int>(mCurrentFrame)};
     if (frame >= mDims.x)
     {
@@ -62,7 +62,7 @@ void SpritesheetComponent::draw(double dt)
   };
   if (!SDL_RenderTextureRotated(SpriteComponent::getRenderer(), texture, &srcrect, &dstrect, rotationAmount, nullptr, SpriteComponent::getFlipState()))
   {
-    SDL_Log("[ERROR] Draw failed on SpritesheetComponent: %p", (void*)this);
+    SDL_Log("[ERROR] Draw failed on SpritesheetComponent: %p", static_cast<void*>(this));
   }
 }
 

@@ -12,7 +12,7 @@ Component::Component(Actor* actor)
 
 Component::~Component()
 {
-  SDL_Log("[INFO] Removed Component: %p from Actor: %p", (void*)this, (void*)mOwner);
+  SDL_Log("[INFO] Removed Component: %p from Actor: %p", static_cast<void*>(this), static_cast<void*>(mOwner));
 }
 
 void Component::update([[maybe_unused]] double dt)

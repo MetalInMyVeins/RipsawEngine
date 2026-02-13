@@ -1,15 +1,16 @@
+.cache/
 bin/
 build/
-.cache/
 docs/
 lib/
 tests/
 .envrc
-vgrun
+.rn
+compile_commands.json
+quirks
 vimbin
+vgrun
+*.log
 *.nvim
 *.vim
-.rn
-*.log
-quirks
 

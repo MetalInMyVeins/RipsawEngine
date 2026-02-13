@@ -32,8 +32,8 @@ SpriteComponent::SpriteComponent(Actor* actor, SDL_Renderer* renderer, const std
 
   if (this->isComponentValid())
   {
-    SDL_Log("[INFO] Component added: SpriteComponent: %p to Actor: %p", (void*)this, (void*)mOwner);
-    SDL_Log("\tTexture size: %.2f X %.2f", mTexSize.x, mTexSize.y);
+    SDL_Log("[INFO] Component added: SpriteComponent: %p to Actor: %p", static_cast<void*>(this), static_cast<void*>(mOwner));
+    SDL_Log("\tTexture size: %.2f X %.2f", static_cast<double>(mTexSize.x), static_cast<double>(mTexSize.y));
     mOwner->getEngine()->addSprite(this);
   }
   else
@@ -67,8 +67,8 @@ SpriteComponent::SpriteComponent(class Actor* actor, SDL_Renderer* renderer, con
 
   if (this->isComponentValid())
   {
-    SDL_Log("[INFO] Component added: SpriteComponent: %p to Actor: %p", (void*)this, (void*)mOwner);
-    SDL_Log("\tTexture size: %.2f X %.2f", mTexSize.x, mTexSize.y);
+    SDL_Log("[INFO] Component added: SpriteComponent: %p to Actor: %p", static_cast<void*>(this), static_cast<void*>(mOwner));
+    SDL_Log("\tTexture size: %.2f X %.2f", static_cast<double>(mTexSize.x), static_cast<double>(mTexSize.y));
     mOwner->getEngine()->addSprite(this);
   }
   else
@@ -118,7 +118,7 @@ void SpriteComponent::draw(double dt)
   };
   if (!SDL_RenderTextureRotated(mRenderer, mTexture, nullptr, &rect, mRotationAmount, nullptr, mFlipState))
   {
-    SDL_Log("[ERROR] Draw failed on SpriteComponent: %p", (void*)this);
+    SDL_Log("[ERROR] Draw failed on SpriteComponent: %p", static_cast<void*>(this));
   }
 }
 
@@ -132,7 +132,7 @@ void SpriteComponent::setScale(float scale)
   mScale = scale;
   mTexSizeDynamic.x = mTexSize.x * scale;
   mTexSizeDynamic.y = mTexSize.y * scale;
-  SDL_Log("[INFO] SpriteComponent: %p scaled by %.2fx: %.2f X %.2f", (void*)this, scale, mTexSizeDynamic.x, mTexSizeDynamic.y);
+  SDL_Log("[INFO] SpriteComponent: %p scaled by %.2fx: %.2f X %.2f", static_cast<void*>(this), static_cast<double>(scale), static_cast<double>(mTexSizeDynamic.x), static_cast<double>(mTexSizeDynamic.y));
 }
 
 double SpriteComponent::getRotationAmount() const
@@ -234,7 +234,7 @@ SDL_FlipMode SpriteComponent::getFlipState() const
 
 void SpriteComponent::fitByAspectRatio()
 {
-  SDL_Log("[INFO] SpriteComponent: %p fitting by aspect ratio", (void*)this);
+  SDL_Log("[INFO] SpriteComponent: %p fitting by aspect ratio", static_cast<void*>(this));
   float sw{static_cast<float>(mOwner->getEngine()->getScreenSize().first)};
   float sh{static_cast<float>(mOwner->getEngine()->getScreenSize().second)};
   float ratw{sw / mTexSize.x};

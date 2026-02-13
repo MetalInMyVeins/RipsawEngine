@@ -20,9 +20,9 @@ add_library(RipsawEngine ${LIB_TYPE}
 )
 
 set_target_properties(RipsawEngine PROPERTIES
-  ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/lib
-  LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/lib
-  RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/lib
+  ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
+  LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
+  RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
   INTERPROCEDURAL_OPTIMIZATION TRUE
 )
 
@@ -40,6 +40,17 @@ target_compile_options(RipsawEngine PRIVATE
   -Wsign-conversion
   -Wformat=2
   -Wundef
+  -Wcast-align
+  -Wcast-qual
+  -Wdouble-promotion
+  -Wnull-dereference
+  -Wold-style-cast
+  -Woverloaded-virtual
+  -Wnon-virtual-dtor
+  -Wimplicit-fallthrough
+  -Wredundant-decls
+  -Wswitch-enum
+  -Wzero-as-null-pointer-constant
 )
 
 target_compile_options(RipsawEngine PRIVATE
@@ -62,7 +73,13 @@ target_link_options(RipsawEngine PRIVATE
   >
 )
 
+if (LIB_TYPE STREQUAL "Release")
 target_link_libraries(RipsawEngine PRIVATE
-  SDL3 SDL3_image SDL3_ttf
+  SDL3 SDL3_image SDL3_ttf -static
 )
+else()
+  target_link_libraries(RipsawEngine PRIVATE
+    SDL3 SDL3_image SDL3_ttf
+  )
+endif()
 

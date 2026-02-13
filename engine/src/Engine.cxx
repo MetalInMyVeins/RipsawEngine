@@ -39,6 +39,7 @@ Engine::~Engine()
 
 bool Engine::init()
 {
+  SDL_SetHint(SDL_HINT_VIDEO_DRIVER, "wayland,x11");
   if (SDL_Init(SDL_INIT_VIDEO) == false)
   {
     SDL_Log("[ERROR] SDL_INIT_VIDEO failed");
@@ -69,7 +70,7 @@ bool Engine::init()
       return false;
     }
     SDL_Log("[INFO] Display ID: %d", dID);
-    SDL_Log("[INFO] Display Mode: %p", (void*)dm);
+    SDL_Log("[INFO] Display Mode: %p", static_cast<const void*>(dm));
     mScreenWidth = dm->w;
     mScreenHeight = dm->h;
     SDL_free(displays);

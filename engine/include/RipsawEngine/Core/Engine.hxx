@@ -33,7 +33,7 @@ public:
   /// @param h Custom window height.
   Engine(class Game* game, const std::string& wname = "RipsawEngine", int w = 0, int h = 0);
   /// Destructs engine.
-  ~Engine();
+  virtual ~Engine();
   Engine(const Engine&) = delete;
   Engine& operator=(const Engine&) = delete;
   Engine(Engine&&) = delete;
