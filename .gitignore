@@ -8,6 +8,7 @@ tests/
 .bd
 .envrc
 .rn
+.sha256cache
 compile_commands.json
 quirks
 vimbin
