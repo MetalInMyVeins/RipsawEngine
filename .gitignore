@@ -7,6 +7,7 @@ lib/
 tests/
 .bd
 .envrc
+.hashdir
 .rn
 .sha256cache
 compile_commands.json
