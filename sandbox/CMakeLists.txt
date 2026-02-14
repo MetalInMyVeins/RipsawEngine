@@ -2,6 +2,8 @@ add_executable(sandboxbin src/main.cxx)
 
 set_target_properties(sandboxbin PROPERTIES
   RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
+  INSTALL_RPATH "$ORIGIN"
+  BUILD_WITH_INSTALL_RPATH ON
 )
 
 target_link_libraries(sandboxbin PRIVATE RipsawEngine)
@@ -24,15 +26,10 @@ install(TARGETS sandboxbin
 )
 
 install(TARGETS RipsawEngine
-  LIBRARY DESTINATION lib
+  LIBRARY DESTINATION .
 )
 
 install(DIRECTORY ${CMAKE_SOURCE_DIR}/sandbox/assets
   DESTINATION .
-)
-
-set_target_properties(sandboxbin PROPERTIES
-  INSTALL_RPATH "$ORIGIN/lib"
-  BUILD_RPATH_USE_ORIGIN ON
 )
 
