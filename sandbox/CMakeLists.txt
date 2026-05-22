@@ -1,6 +1,9 @@
 add_executable(sandbox2D src/2D/main.cxx)
 add_executable(sandbox3D src/3D/main.cxx)
 
+apply_strict_flags(RipsawEngine2D)
+apply_strict_flags(RipsawEngine3D)
+
 set_target_properties(sandbox2D PROPERTIES
   RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
   INSTALL_RPATH "$ORIGIN"

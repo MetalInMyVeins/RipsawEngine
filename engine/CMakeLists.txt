@@ -13,6 +13,8 @@ add_library(RipsawEngine2D STATIC
   src/2D/updateEngine.cxx
 )
 
+apply_strict_flags(RipsawEngine2D)
+
 set_target_properties(RipsawEngine2D PROPERTIES
   ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
   LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
@@ -33,6 +35,8 @@ target_link_libraries(RipsawEngine2D PRIVATE
 add_library(RipsawEngine3D STATIC
   src/3D/Engine.cxx
 )
+
+apply_strict_flags(RipsawEngine3D)
 
 set_target_properties(RipsawEngine3D PROPERTIES
   ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}

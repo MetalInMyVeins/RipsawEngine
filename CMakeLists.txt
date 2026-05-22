@@ -99,7 +99,6 @@ function(apply_strict_flags target)
     -Wredundant-decls
     -Wswitch-enum
     -Wzero-as-null-pointer-constant
-    -fno-rtti
     $<$<CONFIG:Release>:
       -O3
       -fvisibility=hidden
