@@ -12,7 +12,7 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
   }
   catch (const std::exception& e)
   {
-    SDL_Log("%s", e.what());
+    SDL_Log("%s\n", e.what());
     std::exit(EXIT_FAILURE);
   }
   return 0;
