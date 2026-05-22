@@ -1,9 +1,9 @@
-#ifndef SCENE_TRANSFORMCOMPONENT_HXX
-#define SCENE_TRANSFORMCOMPONENT_HXX
-
-#include <glm/glm.hpp>
+#ifndef D2_SCENE_TRANSFORMCOMPONENT_HXX
+#define D2_SCENE_TRANSFORMCOMPONENT_HXX
 
 #include "Component.hxx"
+
+#include <glm/glm.hpp>
 
 namespace RipsawEngine
 {

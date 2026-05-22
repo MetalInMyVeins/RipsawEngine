@@ -1,5 +1,5 @@
-#ifndef CORE_TIMER_HXX
-#define CORE_TIMER_HXX
+#ifndef D2_CORE_TIMER_HXX
+#define D2_CORE_TIMER_HXX
 
 #include <SDL3/SDL.h>
 

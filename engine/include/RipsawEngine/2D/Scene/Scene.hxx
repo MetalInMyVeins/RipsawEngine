@@ -1,5 +1,5 @@
-#ifndef SCENE_SCENE_HXX
-#define SCENE_SCENE_HXX
+#ifndef D2_SCENE_SCENE_HXX
+#define D2_SCENE_SCENE_HXX
 
 #include "Actor.hxx"
 #include "Component.hxx"

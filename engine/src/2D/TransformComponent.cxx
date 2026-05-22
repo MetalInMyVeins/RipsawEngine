@@ -1,7 +1,7 @@
-#include <stdexcept>
+#include "RipsawEngine/2D/Scene/Actor.hxx"
+#include "RipsawEngine/2D/Scene/TransformComponent.hxx"
 
-#include "RipsawEngine/Scene/Actor.hxx"
-#include "RipsawEngine/Scene/TransformComponent.hxx"
+#include <stdexcept>
 
 namespace RipsawEngine
 {

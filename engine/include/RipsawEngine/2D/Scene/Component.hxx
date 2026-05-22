@@ -1,5 +1,5 @@
-#ifndef SCENE_COMPONENT_HXX
-#define SCENE_COMPONENT_HXX
+#ifndef D2_SCENE_COMPONENT_HXX
+#define D2_SCENE_COMPONENT_HXX
 
 namespace RipsawEngine
 {

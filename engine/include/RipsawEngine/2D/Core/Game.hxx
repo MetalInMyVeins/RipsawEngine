@@ -1,5 +1,5 @@
-#ifndef CORE_GAME_HXX
-#define CORE_GAME_HXX
+#ifndef D2_CORE_GAME_HXX
+#define D2_CORE_GAME_HXX
 
 namespace RipsawEngine
 {

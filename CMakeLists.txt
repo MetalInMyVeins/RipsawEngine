@@ -14,6 +14,10 @@ option(ENABLE_SANITIZERS_ADDUB "Enable Address + Undefined sanitizers" OFF)
 option(ENABLE_SANITIZERS_MEMUB "Enable Memory + Undefined sanitizers" OFF)
 option(ENABLE_SANITIZERS_THREAD "Enable Thread sanitizer" OFF)
 
+find_package(SDL3 REQUIRED)
+find_package(SDL3_image REQUIRED)
+find_package(SDL3_ttf REQUIRED)
+
 if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang" AND USE_LIBCXX)
   add_compile_options($<$<COMPILE_LANGUAGE:CXX>:-stdlib=libc++>)
   add_link_options(-stdlib=libc++ -lc++ -lc++abi)
@@ -21,56 +25,6 @@ endif()
 
 if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
   add_link_options(-fuse-ld=lld)
-endif()
-
-if(ENABLE_SANITIZERS_ADDUB)
-  if(NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
-    message(FATAL_ERROR "Sanitizers are only supported in Debug builds")
-  endif()
-
-  if(CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
-    add_compile_options(
-      -g
-      -O0
-      -fsanitize=address,undefined
-      -fno-omit-frame-pointer
-    )
-    add_link_options(
-      -fsanitize=address,undefined
-    )
-  endif()
-elseif(ENABLE_SANITIZERS_MEMUB)
-  if(NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
-    message(FATAL_ERROR "Sanitizers are only supported in Debug builds")
-  endif()
-
-  if(CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
-    add_compile_options(
-      -g
-      -O0
-      -fsanitize=memory,undefined
-      -fno-omit-frame-pointer
-    )
-    add_link_options(
-      -fsanitize=memory,undefined
-    )
-  endif()
-elseif(ENABLE_SANITIZERS_THREAD)
-  if(NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
-    message(FATAL_ERROR "Sanitizers are only supported in Debug builds")
-  endif()
-
-  if(CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
-    add_compile_options(
-      -g
-      -O0
-      -fsanitize=thread
-      -fno-omit-frame-pointer
-    )
-    add_link_options(
-      -fsanitize=thread
-    )
-  endif()
 endif()
 
 set(SANITIZER_COUNT 0)
@@ -88,11 +42,94 @@ if(SANITIZER_COUNT GREATER 1)
   message(FATAL_ERROR "Only one sanitizer option can be enabled at a time")
 endif()
 
+if(ENABLE_SANITIZERS_ADDUB OR ENABLE_SANITIZERS_MEMUB OR ENABLE_SANITIZERS_THREAD)
+  if(NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
+    message(FATAL_ERROR "Sanitizers are only supported in Debug builds")
+  endif()
+endif()
+
+if(ENABLE_SANITIZERS_ADDUB)
+  if(CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
+    add_compile_options(-g -O0 -fsanitize=address,undefined -fno-omit-frame-pointer)
+    add_link_options(-fsanitize=address,undefined)
+  endif()
+elseif(ENABLE_SANITIZERS_MEMUB)
+  if(CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
+    add_compile_options(-g -O0 -fsanitize=memory,undefined -fno-omit-frame-pointer)
+    add_link_options(-fsanitize=memory,undefined)
+  endif()
+elseif(ENABLE_SANITIZERS_THREAD)
+  if(CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
+    add_compile_options(-g -O0 -fsanitize=thread -fno-omit-frame-pointer)
+    add_link_options(-fsanitize=thread)
+  endif()
+endif()
+
 if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
   message(STATUS "No build type specified. Setting to Debug.")
   set(CMAKE_BUILD_TYPE Debug CACHE STRING "Choose the type of build, options are: Debug Release RelWithDebInfo MinSizeRel." FORCE)
   set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release" "RelWithDebInfo" "MinSizeRel")
 endif()
+
+if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+  message(STATUS "No build type specified. Setting to Debug.")
+  set(CMAKE_BUILD_TYPE Debug CACHE STRING "Choose the type of build, options are: Debug Release RelWithDebInfo MinSizeRel." FORCE)
+  set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release" "RelWithDebInfo" "MinSizeRel")
+endif()
+
+function(apply_strict_flags target)
+  target_compile_options(${target} PRIVATE
+    -Wall
+    -Wextra
+    -Wpedantic
+    -Werror
+    -Wshadow
+    -Wconversion
+    -Wsign-conversion
+    -Wformat=2
+    -Wundef
+    -Wcast-align
+    -Wcast-qual
+    -Wdouble-promotion
+    -Wnull-dereference
+    -Wold-style-cast
+    -Woverloaded-virtual
+    -Wnon-virtual-dtor
+    -Wimplicit-fallthrough
+    -Wredundant-decls
+    -Wswitch-enum
+    -Wzero-as-null-pointer-constant
+    -fno-rtti
+    $<$<CONFIG:Release>:
+      -O3
+      -fvisibility=hidden
+      -fomit-frame-pointer
+      -fcf-protection=full
+      -fstack-clash-protection
+      -D_FORTIFY_SOURCE=3
+      -DNDEBUG
+    >
+  )
+endfunction()
+
+function(apply_loose_flags target)
+  target_compile_options(${target} PRIVATE
+    -Wall
+    -Wextra
+    -Wpedantic
+    -Werror
+    -Wno-unused-variable
+    -Wno-unused-but-set-variable
+    -Wno-unused-private-field
+    -Wno-unused-parameter
+  )
+endfunction()
+
+function(apply_looser_flags target)
+  target_compile_options(${target} PRIVATE
+    -Wall
+  )
+endfunction()
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
@@ -122,10 +159,6 @@ set(SDLIMAGE_XCF OFF CACHE BOOL "" FORCE)
 set(SDLIMAGE_XPM OFF CACHE BOOL "" FORCE)
 set(SDLIMAGE_XV OFF CACHE BOOL "" FORCE)
 set(SDLTTF_VENDORED ON CACHE BOOL "" FORCE)
-
-add_subdirectory(external/SDL3)
-add_subdirectory(external/SDL3_image)
-add_subdirectory(external/SDL3_ttf)
 
 add_subdirectory(engine)
 add_subdirectory(sandbox)

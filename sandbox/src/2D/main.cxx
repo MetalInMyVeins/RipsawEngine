@@ -1,6 +1,6 @@
-#include "RipsawEngine/Core/Core.hxx"
-#include "RipsawEngine/Managers/BGManager.hxx"
-#include "RipsawEngine/Scene/Scene.hxx"
+#include "RipsawEngine/2D/Core/Core.hxx"
+#include "RipsawEngine/2D/Managers/BGManager.hxx"
+#include "RipsawEngine/2D/Scene/Scene.hxx"
 
 class Sandbox : public RipsawEngine::Game
 {

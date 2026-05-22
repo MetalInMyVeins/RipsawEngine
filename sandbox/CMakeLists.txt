@@ -1,4 +1,4 @@
-add_executable(sandboxbin src/main.cxx)
+add_executable(sandboxbin src/2D/main.cxx)
 
 set_target_properties(sandboxbin PROPERTIES
   RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}

@@ -1,15 +1,15 @@
-#ifndef SCENE_SPRITECOMPONENT_HXX
-#define SCENE_SPRITECOMPONENT_HXX
+#ifndef D2_SCENE_SPRITECOMPONENT_HXX
+#define D2_SCENE_SPRITECOMPONENT_HXX
 
-#include <string>
-#include <tuple>
-#include <utility>
+#include "Component.hxx"
 
 #include <SDL3/SDL.h>
 #include <SDL3_image/SDL_image.h>
 #include <glm/glm.hpp>
 
-#include "Component.hxx"
+#include <string>
+#include <tuple>
+#include <utility>
 
 namespace RipsawEngine
 {

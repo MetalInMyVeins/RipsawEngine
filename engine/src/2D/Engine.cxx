@@ -1,11 +1,11 @@
-#include <stdexcept>
+#include "RipsawEngine/2D/Core/Engine.hxx"
+#include "RipsawEngine/2D/Core/Game.hxx"
+#include "RipsawEngine/2D/Managers/BGManager.hxx"
+#include "RipsawEngine/2D/Scene/Actor.hxx"
+#include "RipsawEngine/2D/Scene/SpriteComponent.hxx"
+#include "RipsawEngine/2D/Scene/TransformComponent.hxx"
 
-#include "RipsawEngine/Core/Engine.hxx"
-#include "RipsawEngine/Core/Game.hxx"
-#include "RipsawEngine/Managers/BGManager.hxx"
-#include "RipsawEngine/Scene/Actor.hxx"
-#include "RipsawEngine/Scene/SpriteComponent.hxx"
-#include "RipsawEngine/Scene/TransformComponent.hxx"
+#include <stdexcept>
 
 namespace RipsawEngine
 {

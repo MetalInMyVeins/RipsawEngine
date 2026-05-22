@@ -1,13 +1,13 @@
-#ifndef SCENE_ACTOR_HXX
-#define SCENE_ACTOR_HXX
+#ifndef D2_SCENE_ACTOR_HXX
+#define D2_SCENE_ACTOR_HXX
+
+#include <SDL3/SDL_log.h>
+#include <glm/glm.hpp>
 
 #include <algorithm>
 #include <string>
 #include <unordered_map>
 #include <vector>
-
-#include <SDL3/SDL_log.h>
-#include <glm/glm.hpp>
 
 namespace RipsawEngine
 {

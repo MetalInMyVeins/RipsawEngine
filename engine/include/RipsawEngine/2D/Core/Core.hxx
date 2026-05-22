@@ -1,5 +1,5 @@
-#ifndef CORE_CORE_HXX
-#define CORE_CORE_HXX
+#ifndef D2_CORE_CORE_HXX
+#define D2_CORE_CORE_HXX
 
 #include "Engine.hxx"
 #include "Game.hxx"

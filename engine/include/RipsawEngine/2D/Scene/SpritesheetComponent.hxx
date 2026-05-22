@@ -1,12 +1,12 @@
-#ifndef SCENE_SPRITESHEETCOMPONENT_HXX
-#define SCENE_SPRITESHEETCOMPONENT_HXX
+#ifndef D2_SCENE_SPRITESHEETCOMPONENT_HXX
+#define D2_SCENE_SPRITESHEETCOMPONENT_HXX
 
-#include <string>
+#include "RipsawEngine/2D/Scene/SpriteComponent.hxx"
 
 #include <SDL3/SDL.h>
 #include <glm/glm.hpp>
 
-#include "RipsawEngine/Scene/SpriteComponent.hxx"
+#include <string>
 
 namespace RipsawEngine
 {

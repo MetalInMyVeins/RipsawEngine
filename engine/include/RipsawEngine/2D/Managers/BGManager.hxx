@@ -1,5 +1,5 @@
-#ifndef MANAGERS_BGMANAGER_HXX
-#define MANAGERS_BGMANAGER_HXX
+#ifndef D2_MANAGERS_BGMANAGER_HXX
+#define D2_MANAGERS_BGMANAGER_HXX
 
 #include <string>
 #include <tuple>

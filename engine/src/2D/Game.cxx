@@ -1,5 +1,5 @@
-#include "RipsawEngine/Core/Game.hxx"
-#include "RipsawEngine/Core/Engine.hxx"
+#include "RipsawEngine/2D/Core/Game.hxx"
+#include "RipsawEngine/2D/Core/Engine.hxx"
 
 namespace RipsawEngine
 {

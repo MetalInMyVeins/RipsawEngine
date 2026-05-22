@@ -1,5 +1,12 @@
-#ifndef CORE_ENGINE_HXX
-#define CORE_ENGINE_HXX
+#ifndef D2_CORE_ENGINE_HXX
+#define D2_CORE_ENGINE_HXX
+
+#include "RipsawEngine/2D/Core/Timer.hxx"
+
+#include <SDL3/SDL.h>
+#include <SDL3_image/SDL_image.h>
+#include <SDL3_ttf/SDL_ttf.h>
+#include <glm/glm.hpp>
 
 #include <algorithm>
 #include <string>
@@ -7,13 +14,6 @@
 #include <utility>
 #include <variant>
 #include <vector>
-
-#include <SDL3/SDL.h>
-#include <SDL3_image/SDL_image.h>
-#include <SDL3_ttf/SDL_ttf.h>
-#include <glm/glm.hpp>
-
-#include "RipsawEngine/Core/Timer.hxx"
 
 namespace RipsawEngine
 {
