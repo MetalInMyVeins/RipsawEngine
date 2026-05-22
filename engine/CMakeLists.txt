@@ -1,4 +1,4 @@
-add_library(RipsawEngine STATIC
+add_library(RipsawEngine2D STATIC
   src/2D/Actor.cxx
   src/2D/BGManager.cxx
   src/2D/Component.cxx
@@ -13,20 +13,40 @@ add_library(RipsawEngine STATIC
   src/2D/updateEngine.cxx
 )
 
-set_target_properties(RipsawEngine PROPERTIES
+set_target_properties(RipsawEngine2D PROPERTIES
   ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
   LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
   RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
   INTERPROCEDURAL_OPTIMIZATION TRUE
 )
 
-target_include_directories(RipsawEngine PUBLIC
+target_include_directories(RipsawEngine2D PUBLIC
   ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
-target_link_libraries(RipsawEngine PRIVATE
+target_link_libraries(RipsawEngine2D PRIVATE
   SDL3::SDL3
   SDL3_image::SDL3_image
   SDL3_ttf::SDL3_ttf
 )
+
+add_library(RipsawEngine3D STATIC
+  src/3D/Engine.cxx
+)
+
+set_target_properties(RipsawEngine3D PROPERTIES
+  ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
+  LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
+  RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
+  INTERPROCEDURAL_OPTIMIZATION TRUE
+)
+
+target_include_directories(RipsawEngine3D PUBLIC
+  ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+
+target_link_libraries(RipsawEngine3D PRIVATE
+  SDL3::SDL3
+)
+
 
