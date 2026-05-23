@@ -7,12 +7,12 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
 {
   try
   {
-    RipsawEngine::Engine engine{};
+    RipsawEngine::Engine engine{RipsawEngine::Backend::gl_core_43};
     engine.init();
   }
   catch (const std::exception& e)
   {
-    SDL_Log("%s\n", e.what());
+    SDL_Log("%s\nAborting\n", e.what());
     std::exit(EXIT_FAILURE);
   }
   return 0;

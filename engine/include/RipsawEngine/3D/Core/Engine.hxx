@@ -8,6 +8,7 @@ namespace RipsawEngine
 
 enum class Backend
 {
+  none,
   gl_core_43,
   gles2_core_32,
 };
@@ -15,9 +16,12 @@ enum class Backend
 class Engine
 {
 public:
+  Engine(Backend backend);
+  ~Engine();
   void init();
 
 private:
+  Backend mBackend{Backend::none};
   int mWidth{};
   int mHeight{};
 };

@@ -5,6 +5,28 @@
 namespace RipsawEngine
 {
 
+Engine::Engine(Backend backend)
+  : mBackend{backend}
+{
+  if (mBackend == Backend::none)
+    throw std::runtime_error{"[ERROR] Invalid backend selected"};
+  
+  switch (mBackend)
+  {
+    case Backend::gl_core_43:
+      SDL_Log("[INFO] Selected backend: gl_core_43");
+      break;
+    case Backend::gles2_core_32:
+      SDL_Log("[INFO] Selected backend: gles2_core_32");
+      break;
+    case Backend::none:
+      break;
+  }
+}
+
+Engine::~Engine()
+{}
+
 void Engine::init()
 {
   bool status = SDL_Init(SDL_INIT_VIDEO);
