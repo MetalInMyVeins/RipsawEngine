@@ -12,6 +12,8 @@ public:
   void init();
 
 private:
+  int mWidth{};
+  int mHeight{};
 };
 
 }
