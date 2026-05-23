@@ -78,7 +78,7 @@ if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
 endif()
 
 function(apply_strict_flags target)
-  target_compile_options(${target} PRIVATE
+  target_compile_options(${target} PUBLIC
     -Wall
     -Wextra
     -Wpedantic
@@ -113,7 +113,7 @@ function(apply_strict_flags target)
 endfunction()
 
 function(apply_loose_flags target)
-  target_compile_options(${target} PRIVATE
+  target_compile_options(${target} PUBLIC
     -Wall
     -Wextra
     -Wpedantic
@@ -126,7 +126,7 @@ function(apply_loose_flags target)
 endfunction()
 
 function(apply_looser_flags target)
-  target_compile_options(${target} PRIVATE
+  target_compile_options(${target} PUBLIC
     -Wall
   )
 endfunction()
