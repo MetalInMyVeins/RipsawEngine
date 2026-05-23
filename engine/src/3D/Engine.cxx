@@ -2,12 +2,14 @@
 
 #include <stdexcept>
 
-namespace RipsawEngine
+namespace RipsawEngine::_3D
 {
 
 Engine::Engine(Backend backend)
   : mBackend{backend}
 {
+  SDL_Log("[START] RipsawEngine::_3D subsystem");
+
   if (mBackend == Backend::none)
     throw std::runtime_error{"[ERROR] Invalid backend selected"};
   
@@ -25,7 +27,9 @@ Engine::Engine(Backend backend)
 }
 
 Engine::~Engine()
-{}
+{
+  SDL_Log("[STOP] RipsawEngine::_3D subsystem");
+}
 
 void Engine::init()
 {

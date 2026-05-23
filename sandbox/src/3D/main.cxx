@@ -7,7 +7,7 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
 {
   try
   {
-    RipsawEngine::Engine engine{RipsawEngine::Backend::gl_core_43};
+    RipsawEngine::_3D::Engine engine{RipsawEngine::_3D::Backend::gl_core_43};
     engine.init();
   }
   catch (const std::exception& e)

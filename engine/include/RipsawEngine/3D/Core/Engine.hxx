@@ -3,7 +3,7 @@
 
 #include <SDL3/SDL.h>
 
-namespace RipsawEngine
+namespace RipsawEngine::_3D
 {
 
 enum class Backend
