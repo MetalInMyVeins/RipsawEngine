@@ -19,6 +19,7 @@ public:
   Engine(Backend backend);
   ~Engine();
   void init();
+  void initGL();
 
 private:
   Backend mBackend{Backend::none};

@@ -9,6 +9,7 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
   {
     RipsawEngine::_3D::Engine engine{RipsawEngine::_3D::Backend::gl_core_43};
     engine.init();
+    engine.initGL();
   }
   catch (const std::exception& e)
   {

@@ -46,5 +46,22 @@ void Engine::init()
   SDL_Log("[INFO] Detected display dimension: %d X %d", mWidth, mHeight);
 }
 
+void Engine::initGL()
+{
+  if (mBackend == Backend::gl_core_43)
+  {
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+  }
+  else if (mBackend == Backend::gles2_core_32)
+  {
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES);
+  }
+  SDL_Log("[INFO] GL attributes set up");
+}
+
 }
 
