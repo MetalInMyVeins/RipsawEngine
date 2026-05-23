@@ -49,7 +49,15 @@ target_include_directories(RipsawEngine3D PUBLIC
   ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
-target_link_libraries(RipsawEngine3D PUBLIC
-  SDL3::SDL3
-)
+if(LINUX)
+  target_link_libraries(RipsawEngine3D PUBLIC
+    SDL3::SDL3
+    glad_gl_core_43
+  )
+elseif(ANDROID)
+  target_link_libraries(RipsawEngine3D PUBLIC
+    SDL3::SDL3
+    glad_gles2_core_32
+  )
+endif()
 

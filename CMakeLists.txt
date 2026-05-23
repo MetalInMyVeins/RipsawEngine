@@ -160,6 +160,7 @@ set(SDLIMAGE_XPM OFF CACHE BOOL "" FORCE)
 set(SDLIMAGE_XV OFF CACHE BOOL "" FORCE)
 set(SDLTTF_VENDORED ON CACHE BOOL "" FORCE)
 
+add_subdirectory(external)
 add_subdirectory(engine)
 add_subdirectory(sandbox)
 
