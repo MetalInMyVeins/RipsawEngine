@@ -2,12 +2,13 @@ Diagnostics:
   Suppress:
     - unused-includes
 
-header-insertion: never
+Completion:
+  HeaderInsertion: Never
 
 ---
 
 If:
-  PathMatch: external/.*
+  PathMatch: .deps/.*
 
 Index:
   Background: Skip

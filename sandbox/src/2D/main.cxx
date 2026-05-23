@@ -22,7 +22,7 @@ public:
     a1->createSpritesheetComponent("sandbox/assets/man.png", {6, 1}, {1, 1}, true, 5);
   }
 
-  void updateGame(double dt) override
+  void updateGame([[maybe_unused]] double dt) override
   {
     bgm->update();
   }
@@ -31,7 +31,7 @@ public:
   {}
 };
 
-int main(int argc, char** argv)
+int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
 {
   Sandbox sandbox;
   RipsawEngine::Engine engine{&sandbox};

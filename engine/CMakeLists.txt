@@ -26,7 +26,7 @@ target_include_directories(RipsawEngine2D PUBLIC
   ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
-target_link_libraries(RipsawEngine2D PRIVATE
+target_link_libraries(RipsawEngine2D PUBLIC
   SDL3::SDL3
   SDL3_image::SDL3_image
   SDL3_ttf::SDL3_ttf
@@ -49,8 +49,7 @@ target_include_directories(RipsawEngine3D PUBLIC
   ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
-target_link_libraries(RipsawEngine3D PRIVATE
+target_link_libraries(RipsawEngine3D PUBLIC
   SDL3::SDL3
 )
-
 
