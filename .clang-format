@@ -1,0 +1,23 @@
+BasedOnStyle: LLVM
+
+IndentWidth: 2
+TabWidth: 2
+ContinuationIndentWidth: 2
+ConstructorInitializerIndentWidth: 2
+UseTab: Never
+
+BreakBeforeBraces: Allman
+AllowShortBlocksOnASingleLine: Never
+AllowShortFunctionsOnASingleLine: None
+AllowShortIfStatementsOnASingleLine: Never
+
+ColumnLimit: 0
+InsertNewlineAtEOF: true
+
+PointerAlignment: Left
+ReferenceAlignment: Left
+AllowShortLambdasOnASingleLine: All
+SortIncludes: true
+IncludeBlocks: Regroup
+AlignOperands: false
+...
