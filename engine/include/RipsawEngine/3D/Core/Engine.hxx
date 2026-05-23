@@ -6,6 +6,12 @@
 namespace RipsawEngine
 {
 
+enum class Backend
+{
+  gl_core_43,
+  gles2_core_32,
+};
+
 class Engine
 {
 public:
