@@ -103,6 +103,13 @@ void Engine::initGeom()
     0.f, 0.5f, 0.f,
     -0.5f, -0.5f, 0.f,
     0.5f, -0.5f, 0.f,
+    1.f, 1.f, 0.f,
+  };
+
+  GLuint indices[]
+  {
+    0, 1, 2,
+    0, 2, 3,
   };
 
   glGenVertexArrays(1, &mVao);
@@ -113,6 +120,11 @@ void Engine::initGeom()
   glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
   glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
   glEnableVertexAttribArray(0);
+
+  glGenBuffers(1, &mEbo);
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEbo);
+  glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
   glBindVertexArray(0);
 }
 
@@ -205,7 +217,7 @@ void Engine::run()
     glClear(GL_COLOR_BUFFER_BIT);
     glBindVertexArray(mVao);
     glUseProgram(mProgram);
-    glDrawArrays(GL_TRIANGLES, 0, 3);
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
     glBindVertexArray(0);
     SDL_GL_SwapWindow(mWindow);
   }

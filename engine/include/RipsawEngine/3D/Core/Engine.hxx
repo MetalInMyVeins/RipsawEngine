@@ -30,6 +30,7 @@ private:
 private:
   GLuint mVao{};
   GLuint mVbo{};
+  GLuint mEbo{};
   GLuint mVertexShader{};
   GLuint mFragmentShader{};
   int mCompStat{};
