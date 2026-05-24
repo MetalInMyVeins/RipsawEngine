@@ -127,19 +127,26 @@ void Engine::initShaders()
   std::stringstream ss{};
 
   std::ifstream file{};
-  file.open("engine/shaders/triangle.vert");
+#ifdef RIPSAW_ENGINE_GL_43
+  file.open("engine/shaders/gl/triangle.vert");
+#elifdef RIPSAW_ENGINE_GLES2_32
+#endif
   ss << file.rdbuf();
   file.close();
   vertexString = ss.str();
   vertexCstr = vertexString.c_str();
   ss.str("");
   ss.clear();
-  
-  file.open("engine/shaders/triangle.frag");
+
+#ifdef RIPSAW_ENGINE_GL_43
+  file.open("engine/shaders/gl/triangle.frag");
+#elifdef RIPSAW_ENGINE_GLES2_32
+#endif
   ss << file.rdbuf();
   file.close();
   fragmentString = ss.str();
   fragmentCstr = fragmentString.c_str();
+  ss.str("");
   ss.clear();
 
   glShaderSource(mVertexShader, 1, &vertexCstr, nullptr);
