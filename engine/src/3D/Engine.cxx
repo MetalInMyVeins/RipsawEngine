@@ -40,6 +40,12 @@ Engine::~Engine()
 
 void Engine::init()
 {
+  this->initDisplay();
+  this->initGL();
+}
+
+void Engine::initDisplay()
+{
   bool status = SDL_Init(SDL_INIT_VIDEO);
   if (status == false)
     throw std::runtime_error{"[ERROR] SDL3 initialization failure"};

@@ -19,6 +19,7 @@ public:
   Engine(Backend backend);
   ~Engine();
   void init();
+  void initDisplay();
   void initGL();
   void run();
 
