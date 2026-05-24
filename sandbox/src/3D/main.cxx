@@ -16,6 +16,6 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
     SDL_Log("%s\nAborting\n", e.what());
     std::exit(EXIT_FAILURE);
   }
-  return 0;
+  return EXIT_SUCCESS;
 }
 
