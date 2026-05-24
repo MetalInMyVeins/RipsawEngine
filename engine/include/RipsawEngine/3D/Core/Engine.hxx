@@ -8,13 +8,6 @@
 namespace RipsawEngine::_3D
 {
 
-enum class Backend
-{
-  none,
-  gl_core_43,
-  gles2_core_32,
-};
-
 class Engine
 {
 public:
@@ -28,7 +21,6 @@ public:
   void run();
 
 private:
-  Backend mBackend{Backend::none};
   int mWidth{};
   int mHeight{};
   SDL_Window* mWindow{nullptr};

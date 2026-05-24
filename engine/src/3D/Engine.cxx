@@ -53,18 +53,15 @@ void Engine::initDisplay()
 
 void Engine::initGL()
 {
-  if (mBackend == Backend::gl_core_43)
-  {
+#ifdef RIPSAW_ENGINE_GL_43
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
-  }
-  else if (mBackend == Backend::gles2_core_32)
-  {
+#elifdef RIPSAW_ENGINE_GLES2_32
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES);
-  }
+#endif
   SDL_Log("[INFO] GL attributes set up");
 
   mWindow = SDL_CreateWindow("RipsawEngine3D", mWidth, mHeight, SDL_WINDOW_OPENGL | SDL_WINDOW_FULLSCREEN);
