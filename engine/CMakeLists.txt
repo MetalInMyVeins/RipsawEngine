@@ -54,10 +54,12 @@ if(LINUX)
     SDL3::SDL3
     glad_gl_core_43
   )
+  target_compile_definitions(RipsawEngine3D PRIVATE RIPSAW_GL)
 elseif(ANDROID)
   target_link_libraries(RipsawEngine3D PUBLIC
     SDL3::SDL3
     glad_gles2_core_32
   )
+  target_compile_definitions(RipsawEngine3D PRIVATE RIPSAW_GLES2)
 endif()
 

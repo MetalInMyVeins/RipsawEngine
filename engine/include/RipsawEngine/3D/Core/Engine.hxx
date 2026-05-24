@@ -26,6 +26,7 @@ private:
   int mWidth{};
   int mHeight{};
   SDL_Window* mWindow{nullptr};
+  SDL_GLContext mContext{};
 };
 
 }
