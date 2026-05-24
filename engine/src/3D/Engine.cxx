@@ -105,7 +105,10 @@ void Engine::initGL()
 #endif
   glViewport(0, 0, mWidth, mHeight);
   SDL_Log("[INFO] Viewport created: %d X %d", mWidth, mHeight);
+}
 
+void Engine::run()
+{
   while (mRunning)
   {
     SDL_Event event{};

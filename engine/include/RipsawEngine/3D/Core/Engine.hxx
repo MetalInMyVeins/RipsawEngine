@@ -20,6 +20,7 @@ public:
   ~Engine();
   void init();
   void initGL();
+  void run();
 
 private:
   Backend mBackend{Backend::none};
