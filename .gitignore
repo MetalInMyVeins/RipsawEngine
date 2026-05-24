@@ -1,3 +1,4 @@
+# Linux
 .cache/
 .deps/
 bin/
@@ -19,3 +20,40 @@ vgrun
 *.nvim
 *.swp
 *.vim
+
+# Android
+*.apk
+*.aar
+*.ap_
+*.aab
+*.dex
+*.class
+gen/
+out/
+.gradle/
+local.properties
+proguard/
+.navigation/
+captures/
+*.iml
+.idea/
+*.jks
+*.keystore
+.externalNativeBuild/
+.cxx/
+google-services.json
+freeline.py
+freeline/
+freeline_project_description.json
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots
+fastlane/test_output
+fastlane/readme.md
+vcs.xml
+lint/intermediates/
+lint/generated/
+lint/outputs/
+lint/tmp/
+*.hprof
+.kotlin/
