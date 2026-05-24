@@ -1,6 +1,7 @@
 #include "RipsawEngine/3D/Core/Engine.hxx"
 
 #include <stdexcept>
+#include <string>
 
 namespace RipsawEngine::_3D
 {
@@ -28,6 +29,7 @@ Engine::Engine(Backend backend)
 
 Engine::~Engine()
 {
+  SDL_DestroyWindow(mWindow);
   SDL_Log("[STOP] RipsawEngine::_3D subsystem");
 }
 
@@ -61,6 +63,11 @@ void Engine::initGL()
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES);
   }
   SDL_Log("[INFO] GL attributes set up");
+
+  mWindow = SDL_CreateWindow("RipsawEngine3D", mWidth, mHeight, SDL_WINDOW_OPENGL | SDL_WINDOW_FULLSCREEN);
+  if (mWindow == nullptr)
+    throw std::runtime_error{"[ERROR] %s" + std::string{SDL_GetError()}};
+  SDL_Log("[INFO] Created window: %d X %d", mWidth, mHeight);
 }
 
 }

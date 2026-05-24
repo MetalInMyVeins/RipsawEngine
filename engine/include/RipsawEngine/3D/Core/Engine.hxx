@@ -1,5 +1,5 @@
-#ifndef D3_CORE_ENGINE_HXX
-#define D3_CORE_ENGINE_HXX
+#ifndef _3D_CORE_ENGINE_HXX
+#define _3D_CORE_ENGINE_HXX
 
 #include <SDL3/SDL.h>
 
@@ -25,6 +25,7 @@ private:
   Backend mBackend{Backend::none};
   int mWidth{};
   int mHeight{};
+  SDL_Window* mWindow{nullptr};
 };
 
 }
