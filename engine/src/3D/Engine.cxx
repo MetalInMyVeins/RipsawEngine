@@ -142,6 +142,7 @@ void Engine::initShaders()
 #ifdef RIPSAW_ENGINE_GL_43
   file.open("engine/shaders/gl/triangle.vert");
 #elifdef RIPSAW_ENGINE_GLES2_32
+  file.open("engine/shaders/gles2/triangle.vert");
 #endif
   ss << file.rdbuf();
   file.close();
@@ -153,6 +154,7 @@ void Engine::initShaders()
 #ifdef RIPSAW_ENGINE_GL_43
   file.open("engine/shaders/gl/triangle.frag");
 #elifdef RIPSAW_ENGINE_GLES2_32
+  file.open("engine/shaders/gles2/triangle.frag");
 #endif
   ss << file.rdbuf();
   file.close();
