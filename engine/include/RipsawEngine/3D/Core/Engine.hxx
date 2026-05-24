@@ -1,6 +1,8 @@
 #ifndef _3D_CORE_ENGINE_HXX
 #define _3D_CORE_ENGINE_HXX
 
+#include <glad/glad.h>
+
 #include <SDL3/SDL.h>
 
 namespace RipsawEngine::_3D
@@ -21,6 +23,7 @@ public:
   void init();
   void initDisplay();
   void initGL();
+  void initGeom();
   void run();
 
 private:
@@ -30,6 +33,10 @@ private:
   SDL_Window* mWindow{nullptr};
   SDL_GLContext mContext{};
   bool mRunning{true};
+
+private:
+  GLuint mVao{};
+  GLuint mVbo{};
 };
 
 }

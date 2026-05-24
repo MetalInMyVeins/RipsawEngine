@@ -1,7 +1,5 @@
 #include "RipsawEngine/3D/Core/Engine.hxx"
 
-#include <glad/glad.h>
-
 #include <stdexcept>
 #include <string>
 
@@ -42,6 +40,7 @@ void Engine::init()
 {
   this->initDisplay();
   this->initGL();
+  this->initGeom();
 }
 
 void Engine::initDisplay()
@@ -111,6 +110,26 @@ void Engine::initGL()
 #endif
   glViewport(0, 0, mWidth, mHeight);
   SDL_Log("[INFO] Viewport created: %d X %d", mWidth, mHeight);
+}
+
+void Engine::initGeom()
+{
+  GLfloat vertices[]
+  {
+    0.5f, 0.f, 0.f,
+    -0.5f, -0.5f, 0.f,
+    0.5f, 0.5f, 0.f,
+  };
+
+  glGenVertexArrays(1, &mVao);
+  glBindVertexArray(mVao);
+
+  glGenBuffers(1, &mVbo);
+  glBindBuffer(GL_ARRAY_BUFFER, mVbo);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
+  glEnableVertexAttribArray(mVao);
+  glBindVertexArray(0);
 }
 
 void Engine::run()
