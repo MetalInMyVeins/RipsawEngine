@@ -13,6 +13,7 @@ option(USE_LIBCXX "Use libc++ instead of libstdc++" OFF)
 option(ENABLE_SANITIZERS_ADDUB "Enable Address + Undefined sanitizers" OFF)
 option(ENABLE_SANITIZERS_MEMUB "Enable Memory + Undefined sanitizers" OFF)
 option(ENABLE_SANITIZERS_THREAD "Enable Thread sanitizer" OFF)
+option(RIPSAW_ENGINE_BACKEND "Choose backend" "gl_core_43")
 
 find_package(SDL3 REQUIRED)
 find_package(SDL3_image REQUIRED)

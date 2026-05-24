@@ -8,25 +8,14 @@
 namespace RipsawEngine::_3D
 {
 
-Engine::Engine(Backend backend)
-  : mBackend{backend}
+Engine::Engine()
 {
   SDL_Log("[START] RipsawEngine::_3D subsystem");
-
-  if (mBackend == Backend::none)
-    throw std::runtime_error{"[ERROR] Invalid backend selected"};
-  
-  switch (mBackend)
-  {
-    case Backend::gl_core_43:
-      SDL_Log("[INFO] Selected backend: gl_core_43");
-      break;
-    case Backend::gles2_core_32:
-      SDL_Log("[INFO] Selected backend: gles2_core_32");
-      break;
-    case Backend::none:
-      break;
-  }
+#ifdef RIPSAW_ENGINE_GL_43
+  SDL_Log("[INFO] Selected backend: gl_core_43");
+#elifdef RIPSAW_ENGINE_GLES2_32
+  SDL_Log("[INFO] Selected backend: gles2_core_32");
+#endif
 }
 
 Engine::~Engine()
@@ -83,34 +72,28 @@ void Engine::initGL()
     throw std::runtime_error{"[ERROR] %s" + std::string{SDL_GetError()}};
   SDL_Log("[INFO] Created window: %d X %d", mWidth, mHeight);
 
-  if (mBackend == Backend::gl_core_43)
-  {
-#ifdef RIPSAW_GL
-    mContext = SDL_GL_CreateContext(mWindow);
-    SDL_Log("[INFO] Created OpenGL context");
-    int gladinit = gladLoadGLLoader(reinterpret_cast<GLADloadproc>(SDL_GL_GetProcAddress));
-    if (gladinit == 0)
-      throw std::runtime_error{"[ERROR] GLAD init failed"};
-    SDL_Log("[INFO] GLAD initialized");
-    SDL_Log("\tGL Vendor:\t%s", glGetString(GL_VENDOR));
-    SDL_Log("\tGL Renderer:\t%s", glGetString(GL_RENDERER));
-    SDL_Log("\tGL Version:\t%s", glGetString(GL_VERSION));
-    SDL_Log("\tGLSL Version:\t%s", glGetString(GL_SHADING_LANGUAGE_VERSION));
-  }
-#elifdef RIPSAW_GLES2
-  else if (mBackend == Backend::gles2_core_32)
-  {
-    mContext = SDL_GL_CreateContext(mWindow);
-    SDL_Log("[INFO] Created OpenGL context");
-    int gladinit = gladLoadGLES2Loader(reinterpret_cast<GLADloadproc>(SDL_GL_GetProcAddress));
-    if (gladinit == 0)
-      throw std::runtime_error{"[ERROR] GLAD init failed"};
-    SDL_Log("[INFO] GLAD initialized");
-    SDL_Log("\tGL Vendor:\t%s", glGetString(GL_VENDOR));
-    SDL_Log("\tGL Renderer:\t%s", glGetString(GL_RENDERER));
-    SDL_Log("\tGL Version:\t%s", glGetString(GL_VERSION));
-    SDL_Log("\tGLSL Version:\t%s", glGetString(GL_SHADING_LANGUAGE_VERSION));
-  }
+#ifdef RIPSAW_ENGINE_GL_43
+  mContext = SDL_GL_CreateContext(mWindow);
+  SDL_Log("[INFO] Created OpenGL context");
+  int gladinit = gladLoadGLLoader(reinterpret_cast<GLADloadproc>(SDL_GL_GetProcAddress));
+  if (gladinit == 0)
+    throw std::runtime_error{"[ERROR] GLAD init failed"};
+  SDL_Log("[INFO] GLAD initialized");
+  SDL_Log("\tGL Vendor:\t%s", glGetString(GL_VENDOR));
+  SDL_Log("\tGL Renderer:\t%s", glGetString(GL_RENDERER));
+  SDL_Log("\tGL Version:\t%s", glGetString(GL_VERSION));
+  SDL_Log("\tGLSL Version:\t%s", glGetString(GL_SHADING_LANGUAGE_VERSION));
+#elifdef RIPSAW_ENGINE_GLES2_32
+  mContext = SDL_GL_CreateContext(mWindow);
+  SDL_Log("[INFO] Created OpenGL context");
+  int gladinit = gladLoadGLES2Loader(reinterpret_cast<GLADloadproc>(SDL_GL_GetProcAddress));
+  if (gladinit == 0)
+    throw std::runtime_error{"[ERROR] GLAD init failed"};
+  SDL_Log("[INFO] GLAD initialized");
+  SDL_Log("\tGL Vendor:\t%s", glGetString(GL_VENDOR));
+  SDL_Log("\tGL Renderer:\t%s", glGetString(GL_RENDERER));
+  SDL_Log("\tGL Version:\t%s", glGetString(GL_VERSION));
+  SDL_Log("\tGLSL Version:\t%s", glGetString(GL_SHADING_LANGUAGE_VERSION));
 #endif
   glViewport(0, 0, mWidth, mHeight);
   SDL_Log("[INFO] Viewport created: %d X %d", mWidth, mHeight);

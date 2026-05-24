@@ -7,7 +7,7 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
 {
   try
   {
-    RipsawEngine::_3D::Engine engine{RipsawEngine::_3D::Backend::gl_core_43};
+    RipsawEngine::_3D::Engine engine{};
     engine.init();
     engine.run();
   }

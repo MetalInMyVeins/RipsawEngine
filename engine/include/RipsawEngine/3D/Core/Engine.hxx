@@ -18,7 +18,7 @@ enum class Backend
 class Engine
 {
 public:
-  Engine(Backend backend);
+  Engine();
   ~Engine();
   void init();
   void initDisplay();

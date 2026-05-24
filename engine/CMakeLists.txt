@@ -49,17 +49,17 @@ target_include_directories(RipsawEngine3D PUBLIC
   ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
-if(LINUX)
+if(RIPSAW_ENGINE_BACKEND STREQUAL "gl_core_43")
   target_link_libraries(RipsawEngine3D PUBLIC
     SDL3::SDL3
     glad_gl_core_43
   )
-  target_compile_definitions(RipsawEngine3D PRIVATE RIPSAW_GL)
-elseif(ANDROID)
+  target_compile_definitions(RipsawEngine3D PRIVATE RIPSAW_ENGINE_GL_43)
+elseif(RIPSAW_ENGINE_BACKEND STREQUAL "gles2_core_32")
   target_link_libraries(RipsawEngine3D PUBLIC
     SDL3::SDL3
     glad_gles2_core_32
   )
-  target_compile_definitions(RipsawEngine3D PRIVATE RIPSAW_GLES2)
+  target_compile_definitions(RipsawEngine3D PRIVATE RIPSAW_ENGINE_GLES2_32)
 endif()
 
