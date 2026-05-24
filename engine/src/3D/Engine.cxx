@@ -1,6 +1,8 @@
 #include "RipsawEngine/3D/Core/Engine.hxx"
 
+#include <fstream>
 #include <stdexcept>
+#include <sstream>
 #include <string>
 
 namespace RipsawEngine::_3D
@@ -29,6 +31,7 @@ Engine::Engine(Backend backend)
 
 Engine::~Engine()
 {
+  glDeleteProgram(mProgram);
   SDL_GL_DestroyContext(mContext);
   SDL_Log("[INFO] Destroyed OpenGL context");
   SDL_DestroyWindow(mWindow);
@@ -41,6 +44,7 @@ void Engine::init()
   this->initDisplay();
   this->initGL();
   this->initGeom();
+  this->initShaders();
 }
 
 void Engine::initDisplay()
@@ -130,6 +134,71 @@ void Engine::initGeom()
   glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
   glEnableVertexAttribArray(mVao);
   glBindVertexArray(0);
+}
+
+void Engine::initShaders()
+{
+  mVertexShader = glCreateShader(GL_VERTEX_SHADER);
+  mFragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+  std::string vertexString{};
+  const char* vertexCstr{};
+  const char* fragmentCstr{};
+  std::string fragmentString{};
+  std::stringstream ss{};
+
+  std::ifstream file{};
+  file.open("engine/shaders/triangle.vert");
+  ss << file.rdbuf();
+  file.close();
+  vertexString = ss.str();
+  vertexCstr = vertexString.c_str();
+  ss.str("");
+  ss.clear();
+  
+  file.open("engine/shaders/triangle.frag");
+  ss << file.rdbuf();
+  file.close();
+  fragmentString = ss.str();
+  fragmentCstr = fragmentString.c_str();
+  ss.clear();
+
+  glShaderSource(mVertexShader, 1, &vertexCstr, nullptr);
+  glCompileShader(mVertexShader);
+  glGetShaderiv(mVertexShader, GL_COMPILE_STATUS, &mCompStat);
+  if (mCompStat == 0)
+  {
+    glGetShaderInfoLog(mVertexShader, sizeof(mInfolog), nullptr, mInfolog);
+    throw std::runtime_error{"[ERROR] Failed compiling vertex shader: " + std::string{mInfolog}};
+  }
+  SDL_Log("[INFO] Compiled vertex shader: %d", mVertexShader);
+  mCompStat = 0;
+  
+  glShaderSource(mFragmentShader, 1, &fragmentCstr, nullptr);
+  glCompileShader(mFragmentShader);
+  glGetShaderiv(mFragmentShader, GL_COMPILE_STATUS, &mCompStat);
+  if (mCompStat == 0)
+  {
+    glGetShaderInfoLog(mFragmentShader, sizeof(mInfolog), nullptr, mInfolog);
+    throw std::runtime_error{"[ERROR] Failed compiling fragment shader: " + std::string{mInfolog}};
+  }
+  SDL_Log("[INFO] Compiled fragment shader: %d", mFragmentShader);
+  mCompStat = 0;
+
+  mProgram = glCreateProgram();
+  glAttachShader(mProgram, mVertexShader);
+  glAttachShader(mProgram, mFragmentShader);
+  glLinkProgram(mProgram);
+  glGetProgramiv(mProgram, GL_LINK_STATUS, &mCompStat);
+  if (mCompStat == 0)
+  {
+    glGetProgramInfoLog(mProgram, sizeof(mInfolog), nullptr, mInfolog);
+    throw std::runtime_error{"[ERROR] Failed linking program: " + std::string{mInfolog}};
+  }
+  SDL_Log("[INFO] Linked program: %d", mProgram);
+  mCompStat = 0;
+
+  glDeleteShader(mFragmentShader);
+  glDeleteShader(mVertexShader);
 }
 
 void Engine::run()

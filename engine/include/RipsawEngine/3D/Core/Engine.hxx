@@ -24,6 +24,7 @@ public:
   void initDisplay();
   void initGL();
   void initGeom();
+  void initShaders();
   void run();
 
 private:
@@ -37,6 +38,11 @@ private:
 private:
   GLuint mVao{};
   GLuint mVbo{};
+  GLuint mVertexShader{};
+  GLuint mFragmentShader{};
+  int mCompStat{};
+  char mInfolog[512]{};
+  GLuint mProgram{};
 };
 
 }
