@@ -105,6 +105,22 @@ void Engine::initGL()
 #endif
   glViewport(0, 0, mWidth, mHeight);
   SDL_Log("[INFO] Viewport created: %d X %d", mWidth, mHeight);
+
+  while (mRunning)
+  {
+    SDL_Event event{};
+    while (SDL_PollEvent(&event))
+    {
+      if (event.type == SDL_EVENT_QUIT)
+        mRunning = false;
+      if (event.key.key == SDLK_ESCAPE)
+        mRunning = false;
+    }
+
+    glClearColor(0.1f, 0.1f, 0.1f, 1.f);
+    glClear(GL_COLOR_BUFFER_BIT);
+    SDL_GL_SwapWindow(mWindow);
+  }
 }
 
 }
