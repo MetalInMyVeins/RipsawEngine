@@ -1,6 +1,7 @@
 # Linux
 .cache/
 .deps/
+.deps/stamps
 bin/
 build/
 dist/
