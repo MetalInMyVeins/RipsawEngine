@@ -1,0 +1,3 @@
+external/** linguist-vendored
+platform/android/app/src/main/java/** linguist-vendored
+
