@@ -39,7 +39,6 @@ Engine::~Engine()
 
 bool Engine::init()
 {
-  SDL_SetHint(SDL_HINT_VIDEO_DRIVER, "wayland,x11");
   if (SDL_Init(SDL_INIT_VIDEO) == false)
   {
     SDL_Log("[ERROR] SDL_INIT_VIDEO failed");
@@ -54,37 +53,22 @@ bool Engine::init()
 
   if (mIsDisplaySetManually == false)
   {
-    int count{};
-    SDL_DisplayID* displays{SDL_GetDisplays(&count)};
-    if (displays == nullptr or count == 0)
-    {
-      SDL_Log("[ERROR] Couldn't get display");
-      return false;
-    }
-
-    SDL_DisplayID dID{displays[0]};
-    const SDL_DisplayMode* dm{SDL_GetCurrentDisplayMode(dID)};
-    if (dm == nullptr)
-    {
-      SDL_Log("[ERROR] Failed to set up display");
-      return false;
-    }
-    SDL_Log("[INFO] Display ID: %d", dID);
-    SDL_Log("[INFO] Display Mode: %p", static_cast<const void*>(dm));
+    SDL_DisplayID did = SDL_GetPrimaryDisplay();
+    const SDL_DisplayMode* dm = SDL_GetCurrentDisplayMode(did);
     mScreenWidth = dm->w;
     mScreenHeight = dm->h;
-    SDL_free(displays);
+    if (mScreenWidth <= 0 or mScreenHeight <= 0)
+      throw std::runtime_error{"[ERROR] Invalid display dimension"};
+    SDL_Log("[INFO] Detected display dimension: %d X %d", mScreenWidth, mScreenHeight);
   }
   SDL_Log("[INFO] Display Resolution: %d X %d", mScreenWidth, mScreenHeight);
 
-  SDL_SetHint(SDL_HINT_RENDER_DRIVER, mRendererBackend.c_str());
-  
   SDL_CreateWindowAndRenderer(
-      mWname.c_str(),
-      mScreenWidth, mScreenHeight,
-      SDL_WINDOW_FULLSCREEN | SDL_WINDOW_HIGH_PIXEL_DENSITY,
-      &mWindow,
-      &mRenderer
+    mWname.c_str(),
+    mScreenWidth, mScreenHeight,
+    SDL_WINDOW_FULLSCREEN,
+    &mWindow,
+    &mRenderer
   );
 
   if (mWindow == nullptr or mRenderer == nullptr)
@@ -244,7 +228,7 @@ void Engine::addActor(Actor* actor)
 {
   mActors.emplace_back(actor);
   mTotalActorsSize += sizeof(*actor);
-  SDL_Log("[INFO] Cumulative actor size: %ld bytes", mTotalActorsSize);
+  SDL_Log("[INFO] Cumulative actor size: %zu bytes", mTotalActorsSize);
 }
 
 void Engine::removeActor(Actor* actor)
@@ -261,7 +245,7 @@ void Engine::removeActor(Actor* actor)
 void Engine::addSprite(class SpriteComponent* sc)
 {
   mSprites.emplace_back(sc);
-  SDL_Log("[INFO] Total active sprites++: %ld", mSprites.size());
+  SDL_Log("[INFO] Total active sprites++: %zu", mSprites.size());
 }
 
 void Engine::removeSprite(SpriteComponent* sprite)
@@ -271,7 +255,7 @@ void Engine::removeSprite(SpriteComponent* sprite)
   {
     mSprites.erase(it);
   }
-  SDL_Log("[INFO] Total active sprites--: %ld", mSprites.size());
+  SDL_Log("[INFO] Total active sprites--: %zu", mSprites.size());
 }
 
 void Engine::insertActorSpritePair(const std::pair<Actor*, Component*>& asp)

@@ -11,9 +11,14 @@ namespace RipsawEngine::_3D
 Engine::Engine()
 {
   SDL_Log("[START] RipsawEngine::_3D subsystem");
-#ifdef RIPSAW_ENGINE_GL_43
+#if defined(RIPSAW_ENGINE_TARGET_LINUX) && defined(RIPSAW_ENGINE_BACKEND_GLCORE43)
+  SDL_Log("[INFO] Selected target: Linux");
   SDL_Log("[INFO] Selected backend: gl_core_43");
-#elifdef RIPSAW_ENGINE_GLES2_32
+#elif defined(RIPSAW_ENGINE_TARGET_LINUX) && defined(RIPSAW_ENGINE_BACKEND_GLES2CORE32)
+  SDL_Log("[INFO] Selected target: Linux");
+  SDL_Log("[INFO] Selected backend: gles2_core_32");
+#elif defined(RIPSAW_ENGINE_TARGET_ANDROID)
+  SDL_Log("[INFO] Selected target: Android");
   SDL_Log("[INFO] Selected backend: gles2_core_32");
 #endif
 }
@@ -53,11 +58,11 @@ void Engine::initDisplay()
 
 void Engine::initGL()
 {
-#ifdef RIPSAW_ENGINE_GL_43
+#if defined(RIPSAW_ENGINE_BACKEND_GLCORE43)
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
-#elifdef RIPSAW_ENGINE_GLES2_32
+#elif defined(RIPSAW_ENGINE_BACKEND_GLES2CORE32)
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES);
@@ -69,7 +74,7 @@ void Engine::initGL()
     throw std::runtime_error{"[ERROR] %s" + std::string{SDL_GetError()}};
   SDL_Log("[INFO] Created window: %d X %d", mWidth, mHeight);
 
-#ifdef RIPSAW_ENGINE_GL_43
+#if defined(RIPSAW_ENGINE_BACKEND_GLCORE43)
   mContext = SDL_GL_CreateContext(mWindow);
   SDL_Log("[INFO] Created OpenGL context");
   int gladinit = gladLoadGLLoader(reinterpret_cast<GLADloadproc>(SDL_GL_GetProcAddress));
@@ -80,7 +85,7 @@ void Engine::initGL()
   SDL_Log("\tGL Renderer:\t%s", glGetString(GL_RENDERER));
   SDL_Log("\tGL Version:\t%s", glGetString(GL_VERSION));
   SDL_Log("\tGLSL Version:\t%s", glGetString(GL_SHADING_LANGUAGE_VERSION));
-#elifdef RIPSAW_ENGINE_GLES2_32
+#elif defined(RIPSAW_ENGINE_BACKEND_GLES2CORE32)
   mContext = SDL_GL_CreateContext(mWindow);
   SDL_Log("[INFO] Created OpenGL context");
   int gladinit = gladLoadGLES2Loader(reinterpret_cast<GLADloadproc>(SDL_GL_GetProcAddress));
@@ -136,32 +141,24 @@ void Engine::initShaders()
   const char* vertexCstr{};
   const char* fragmentCstr{};
   std::string fragmentString{};
-  std::stringstream ss{};
 
-  std::ifstream file{};
-#ifdef RIPSAW_ENGINE_GL_43
-  file.open("engine/shaders/gl/triangle.vert");
-#elifdef RIPSAW_ENGINE_GLES2_32
-  file.open("engine/shaders/gles2/triangle.vert");
+#if (defined(RIPSAW_ENGINE_TARGET_LINUX) || defined(RIPSAW_ENGINE_TARGET_WINDOWS)) && defined(RIPSAW_ENGINE_BACKEND_GLCORE43) && !defined(RIPSAW_ENGINE_TARGET_ANDROID)
+  vertexString = readFile("engine/shaders/gl/triangle.vert");
+#elif (defined(RIPSAW_ENGINE_TARGET_LINUX) || defined(RIPSAW_ENGINE_TARGET_WINDOWS)) && defined(RIPSAW_ENGINE_BACKEND_GLES2CORE32) && !defined(RIPSAW_ENGINE_TARGET_ANDROID)
+  vertexString = readTextFileSDL("engine/shaders/gles2/triangle.vert");
+#elif defined(RIPSAW_ENGINE_TARGET_ANDROID)
+  vertexString = readTextFileSDL("shaders/gles2/triangle.vert");
 #endif
-  ss << file.rdbuf();
-  file.close();
-  vertexString = ss.str();
   vertexCstr = vertexString.c_str();
-  ss.str("");
-  ss.clear();
 
-#ifdef RIPSAW_ENGINE_GL_43
-  file.open("engine/shaders/gl/triangle.frag");
-#elifdef RIPSAW_ENGINE_GLES2_32
-  file.open("engine/shaders/gles2/triangle.frag");
+#if (defined(RIPSAW_ENGINE_TARGET_LINUX) || defined(RIPSAW_ENGINE_TARGET_WINDOWS)) && defined(RIPSAW_ENGINE_BACKEND_GLCORE43) && !defined(RIPSAW_ENGINE_TARGET_ANDROID)
+  fragmentString = readFile("engine/shaders/gl/triangle.frag");
+#elif (defined(RIPSAW_ENGINE_TARGET_LINUX) || defined(RIPSAW_ENGINE_TARGET_WINDOWS)) && defined(RIPSAW_ENGINE_BACKEND_GLES2CORE32) && !defined(RIPSAW_ENGINE_TARGET_ANDROID)
+  fragmentString = readTextFileSDL("engine/shaders/gles2/triangle.frag");
+#elif defined(RIPSAW_ENGINE_TARGET_ANDROID)
+  fragmentString = readTextFileSDL("shaders/gles2/triangle.frag");
 #endif
-  ss << file.rdbuf();
-  file.close();
-  fragmentString = ss.str();
   fragmentCstr = fragmentString.c_str();
-  ss.str("");
-  ss.clear();
 
   glShaderSource(mVertexShader, 1, &vertexCstr, nullptr);
   glCompileShader(mVertexShader);
@@ -226,4 +223,3 @@ void Engine::run()
 }
 
 }
-

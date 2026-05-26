@@ -2,6 +2,10 @@
 #include "RipsawEngine/2D/Managers/BGManager.hxx"
 #include "RipsawEngine/2D/Scene/Scene.hxx"
 
+#if defined(RIPSAW_ENGINE_TARGET_ANDROID)
+#include <SDL3/SDL_main.h>
+#endif
+
 class Sandbox : public RipsawEngine::Game
 {
 public:
@@ -16,10 +20,17 @@ private:
 public:
   void initGame() override
   {
-    bgm = mEngine->createBGManager({"sandbox/assets/woods.png"}, {-55});
+#if defined(RIPSAW_ENGINE_TARGET_LINUX) || defined(RIPSAW_ENGINE_TARGET_WINDOWS)
+    std::string asset1{"sandbox/assets/woods.png"};
+    std::string asset2{"sandbox/assets/man.png"};
+#elif defined(RIPSAW_ENGINE_TARGET_ANDROID)
+    std::string asset1{"woods.png"};
+    std::string asset2{"man.png"};
+#endif
+    bgm = mEngine->createBGManager({asset1}, {-55});
     a1 = mEngine->createActor();
     a1->createTransformComponent({300, 650}, {});
-    a1->createSpritesheetComponent("sandbox/assets/man.png", {6, 1}, {1, 1}, true, 5);
+    a1->createSpritesheetComponent(asset2, {6, 1}, {1, 1}, true, 5);
   }
 
   void updateGame([[maybe_unused]] double dt) override

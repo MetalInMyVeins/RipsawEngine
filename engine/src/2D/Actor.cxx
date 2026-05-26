@@ -14,7 +14,7 @@ namespace RipsawEngine
 Actor::Actor(Engine* engine)
   : mEngine{engine}
 {
-  SDL_Log("[INFO] Actor (%ld bytes) created: %p", sizeof(*this), static_cast<void*>(this));
+  SDL_Log("[INFO] Actor (%zu bytes) created: %p", static_cast<size_t>(sizeof(*this)), static_cast<void*>(this));
   mEngine->addActor(this);
 }
 

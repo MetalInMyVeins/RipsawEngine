@@ -1,65 +1,105 @@
-add_library(RipsawEngine2D STATIC
-  src/2D/Actor.cxx
-  src/2D/BGManager.cxx
-  src/2D/Component.cxx
-  src/2D/Engine.cxx
-  src/2D/Game.cxx
-  src/2D/SpriteComponent.cxx
-  src/2D/SpritesheetComponent.cxx
-  src/2D/Timer.cxx
-  src/2D/TransformComponent.cxx
-  src/2D/processInput.cxx
-  src/2D/renderEngine.cxx
-  src/2D/updateEngine.cxx
-)
-
-apply_strict_flags(RipsawEngine2D)
-
-set_target_properties(RipsawEngine2D PROPERTIES
-  ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
-  LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
-  RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
-  INTERPROCEDURAL_OPTIMIZATION TRUE
-)
-
-target_include_directories(RipsawEngine2D PUBLIC
-  ${CMAKE_CURRENT_SOURCE_DIR}/include
-)
-
-target_link_libraries(RipsawEngine2D PUBLIC
-  SDL3::SDL3
-  SDL3_image::SDL3_image
-  SDL3_ttf::SDL3_ttf
-)
-
-add_library(RipsawEngine3D STATIC
-  src/3D/Engine.cxx
-)
-
-apply_strict_flags(RipsawEngine3D)
-
-set_target_properties(RipsawEngine3D PROPERTIES
-  ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
-  LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
-  RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
-  INTERPROCEDURAL_OPTIMIZATION TRUE
-)
-
-target_include_directories(RipsawEngine3D PUBLIC
-  ${CMAKE_CURRENT_SOURCE_DIR}/include
-)
-
-if(RIPSAW_ENGINE_BACKEND STREQUAL "gl_core_43")
-  target_link_libraries(RipsawEngine3D PUBLIC
-    SDL3::SDL3
-    glad_gl_core_43
+if(RIPSAW_ENGINE_SUBSYSTEM_2D)
+  add_library(RipsawEngine2D SHARED
+    src/2D/Actor.cxx
+    src/2D/BGManager.cxx
+    src/2D/Component.cxx
+    src/2D/Engine.cxx
+    src/2D/Game.cxx
+    src/2D/SpriteComponent.cxx
+    src/2D/SpritesheetComponent.cxx
+    src/2D/Timer.cxx
+    src/2D/TransformComponent.cxx
+    src/2D/processInput.cxx
+    src/2D/renderEngine.cxx
+    src/2D/updateEngine.cxx
   )
-  target_compile_definitions(RipsawEngine3D PRIVATE RIPSAW_ENGINE_GL_43)
-elseif(RIPSAW_ENGINE_BACKEND STREQUAL "gles2_core_32")
-  target_link_libraries(RipsawEngine3D PUBLIC
-    SDL3::SDL3
-    glad_gles2_core_32
+
+  target_compile_definitions(RipsawEngine2D PUBLIC
+    $<$<BOOL:${RIPSAW_ENGINE_TARGET_LINUX}>:RIPSAW_ENGINE_TARGET_LINUX>
+    $<$<BOOL:${RIPSAW_ENGINE_TARGET_WINDOWS}>:RIPSAW_ENGINE_TARGET_WINDOWS>
+    $<$<BOOL:${RIPSAW_ENGINE_TARGET_ANDROID}>:RIPSAW_ENGINE_TARGET_ANDROID>
+    $<$<BOOL:${RIPSAW_ENGINE_BACKEND_GLCORE43}>:RIPSAW_ENGINE_BACKEND_GLCORE43>
+    $<$<BOOL:${RIPSAW_ENGINE_BACKEND_GLES2CORE32}>:RIPSAW_ENGINE_BACKEND_GLES2CORE32>
+    $<$<BOOL:${RIPSAW_ENGINE_SUBSYSTEM_2D}>:RIPSAW_ENGINE_SUBSYSTEM_2D>
+    $<$<BOOL:${RIPSAW_ENGINE_SUBSYSTEM_3D}>:RIPSAW_ENGINE_SUBSYSTEM_3D>
   )
-  target_compile_definitions(RipsawEngine3D PRIVATE RIPSAW_ENGINE_GLES2_32)
+
+  apply_strict_flags(RipsawEngine2D)
+
+  set_target_properties(RipsawEngine2D PROPERTIES
+    ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
+    LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
+    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
+    INTERPROCEDURAL_OPTIMIZATION TRUE
+  )
+
+  target_include_directories(RipsawEngine2D PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+  )
+
+  if(RIPSAW_ENGINE_TARGET_LINUX OR RIPSAW_ENGINE_TARGET_WINDOWS)
+    target_link_libraries(RipsawEngine2D PUBLIC
+      SDL3::SDL3
+      SDL3_image::SDL3_image
+      SDL3_ttf::SDL3_ttf
+    )
+  elseif(RIPSAW_ENGINE_TARGET_ANDROID)
+    target_include_directories(RipsawEngine2D PUBLIC
+      ${CMAKE_SOURCE_DIR}/.deps/glm-src
+    )
+    target_link_libraries(RipsawEngine2D PUBLIC
+      SDL3::SDL3
+      SDL3_image::SDL3_image
+      SDL3_ttf::SDL3_ttf
+      android
+      EGL
+      GLESv2
+      log
+    )
+  endif()
+elseif(RIPSAW_ENGINE_SUBSYSTEM_3D)
+  add_library(RipsawEngine3D SHARED
+    src/3D/Engine.cxx
+    src/3D/readFile.cxx
+  )
+
+  target_compile_definitions(RipsawEngine3D PUBLIC
+    $<$<BOOL:${RIPSAW_ENGINE_TARGET_LINUX}>:RIPSAW_ENGINE_TARGET_LINUX>
+    $<$<BOOL:${RIPSAW_ENGINE_TARGET_WINDOWS}>:RIPSAW_ENGINE_TARGET_WINDOWS>
+    $<$<BOOL:${RIPSAW_ENGINE_TARGET_ANDROID}>:RIPSAW_ENGINE_TARGET_ANDROID>
+    $<$<BOOL:${RIPSAW_ENGINE_BACKEND_GLCORE43}>:RIPSAW_ENGINE_BACKEND_GLCORE43>
+    $<$<BOOL:${RIPSAW_ENGINE_BACKEND_GLES2CORE32}>:RIPSAW_ENGINE_BACKEND_GLES2CORE32>
+    $<$<BOOL:${RIPSAW_ENGINE_SUBSYSTEM_2D}>:RIPSAW_ENGINE_SUBSYSTEM_2D>
+    $<$<BOOL:${RIPSAW_ENGINE_SUBSYSTEM_3D}>:RIPSAW_ENGINE_SUBSYSTEM_3D>
+  )
+
+  apply_strict_flags(RipsawEngine3D)
+
+  set_target_properties(RipsawEngine3D PROPERTIES
+    ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
+    LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
+    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
+    INTERPROCEDURAL_OPTIMIZATION TRUE
+  )
+
+  target_include_directories(RipsawEngine3D PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+  )
+
+  if(RIPSAW_ENGINE_TARGET_LINUX OR RIPSAW_ENGINE_TARGET_WINDOWS)
+    target_link_libraries(RipsawEngine3D PUBLIC
+      SDL3::SDL3
+      glad_gl_core_43
+    )
+  elseif(RIPSAW_ENGINE_TARGET_ANDROID)
+    target_link_libraries(RipsawEngine3D PUBLIC
+      SDL3::SDL3
+      glad_gles2_core_32
+      android
+      EGL
+      GLESv2
+      log
+    )
+  endif()
 endif()
 

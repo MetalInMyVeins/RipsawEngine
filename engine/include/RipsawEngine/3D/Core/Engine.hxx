@@ -5,6 +5,8 @@
 
 #include <SDL3/SDL.h>
 
+#include <string>
+
 namespace RipsawEngine::_3D
 {
 
@@ -21,13 +23,14 @@ public:
   void run();
 
 private:
+  std::string readFile(const std::string& file);
+
+private:
   int mWidth{};
   int mHeight{};
   SDL_Window* mWindow{nullptr};
   SDL_GLContext mContext{};
   bool mRunning{true};
-
-private:
   GLuint mVao{};
   GLuint mVbo{};
   GLuint mEbo{};

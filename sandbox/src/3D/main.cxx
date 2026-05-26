@@ -1,5 +1,9 @@
 #include "RipsawEngine/3D/Core/Engine.hxx"
 
+#if defined(RIPSAW_ENGINE_TARGET_ANDROID)
+#include <SDL3/SDL_main.h>
+#endif
+
 #include <cstdlib>
 #include <exception>
 
