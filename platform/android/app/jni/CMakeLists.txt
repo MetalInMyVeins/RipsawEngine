@@ -46,7 +46,7 @@ set(SDLIMAGE_XPM OFF CACHE BOOL "" FORCE)
 set(SDLIMAGE_XV OFF CACHE BOOL "" FORCE)
 set(SDLTTF_VENDORED ON CACHE BOOL "" FORCE)
 
-set(DEPS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/.deps)
+set(DEPS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../../../../.deps)
 
 foreach(dep IN ITEMS SDL3-src SDL3_image-src SDL3_ttf-src)
   if(NOT EXISTS ${DEPS_DIR}/${dep}/CMakeLists.txt)
@@ -56,10 +56,10 @@ foreach(dep IN ITEMS SDL3-src SDL3_image-src SDL3_ttf-src)
   endif()
 endforeach()
 
-add_subdirectory(${DEPS_DIR}/SDL3-src)
+add_subdirectory(${DEPS_DIR}/SDL3-src ${CMAKE_CURRENT_BINARY_DIR}/SDL3-src-build)
 if(RIPSAW_ENGINE_SUBSYSTEM_2D)
-  add_subdirectory(${DEPS_DIR}/SDL3_image-src)
-  add_subdirectory(${DEPS_DIR}/SDL3_ttf-src)
+  add_subdirectory(${DEPS_DIR}/SDL3_image-src ${CMAKE_CURRENT_BINARY_DIR}/SDL3_image-src-build)
+  add_subdirectory(${DEPS_DIR}/SDL3_ttf-src ${CMAKE_CURRENT_BINARY_DIR}/SDL3_ttf-src-build)
 endif()
 
 if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")

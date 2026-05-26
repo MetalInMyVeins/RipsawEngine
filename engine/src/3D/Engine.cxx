@@ -145,18 +145,18 @@ void Engine::initShaders()
 #if (defined(RIPSAW_ENGINE_TARGET_LINUX) || defined(RIPSAW_ENGINE_TARGET_WINDOWS)) && defined(RIPSAW_ENGINE_BACKEND_GLCORE43) && !defined(RIPSAW_ENGINE_TARGET_ANDROID)
   vertexString = readFile("engine/shaders/gl/triangle.vert");
 #elif (defined(RIPSAW_ENGINE_TARGET_LINUX) || defined(RIPSAW_ENGINE_TARGET_WINDOWS)) && defined(RIPSAW_ENGINE_BACKEND_GLES2CORE32) && !defined(RIPSAW_ENGINE_TARGET_ANDROID)
-  vertexString = readTextFileSDL("engine/shaders/gles2/triangle.vert");
+  vertexString = readFile("engine/shaders/gles2/triangle.vert");
 #elif defined(RIPSAW_ENGINE_TARGET_ANDROID)
-  vertexString = readTextFileSDL("shaders/gles2/triangle.vert");
+  vertexString = readFile("shaders/gles2/triangle.vert");
 #endif
   vertexCstr = vertexString.c_str();
 
 #if (defined(RIPSAW_ENGINE_TARGET_LINUX) || defined(RIPSAW_ENGINE_TARGET_WINDOWS)) && defined(RIPSAW_ENGINE_BACKEND_GLCORE43) && !defined(RIPSAW_ENGINE_TARGET_ANDROID)
   fragmentString = readFile("engine/shaders/gl/triangle.frag");
 #elif (defined(RIPSAW_ENGINE_TARGET_LINUX) || defined(RIPSAW_ENGINE_TARGET_WINDOWS)) && defined(RIPSAW_ENGINE_BACKEND_GLES2CORE32) && !defined(RIPSAW_ENGINE_TARGET_ANDROID)
-  fragmentString = readTextFileSDL("engine/shaders/gles2/triangle.frag");
+  fragmentString = readFile("engine/shaders/gles2/triangle.frag");
 #elif defined(RIPSAW_ENGINE_TARGET_ANDROID)
-  fragmentString = readTextFileSDL("shaders/gles2/triangle.frag");
+  fragmentString = readFile("shaders/gles2/triangle.frag");
 #endif
   fragmentCstr = fragmentString.c_str();
 

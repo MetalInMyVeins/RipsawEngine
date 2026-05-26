@@ -3,7 +3,7 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-DEPS_DIR="${SCRIPT_DIR}/platform/android/app/jni/.deps"
+DEPS_DIR="${SCRIPT_DIR}/.deps"
 
 mkdir -p "$DEPS_DIR"
 
