@@ -8,6 +8,7 @@ set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+set(CMAKE_CXX_SCAN_FOR_MODULES OFF)
 
 option(USE_LIBCXX "Use libc++ instead of libstdc++" OFF)
 option(ENABLE_SANITIZERS_ADDUB "Enable Address + Undefined sanitizers" OFF)
