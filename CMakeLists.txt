@@ -139,6 +139,11 @@ function(apply_looser_flags target)
   )
 endfunction()
 
+function(apply_no_flags target)
+  target_compile_options(${target} PUBLIC
+  )
+endfunction()
+
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)

@@ -63,6 +63,10 @@ elseif(RIPSAW_ENGINE_SUBSYSTEM_3D)
     src/3D/readFile.cxx
   )
 
+  add_library(stbimg SHARED
+    src/3D/stb_impl.cxx
+  )
+
   target_compile_definitions(RipsawEngine3D PUBLIC
     $<$<BOOL:${RIPSAW_ENGINE_TARGET_LINUX}>:RIPSAW_ENGINE_TARGET_LINUX>
     $<$<BOOL:${RIPSAW_ENGINE_TARGET_WINDOWS}>:RIPSAW_ENGINE_TARGET_WINDOWS>
@@ -74,8 +78,15 @@ elseif(RIPSAW_ENGINE_SUBSYSTEM_3D)
   )
 
   apply_strict_flags(RipsawEngine3D)
+  apply_no_flags(stbimg)
 
   set_target_properties(RipsawEngine3D PROPERTIES
+    ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
+    LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
+    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
+    INTERPROCEDURAL_OPTIMIZATION TRUE
+  )
+  set_target_properties(stbimg PROPERTIES
     ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
     LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
     RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
@@ -85,16 +96,21 @@ elseif(RIPSAW_ENGINE_SUBSYSTEM_3D)
   target_include_directories(RipsawEngine3D PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include
   )
+  target_include_directories(stbimg PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+  )
 
   if(RIPSAW_ENGINE_TARGET_LINUX OR RIPSAW_ENGINE_TARGET_WINDOWS)
     target_link_libraries(RipsawEngine3D PUBLIC
       SDL3::SDL3
       glad_gl_core_43
+      stbimg
     )
   elseif(RIPSAW_ENGINE_TARGET_ANDROID)
     target_link_libraries(RipsawEngine3D PUBLIC
       SDL3::SDL3
       glad_gles2_core_32
+      stbimg
       android
       EGL
       GLESv2
