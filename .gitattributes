@@ -1,3 +1,6 @@
 external/** linguist-vendored
 platform/android/app/src/main/java/** linguist-vendored
+engine/include/RipsawEngine/3D/Util/stb_image.h linguist-vendored
+engine/include/RipsawEngine/3D/Util/stb_image_resize2.h linguist-vendored
+engine/include/RipsawEngine/3D/Util/stb_image_write.h linguist-vendored
 
