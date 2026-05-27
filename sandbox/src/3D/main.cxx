@@ -4,9 +4,6 @@
 #include <SDL3/SDL_main.h>
 #endif
 
-#include <cstdlib>
-#include <exception>
-
 int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
 {
   try

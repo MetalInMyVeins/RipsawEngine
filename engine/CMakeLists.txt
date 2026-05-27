@@ -100,6 +100,10 @@ elseif(RIPSAW_ENGINE_SUBSYSTEM_3D)
     ${CMAKE_CURRENT_SOURCE_DIR}/include
   )
 
+  target_precompile_headers(RipsawEngine3D PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/RipsawEngine/3D/pch.hxx
+  )
+
   if(RIPSAW_ENGINE_TARGET_LINUX OR RIPSAW_ENGINE_TARGET_WINDOWS)
     target_link_libraries(RipsawEngine3D PUBLIC
       SDL3::SDL3

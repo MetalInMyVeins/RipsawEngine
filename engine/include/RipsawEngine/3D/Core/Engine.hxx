@@ -1,11 +1,7 @@
 #ifndef _3D_CORE_ENGINE_HXX
 #define _3D_CORE_ENGINE_HXX
 
-#include <glad/glad.h>
-
-#include <SDL3/SDL.h>
-
-#include <string>
+#include "RipsawEngine/3D/pch.hxx"
 
 namespace RipsawEngine::_3D
 {

@@ -1,10 +1,5 @@
 #include "RipsawEngine/3D/Core/Engine.hxx"
 
-#include <fstream>
-#include <stdexcept>
-#include <sstream>
-#include <string>
-
 namespace RipsawEngine::_3D
 {
 
