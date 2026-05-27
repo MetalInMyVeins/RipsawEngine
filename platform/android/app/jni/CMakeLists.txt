@@ -120,6 +120,11 @@ function(apply_looser_flags target)
   )
 endfunction()
 
+function(apply_no_flags target)
+  target_compile_options(${target} PUBLIC
+  )
+endfunction()
+
 add_subdirectory(external)
 add_subdirectory(src)
 
